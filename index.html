@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Toolslap.online - Professional online toolkit for image editing, text processing, GIF manipulation, and more. Advanced tools with dark mode support.">
+    <meta name="keywords" content="toolslap.online, online tools, image editor, text tools, GIF tools, PNG tools, JPG tools, professional toolkit">
+    <meta name="author" content="Toolslap">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Toolslap.online - Professional Online Toolkit">
+    <meta property="og:description" content="Advanced collection of professional online tools for image editing, text processing, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolslap.online">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Toolslap.online - Professional Online Toolkit">
+    <meta name="twitter:description" content="Advanced collection of professional online tools for image editing, text processing, and more.">
+    
+    <title>Toolslap.online - Professional Online Toolkit</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #7c3aed;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --bg-color: #ffffff;
+            --surface-color: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #8b5cf6;
+            --accent-color: #fbbf24;
+            --success-color: #34d399;
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --border-color: #334155;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(var(--surface-color), 0.8);
+            box-shadow: var(--shadow-sm);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo::before {
+            content: "⚡";
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.375rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-container {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.25rem 4rem 1.25rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: #dc2626;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Category Section */
+        .categories {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-tools {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-tools i {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .footer-section p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-4px);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="https://toolslap.online" class="logo">Toolslap.online</a>
+            <ul class="nav-links">
+                <li><a href="image-tools.html">Image Tools</a></li>
+                <li><a href="gif-tools.html">GIF Tools</a></li>
+                <li><a href="text-tools.html">Text Tools</a></li>
+                <li><a href="math-tools.html">Math Tools</a></li>
+                <li>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <span id="theme-icon">🌙</span>
+                        <span id="theme-text">Dark</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Toolslap.online</h1>
+                <p>Professional toolkit for developers, designers, and creators</p>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search 100+ professional tools..." id="searchInput">
+                    <button class="search-btn" onclick="searchTools()">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="categories">
+            <div class="section-header">
+                <h2>Professional Tool Categories</h2>
+                <p>Explore our comprehensive collection of professional tools designed to streamline your workflow</p>
+            </div>
+            
+            <div class="categories-grid">
+                <!-- Image Tools Category -->
+                <a href="image-tools.html" class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🖼️</div>
+                        <h2 class="category-title">Image Tools</h2>
+                    </div>
+                    <p class="category-description">Professional image editing tools for PNG, JPG, and other formats. Remove backgrounds, change colors, optimize quality, and apply effects with precision.</p>
+                    <div class="category-tools">
+                        <i class="fas fa-tools"></i>
+                        <span>6 Professional Tools</span>
+                    </div>
+                </a>
+
+                <!-- GIF Tools Category -->
+                <a href="gif-tools.html" class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🎬</div>
+                        <h2 class="category-title">GIF Tools</h2>
+                    </div>
+                    <p class="category-description">Advanced GIF animation tools for speed control, frame extraction, background removal, and text overlay with professional results.</p>
+                    <div class="category-tools">
+                        <i class="fas fa-tools"></i>
+                        <span>6 Professional Tools</span>
+                    </div>
+                </a>
+
+                <!-- Text Tools Category -->
+                <a href="text-tools.html" class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">📝</div>
+                        <h2 class="category-title">Text Tools</h2>
+                    </div>
+                    <p class="category-description">Comprehensive text processing tools for encoding, formatting, manipulation, and conversion with advanced features.</p>
+                    <div class="category-tools">
+                        <i class="fas fa-tools"></i>
+                        <span>6 Professional Tools</span>
+                    </div>
+                </a>
+
+                <!-- Math Tools Category -->
+                <a href="math-tools.html" class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🔢</div>
+                        <h2 class="category-title">Math Tools</h2>
+                    </div>
+                    <p class="category-description">Professional mathematical tools for calculations, random generation, number conversion, and statistical analysis.</p>
+                    <div class="category-tools">
+                        <i class="fas fa-tools"></i>
+                        <span>6 Professional Tools</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Toolslap.online</h3>
+                    <p>Professional toolkit designed for developers, designers, and creators. Access 24+ advanced tools with enterprise-grade performance and security.</p>
+                    <p>Built with modern technologies and optimized for speed and reliability.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                        <li><a href="#">All Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="#">Dark Mode</a></li>
+                        <li><a href="#">Mobile Responsive</a></li>
+                        <li><a href="#">API Access</a></li>
+                        <li><a href="#">Batch Processing</a></li>
+                        <li><a href="#">No Registration</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap.online. All rights reserved. | Professional online toolkit | Built with ❤️ for creators</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        }
+
+        // Search functionality
+        function searchTools() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                // Redirect to appropriate category page based on search term
+                if (searchTerm.includes('image') || searchTerm.includes('png') || searchTerm.includes('jpg')) {
+                    window.location.href = 'image-tools.html';
+                } else if (searchTerm.includes('gif') || searchTerm.includes('animation')) {
+                    window.location.href = 'gif-tools.html';
+                } else if (searchTerm.includes('text') || searchTerm.includes('string') || searchTerm.includes('encode')) {
+                    window.location.href = 'text-tools.html';
+                } else if (searchTerm.includes('math') || searchTerm.includes('number') || searchTerm.includes('random')) {
+                    window.location.href = 'math-tools.html';
+                }
+            }
+        }
+
+        // Real-time search with debounce
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(searchTools, 300);
+        });
+
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('show');
+            } else {
+                scrollTop.classList.remove('show');
+            }
+        });
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe category cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
+    </script>
+</body>
+</html>
