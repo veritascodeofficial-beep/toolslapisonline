@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Analyze text with comprehensive statistics including character count, word count, sentence count, and readability metrics. Free text analysis tool by Toolslap.">
+    <meta name="keywords" content="text statistics, text analysis, character count, word count, readability score, text metrics, text analyzer">
+    <meta name="author" content="Toolslap">
+    <title>Text Statistics - Comprehensive Text Analysis Tool | Toolslap</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --secondary: #ef4444;
+            --accent: #10b981;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .tool-header p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Tool Interface */
+        .tool-interface {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .section-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .section-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 300px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-area:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-header p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-title {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            height: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Detailed Stats Section */
+        .detailed-stats {
+            margin-top: 2rem;
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .detailed-stats-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .detailed-stats-header h3 {
+            font-size: 1.125rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .detailed-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .detailed-stat-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .detailed-stat-title {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .detailed-stat-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 3rem 0;
+            background: var(--light);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .features-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="https://toolslap.online/text-tools.html">Text Tools</a>
+                    <a href="https://toolslap.online/image-tools.html">Image Tools</a>
+                    <a href="https://toolslap.online/gif-tools.html">GIF Tools</a>
+                    <a href="https://toolslap.online/math-tools.html">Math Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online/text-tools.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Text Tools
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>Text Statistics</h1>
+            <p>Analyze text with comprehensive statistics including character count, word count, and readability metrics</p>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <div class="interface-container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="section-header">
+                        <h2>Input Text</h2>
+                        <div class="section-controls">
+                            <button class="section-btn" title="Clear" id="clear-input">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="section-btn" title="Paste" id="paste-text">
+                                <i class="fas fa-paste"></i>
+                            </button>
+                            <button class="section-btn" title="Upload File" id="upload-file">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="input-text" class="text-area" placeholder="Enter or paste your text here...">The quick brown fox jumps over the lazy dog. This pangram contains every letter of the alphabet at least once. Text analysis tools can provide valuable insights into the structure and complexity of written content.</textarea>
+                    <input type="file" id="file-input" accept=".txt,.doc,.docx" style="display: none;">
+                </div>
+
+                <!-- Stats Section -->
+                <div class="stats-section">
+                    <div class="stats-header">
+                        <h2>Text Analysis</h2>
+                        <p>Comprehensive statistics and metrics for your text</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-title">Character Count</div>
+                            <div class="stat-value" id="char-count">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Word Count</div>
+                            <div class="stat-value" id="word-count">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Sentence Count</div>
+                            <div class="stat-value" id="sentence-count">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Paragraph Count</div>
+                            <div class="stat-value" id="paragraph-count">0</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="text-chart"></canvas>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn action-btn-secondary" id="reset-btn">Reset</button>
+                        <button class="action-btn action-btn-primary" id="analyze-btn">Analyze Text</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Stats Section -->
+            <div class="detailed-stats">
+                <div class="detailed-stats-header">
+                    <h3>Detailed Analysis</h3>
+                    <p>More in-depth statistics about your text</p>
+                </div>
+                <div class="detailed-stats-grid">
+                    <div class="detailed-stat-card">
+                        <div class="detailed-stat-title">Average Words per Sentence</div>
+                        <div class="detailed-stat-value" id="avg-words-per-sentence">0</div>
+                    </div>
+                    <div class="detailed-stat-card">
+                        <div class="detailed-stat-title">Average Characters per Word</div>
+                        <div class="detailed-stat-value" id="avg-chars-per-word">0</div>
+                    </div>
+                    <div class="detailed-stat-card">
+                        <div class="detailed-stat-title">Reading Time</div>
+                        <div class="detailed-stat-value" id="reading-time">0 min</div>
+                    </div>
+                    <div class="detailed-stat-card">
+                        <div class="detailed-stat-title">Speaking Time</div>
+                        <div class="detailed-stat-value" id="speaking-time">0 min</div>
+                    </div>
+                    <div class="detailed-stat-card">
+                        <div class="detailed-stat-title">Flesch Reading Ease</div>
+                        <div class="detailed-stat-value" id="flesch-score">0</div>
+                    </div>
+                    <div class="detailed-stat-card">
+                        <div class="detailed-stat-title">Flesch-Kincaid Grade</div>
+                        <div class="detailed-stat-value" id="flesch-grade">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2>Powerful Features</h2>
+                <p>Comprehensive text analysis capabilities</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h3 class="feature-title">Character Analysis</h3>
+                    <p class="feature-description">Count characters with or without spaces, and analyze character distribution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-spell-check"></i>
+                    </div>
+                    <h3 class="feature-title">Word Analysis</h3>
+                    <p class="feature-description">Count words, analyze word length, and identify unique words in your text.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Readability Metrics</h3>
+                    <p class="feature-description">Evaluate text complexity with Flesch Reading Ease and Flesch-Kincaid Grade Level.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Time Estimates</h3>
+                    <p class="feature-description">Get accurate estimates for reading and speaking time based on word count.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const inputText = document.getElementById('input-text');
+        const charCount = document.getElementById('char-count');
+        const wordCount = document.getElementById('word-count');
+        const sentenceCount = document.getElementById('sentence-count');
+        const paragraphCount = document.getElementById('paragraph-count');
+        const avgWordsPerSentence = document.getElementById('avg-words-per-sentence');
+        const avgCharsPerWord = document.getElementById('avg-chars-per-word');
+        const readingTime = document.getElementById('reading-time');
+        const speakingTime = document.getElementById('speaking-time');
+        const fleschScore = document.getElementById('flesch-score');
+        const fleschGrade = document.getElementById('flesch-grade');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const clearInputBtn = document.getElementById('clear-input');
+        const pasteTextBtn = document.getElementById('paste-text');
+        const uploadFileBtn = document.getElementById('upload-file');
+        const fileInput = document.getElementById('file-input');
+        
+        let textChart;
+
+        // Clear input
+        clearInputBtn.addEventListener('click', function() {
+            inputText.value = '';
+            resetStats();
+        });
+
+        // Paste text
+        pasteTextBtn.addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                inputText.value = text;
+                analyzeText();
+            } catch (err) {
+                // Fallback for older browsers
+                inputText.focus();
+                document.execCommand('paste');
+            }
+        });
+
+        // Upload file
+        uploadFileBtn.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    inputText.value = event.target.result;
+                    analyzeText();
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Analyze button
+        analyzeBtn.addEventListener('click', analyzeText);
+
+        // Reset button
+        resetBtn.addEventListener('click', function() {
+            inputText.value = 'The quick brown fox jumps over the lazy dog. This pangram contains every letter of the alphabet at least once. Text analysis tools can provide valuable insights into the structure and complexity of written content.';
+            analyzeText();
+        });
+
+        // Analyze text
+        function analyzeText() {
+            const text = inputText.value;
+            
+            if (!text) {
+                resetStats();
+                return;
+            }
+
+            // Basic statistics
+            const chars = text.length;
+            const charsNoSpaces = text.replace(/\s/g, '').length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0).length;
+            const paragraphs = text.split(/\n\s*\n/).filter(para => para.trim().length > 0).length;
+            
+            // Update basic stats
+            charCount.textContent = chars.toLocaleString();
+            wordCount.textContent = words.toLocaleString();
+            sentenceCount.textContent = sentences.toLocaleString();
+            paragraphCount.textContent = paragraphs.toLocaleString();
+            
+            // Detailed statistics
+            const avgWordsPerSentenceValue = sentences > 0 ? (words / sentences).toFixed(1) : 0;
+            const avgCharsPerWordValue = words > 0 ? (charsNoSpaces / words).toFixed(1) : 0;
+            const readingTimeValue = Math.ceil(words / 200); // Assuming 200 words per minute
+            const speakingTimeValue = Math.ceil(words / 130); // Assuming 130 words per minute
+            
+            avgWordsPerSentence.textContent = avgWordsPerSentenceValue;
+            avgCharsPerWord.textContent = avgCharsPerWordValue;
+            readingTime.textContent = `${readingTimeValue} min`;
+            speakingTime.textContent = `${speakingTimeValue} min`;
+            
+            // Readability scores
+            const fleschScoreValue = calculateFleschReadingEase(text);
+            const fleschGradeValue = calculateFleschKincaidGrade(text);
+            
+            fleschScore.textContent = fleschScoreValue.toFixed(1);
+            fleschGrade.textContent = fleschGradeValue.toFixed(1);
+            
+            // Update chart
+            updateChart(chars, words, sentences, paragraphs);
+        }
+
+        // Reset statistics
+        function resetStats() {
+            charCount.textContent = '0';
+            wordCount.textContent = '0';
+            sentenceCount.textContent = '0';
+            paragraphCount.textContent = '0';
+            avgWordsPerSentence.textContent = '0';
+            avgCharsPerWord.textContent = '0';
+            readingTime.textContent = '0 min';
+            speakingTime.textContent = '0 min';
+            fleschScore.textContent = '0';
+            fleschGrade.textContent = '0';
+            
+            // Reset chart
+            if (textChart) {
+                textChart.data.datasets[0].data = [0, 0, 0, 0];
+                textChart.update();
+            }
+        }
+
+        // Calculate Flesch Reading Ease score
+        function calculateFleschReadingEase(text) {
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0).length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            const syllables = countSyllables(text);
+            
+            if (sentences === 0 || words === 0) return 0;
+            
+            const score = 206.835 - (1.015 * (words / sentences)) - (84.6 * (syllables / words));
+            return Math.max(0, Math.min(100, score));
+        }
+
+        // Calculate Flesch-Kincaid Grade Level
+        function calculateFleschKincaidGrade(text) {
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0).length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            const syllables = countSyllables(text);
+            
+            if (sentences === 0 || words === 0) return 0;
+            
+            const score = (0.39 * (words / sentences)) + (11.8 * (syllables / words)) - 15.59;
+            return Math.max(0, score);
+        }
+
+        // Count syllables (simplified algorithm)
+        function countSyllables(text) {
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            let syllableCount = 0;
+            
+            words.forEach(word => {
+                const cleanWord = word.toLowerCase().replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+                    .replace(/^y/, '')
+                    .replace(/[aeiouy]{1,2}/g, 'a')
+                    .replace(/[^a]/g, '');
+                syllableCount += Math.max(1, cleanWord.length);
+            });
+            
+            return syllableCount;
+        }
+
+        // Update chart
+        function updateChart(chars, words, sentences, paragraphs) {
+            const ctx = document.getElementById('text-chart').getContext('2d');
+            
+            if (textChart) {
+                textChart.data.datasets[0].data = [chars, words, sentences, paragraphs];
+                textChart.update();
+            } else {
+                textChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Characters', 'Words', 'Sentences', 'Paragraphs'],
+                        datasets: [{
+                            label: 'Count',
+                            data: [chars, words, sentences, paragraphs],
+                            backgroundColor: [
+                                'rgba(245, 158, 11, 0.7)',
+                                'rgba(16, 185, 129, 0.7)',
+                                'rgba(59, 130, 246, 0.7)',
+                                'rgba(139, 92, 246, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(245, 158, 11, 1)',
+                                'rgba(16, 185, 129, 1)',
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(139, 92, 246, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initial analysis
+        analyzeText();
+    </script>
+</body>
+</html>
