@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Encode and decode text using Base64 with support for URL-safe encoding and real-time conversion. Free online Base64 tool by Toolslap.">
+    <meta name="keywords" content="base64 encode, base64 decode, base64 converter, url-safe base64, text encoding, text decoding, base64 online">
+    <meta name="author" content="Toolslap">
+    <title>Base64 Encode/Decode - Secure Text Encoding Tool | Toolslap</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --secondary: #ef4444;
+            --accent: #10b981;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .tool-header p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Tool Interface */
+        .tool-interface {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .section-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .section-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 300px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-area:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .controls-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .controls-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .controls-header p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .encode-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .encode-option {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .encode-option:hover {
+            border-color: var(--primary);
+        }
+
+        .encode-option.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .encode-option i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .encode-option span {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(24px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 3rem 0;
+            background: var(--light);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .features-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 2rem;
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .info-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-header h3 {
+            font-size: 1.125rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-content {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+
+            .encode-options {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="https://toolslap.online/text-tools.html">Text Tools</a>
+                    <a href="https://toolslap.online/image-tools.html">Image Tools</a>
+                    <a href="https://toolslap.online/gif-tools.html">GIF Tools</a>
+                    <a href="https://toolslap.online/math-tools.html">Math Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online/text-tools.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Text Tools
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>Base64 Encode/Decode</h1>
+            <p>Encode and decode text using Base64 with support for URL-safe encoding and real-time conversion</p>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <div class="interface-container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="section-header">
+                        <h2>Input Text</h2>
+                        <div class="section-controls">
+                            <button class="section-btn" title="Clear" id="clear-input">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="section-btn" title="Paste" id="paste-text">
+                                <i class="fas fa-paste"></i>
+                            </button>
+                            <button class="section-btn" title="Upload File" id="upload-file">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="input-text" class="text-area" placeholder="Enter or paste your text here...">Hello World!</textarea>
+                    <input type="file" id="file-input" accept=".txt,.json" style="display: none;">
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <div class="controls-header">
+                        <h2>Base64 Settings</h2>
+                        <p>Configure your encoding or decoding options</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Operation</label>
+                        <div class="encode-options">
+                            <div class="encode-option active" data-operation="encode">
+                                <i class="fas fa-lock"></i>
+                                <span>Encode</span>
+                            </div>
+                            <div class="encode-option" data-operation="decode">
+                                <i class="fas fa-unlock"></i>
+                                <span>Decode</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group" id="url-safe-group">
+                        <span class="toggle-label">URL-Safe Encoding</span>
+                        <div class="toggle-switch" id="url-safe">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Real-time Conversion</span>
+                        <div class="toggle-switch active" id="real-time">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="output-text">Output Text</label>
+                        <textarea id="output-text" class="text-area" readonly placeholder="Result will appear here..."></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn action-btn-secondary" id="reset-btn">Reset</button>
+                        <button class="action-btn action-btn-primary" id="convert-btn">Convert</button>
+                    </div>
+
+                    <div class="action-buttons" style="margin-top: 1rem;">
+                        <button class="action-btn action-btn-secondary" id="copy-results">Copy Results</button>
+                        <button class="action-btn action-btn-secondary" id="swap-btn">Swap Text</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="info-section">
+                <div class="info-header">
+                    <h3>About Base64</h3>
+                    <p>Learn about Base64 encoding and its common uses</p>
+                </div>
+                <div class="info-content">
+                    <p>Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used to encode data that needs to be stored or transferred over media designed to handle text. This ensures that the data remains intact without modification during transport.</p>
+                    <p style="margin-top: 1rem;">URL-safe Base64 replaces '+' with '-' and '/' with '_' to make the output safe for use in URLs and filenames.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2>Powerful Features</h2>
+                <p>Advanced Base64 encoding and decoding capabilities</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">Base64 Encoding</h3>
+                    <p class="feature-description">Convert text to Base64 format for safe storage and transmission across different systems.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-unlock"></i>
+                    </div>
+                    <h3 class="feature-title">Base64 Decoding</h3>
+                    <p class="feature-description">Convert Base64 encoded text back to its original format with high accuracy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3 class="feature-title">URL-Safe Encoding</h3>
+                    <p class="feature-description">Generate URL-safe Base64 strings that can be safely used in web addresses and filenames.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Real-time Conversion</h3>
+                    <p class="feature-description">See results instantly as you type with our real-time conversion feature.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const encodeOptions = document.querySelectorAll('.encode-option');
+        const urlSafeGroup = document.getElementById('url-safe-group');
+        const urlSafe = document.getElementById('url-safe');
+        const realTime = document.getElementById('real-time');
+        const convertBtn = document.getElementById('convert-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const clearInputBtn = document.getElementById('clear-input');
+        const pasteTextBtn = document.getElementById('paste-text');
+        const uploadFileBtn = document.getElementById('upload-file');
+        const fileInput = document.getElementById('file-input');
+        const copyResultsBtn = document.getElementById('copy-results');
+        const swapBtn = document.getElementById('swap-btn');
+        
+        let currentOperation = 'encode';
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Operation selection
+        encodeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                encodeOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                currentOperation = this.dataset.operation;
+                
+                // Show/hide URL-safe option
+                if (currentOperation === 'encode') {
+                    urlSafeGroup.style.display = 'flex';
+                } else {
+                    urlSafeGroup.style.display = 'none';
+                }
+                
+                // Convert if real-time is enabled
+                if (realTime.classList.contains('active') && inputText.value) {
+                    convertText();
+                }
+            });
+        });
+
+        // Clear input
+        clearInputBtn.addEventListener('click', function() {
+            inputText.value = '';
+            outputText.value = '';
+        });
+
+        // Paste text
+        pasteTextBtn.addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                inputText.value = text;
+                
+                // Convert if real-time is enabled
+                if (realTime.classList.contains('active')) {
+                    convertText();
+                }
+            } catch (err) {
+                // Fallback for older browsers
+                inputText.focus();
+                document.execCommand('paste');
+            }
+        });
+
+        // Upload file
+        uploadFileBtn.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    inputText.value = event.target.result;
+                    
+                    // Convert if real-time is enabled
+                    if (realTime.classList.contains('active')) {
+                        convertText();
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Convert text
+        function convertText() {
+            const text = inputText.value;
+            if (!text) {
+                outputText.value = '';
+                return;
+            }
+
+            try {
+                let result = '';
+                
+                if (currentOperation === 'encode') {
+                    result = btoa(text);
+                    
+                    // Apply URL-safe encoding if enabled
+                    if (urlSafe.classList.contains('active')) {
+                        result = result.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+                    }
+                } else {
+                    // For decoding, handle URL-safe encoding
+                    let textToDecode = text;
+                    
+                    // Check if it might be URL-safe encoded
+                    if (text.indexOf('-') !== -1 || text.indexOf('_') !== -1) {
+                        textToDecode = text.replace(/-/g, '+').replace(/_/g, '/');
+                        
+                        // Add padding if needed
+                        const padLength = 4 - (textToDecode.length % 4);
+                        if (padLength < 4) {
+                            for (let i = 0; i < padLength; i++) {
+                                textToDecode += '=';
+                            }
+                        }
+                    }
+                    
+                    result = atob(textToDecode);
+                }
+                
+                outputText.value = result;
+            } catch (error) {
+                outputText.value = `Error: ${error.message}`;
+            }
+        }
+
+        // Convert button
+        convertBtn.addEventListener('click', convertText);
+
+        // Real-time conversion
+        inputText.addEventListener('input', function() {
+            if (realTime.classList.contains('active')) {
+                convertText();
+            }
+        });
+
+        // Reset form
+        resetBtn.addEventListener('click', function() {
+            inputText.value = 'Hello World!';
+            outputText.value = '';
+            encodeOptions.forEach(opt => opt.classList.remove('active'));
+            encodeOptions[0].classList.add('active');
+            currentOperation = 'encode';
+            urlSafeGroup.style.display = 'flex';
+            urlSafe.classList.remove('active');
+            realTime.classList.add('active');
+        });
+
+        // Copy results
+        copyResultsBtn.addEventListener('click', function() {
+            outputText.select();
+            document.execCommand('copy');
+            
+            // Show feedback
+            const originalText = copyResultsBtn.textContent;
+            copyResultsBtn.textContent = 'Copied!';
+            copyResultsBtn.style.background = 'var(--success)';
+            
+            setTimeout(() => {
+                copyResultsBtn.textContent = originalText;
+                copyResultsBtn.style.background = '';
+            }, 2000);
+        });
+
+        // Swap text
+        swapBtn.addEventListener('click', function() {
+            const temp = inputText.value;
+            inputText.value = outputText.value;
+            outputText.value = temp;
+            
+            // Switch operation
+            const newOperation = currentOperation === 'encode' ? 'decode' : 'encode';
+            encodeOptions.forEach(opt => opt.classList.remove('active'));
+            document.querySelector(`[data-operation="${newOperation}"]`).classList.add('active');
+            currentOperation = newOperation;
+            
+            // Show/hide URL-safe option
+            if (currentOperation === 'encode') {
+                urlSafeGroup.style.display = 'flex';
+            } else {
+                urlSafeGroup.style.display = 'none';
+            }
+        });
+
+        // Initial conversion
+        convertText();
+    </script>
+</body>
+</html>
