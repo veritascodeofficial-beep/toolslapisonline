@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional GIF editing tools at Toolslap.online - speed control, frame extraction, background removal">
+    <meta name="description" content="Professional GIF editing tools at Toolslap.online - Advanced speed control, frame extraction, background removal, and animation tools">
     <meta name="keywords" content="GIF tools, GIF editor, animation tools, GIF processing, toolslap.online">
     <meta name="author" content="Toolslap">
-    <title>GIF Tools - Toolslap.online</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Professional GIF Tools - Toolslap.online</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -16,32 +27,25 @@
         }
 
         :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #7c3aed;
-            --accent-color: #f59e0b;
-            --bg-color: #ffffff;
-            --surface-color: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --surface-color: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --border-color: #334155;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            color: var(--text-primary);
+            background: var(--light);
+            color: var(--dark);
             line-height: 1.6;
-            transition: all 0.3s ease;
+            overflow-x: hidden;
         }
 
         .container {
@@ -50,26 +54,34 @@
             padding: 0 20px;
         }
 
+        /* Header */
         header {
-            background: var(--surface-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
-            position: sticky;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
             top: 0;
-            z-index: 100;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-links {
@@ -79,117 +91,510 @@
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--gray);
             text-decoration: none;
+            font-weight: 500;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
             color: white;
-            padding: 4rem 0;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 20s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.375rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-feature {
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .hero-feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .hero-feature-text {
+            font-size: 0.875rem;
             opacity: 0.9;
+        }
+
+        /* Tools Section */
+        .tools {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            padding: 4rem 0;
         }
 
         .tool-card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
+            background: white;
+            border: 1px solid var(--border);
             border-radius: 1rem;
-            padding: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            position: relative;
         }
 
         .tool-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
         }
 
         .tool-icon {
             font-size: 3rem;
-            color: var(--secondary-color);
             margin-bottom: 1rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .tool-card h3 {
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tool-header h3 {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .tool-card p {
-            color: var(--text-secondary);
+        .tool-header p {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .tool-body {
+            padding: 2rem;
+        }
+
+        .tool-description {
+            color: var(--gray);
             margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .tool-features li {
+            padding: 0.5rem 0;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .tool-features li::before {
+            content: '→';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 1rem;
         }
 
         .tool-btn {
-            background: var(--secondary-color);
-            color: white;
+            flex: 1;
+            padding: 0.75rem 1.5rem;
             border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            font-size: 0.875rem;
+        }
+
+        .tool-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: var(--gray);
+        }
+
+        /* Showcase */
+        .showcase {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .showcase-item {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .showcase-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .showcase-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .showcase-content {
+            padding: 1.5rem;
+        }
+
+        .showcase-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .showcase-content p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            color: #9ca3af;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s ease;
-        }
-
-        .tool-btn:hover {
-            background: var(--primary-color);
-        }
-
-        footer {
-            background: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .back-btn {
-            display: inline-flex;
+            text-decoration: none;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            margin-bottom: 2rem;
             font-weight: 500;
+            z-index: 999;
+            transition: all 0.3s ease;
         }
 
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.125rem;
+            }
+            
+            .nav-links {
+                display: none;
             }
             
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .hero-features {
+                gap: 2rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <nav class="container">
-            <a href="https://toolslap.online" class="logo">⚡ Toolslap.online</a>
+            <a href="https://toolslap.online" class="logo">
+                <i class="fas fa-bolt"></i> Toolslap.online
+            </a>
             <div class="nav-links">
                 <a href="https://toolslap.online/image-tools.html">Image Tools</a>
                 <a href="https://toolslap.online/text-tools.html">Text Tools</a>
@@ -198,73 +603,450 @@
         </nav>
     </header>
 
+    <!-- Back Button -->
+    <a href="https://toolslap.online" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>GIF Tools</h1>
-            <p>Professional GIF animation tools for speed control, frame extraction, and more</p>
+            <div class="hero-content">
+                <h1>GIF Tools</h1>
+                <p>Professional GIF animation tools for creators, marketers, and developers</p>
+                
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="hero-feature-text">Speed Control</div>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="hero-feature-text">Frame Extraction</div>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="hero-feature-text">Background Removal</div>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <div class="hero-feature-text">Text Overlay</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <main class="container">
-        <a href="https://toolslap.online" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
-
-        <div class="tools-grid">
-            <div class="tool-card">
-                <div class="tool-icon">⚡</div>
-                <h3>Change GIF Speed</h3>
-                <p>Adjust animation speed with frame-level control and real-time preview.</p>
-                <button class="tool-btn" onclick="openTool('Change GIF Speed')">Launch Tool</button>
+    <!-- Tools Section -->
+    <section class="tools">
+        <div class="container">
+            <div class="section-header">
+                <h2>Professional GIF Tools</h2>
+                <p>Explore our comprehensive collection of GIF animation and editing tools</p>
             </div>
+            
+            <div class="tools-grid">
+                <!-- Change GIF Speed -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Change GIF Speed</h3>
+                        <p>Control animation speed</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Adjust GIF animation speed with precise frame-level control. Perfect for creating slow-motion or fast-forward effects.</p>
+                        <ul class="tool-features">
+                            <li>Speed slider (0.1x - 10x)</li>
+                            <li>Frame-by-frame control</li>
+                            <li>Real-time preview</li>
+                            <li>Preserve quality</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <button class="tool-btn tool-btn-primary" onclick="openTool('Change GIF Speed')">
+                                Launch Tool
+                            </button>
+                            <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">🎬</div>
-                <h3>Extract GIF Frames</h3>
-                <p>Extract individual frames with batch processing and multiple export formats.</p>
-                <button class="tool-btn" onclick="openTool('Extract GIF Frames')">Launch Tool</button>
-            </div>
+                <!-- Extract GIF Frames -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <h3>Extract GIF Frames</h3>
+                        <p>Split animation into frames</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Extract individual frames from GIF animations with batch processing support. Perfect for editing and analysis.</p>
+                        <ul class="tool-features">
+                            <li>Select frame range</li>
+                            <li>Multiple export formats</li>
+                            <li>Batch extraction</li>
+                            <li>Quality preservation</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <button class="tool-btn tool-btn-primary" onclick="openTool('Extract GIF Frames')">
+                                Launch Tool
+                            </button>
+                            <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">🎨</div>
-                <h3>Remove GIF Background</h3>
-                <p>Advanced background removal for animations with transparency support.</p>
-                <button class="tool-btn" onclick="openTool('Remove GIF Background')">Launch Tool</button>
-            </div>
+                <!-- Remove GIF Background -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-eraser"></i>
+                        </div>
+                        <h3>Remove GIF Background</h3>
+                        <p>Create transparent GIFs</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Remove backgrounds from GIF animations while maintaining transparency. Perfect for logos and animated graphics.</p>
+                        <ul class="tool-features">
+                            <li>AI-powered removal</li>
+                            <li>Frame-by-frame processing</li>
+                            <li>Transparency support</li>
+                            <li>Batch processing</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <button class="tool-btn tool-btn-primary" onclick="openTool('Remove GIF Background')">
+                                Launch Tool
+                            </button>
+                            <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">📝</div>
-                <h3>Add Text to GIF</h3>
-                <p>Add animated text with custom fonts, colors, and positioning options.</p>
-                <button class="tool-btn" onclick="openTool('Add Text to GIF')">Launch Tool</button>
-            </div>
+                <!-- Add Text to GIF -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <h3>Add Text to GIF</h3>
+                        <p>Overlay animated text</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Add animated text overlays to GIF animations with custom fonts, colors, and timing controls.</p>
+                        <ul class="tool-features">
+                            <li>Custom fonts</li>
+                            <li>Text animation</li>
+                            <li>Position control</li>
+                            <li>Color effects</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <button class="tool-btn tool-btn-primary" onclick="openTool('Add Text to GIF')">
+                                Launch Tool
+                            </button>
+                            <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">🔄</div>
-                <h3>Reverse GIF</h3>
-                <p>Reverse animation with frame interpolation for smooth playback.</p>
-                <button class="tool-btn" onclick="openTool('Reverse GIF')">Launch Tool</button>
-            </div>
+                <!-- Reverse GIF -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Reverse GIF</h3>
+                        <p>Play animation backwards</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Reverse GIF animations with smooth frame interpolation for creating reverse playback effects.</p>
+                        <ul class="tool-features">
+                            <li>Frame reversal</li>
+                            <li>Smooth interpolation</li>
+                            <li>Loop optimization</li>
+                            <li>Quality preservation</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <button class="tool-btn tool-btn-primary" onclick="openTool('Reverse GIF')">
+                                Launch Tool
+                            </button>
+                            <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">✂️</div>
-                <h3>Crop GIF</h3>
-                <p>Precise GIF cropping with aspect ratio controls and custom dimensions.</p>
-                <button class="tool-btn" onclick="openTool('Crop GIF')">Launch Tool</button>
+                <!-- Crop GIF -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-crop"></i>
+                        </div>
+                        <h3>Crop GIF</h3>
+                        <p>Resize animations</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Crop GIF animations with precision while maintaining animation quality and timing.</p>
+                        <ul class="tool-features">
+                            <li>Freehand cropping</li>
+                            <li>Aspect ratio presets</li>
+                            <li>Animation preview</li>
+                            <li>Size optimization</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <button class="tool-btn tool-btn-primary" onclick="openTool('Crop GIF')">
+                                Launch Tool
+                            </button>
+                            <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+    </section>
 
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Create amazing GIF animations in three simple steps</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Upload Your GIF</h3>
+                    <p>Upload your GIF file or create one from images</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Edit & Enhance</h3>
+                    <p>Use our tools to modify speed, add effects, or extract frames</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Download & Share</h3>
+                    <p>Download your enhanced GIF and share it anywhere</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase -->
+    <section class="showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Use Cases</h2>
+                <p>See how others are using our GIF tools</p>
+            </div>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Social Media</h3>
+                        <p>Create engaging GIFs for Instagram, Twitter, and TikTok</p>
+                    </div>
+                </div>
+                
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Marketing</h3>
+                        <p>Eye-catching animations for ads and promotions</p>
+                    </div>
+                </div>
+                
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Education</h3>
+                        <p>Create instructional animations and tutorials</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Create Amazing GIFs?</h2>
+            <p>Join thousands of creators who trust Toolslap.online for their animation needs</p>
+            <a href="#" class="cta-btn">Start Creating</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Toolslap.online - Professional GIF Tools</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Toolslap.online</h3>
+                    <p>Professional online tools for creators, developers, and designers.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap.online. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Tool launch function
         function openTool(toolName) {
-            alert(`Opening ${toolName} at Toolslap.online\n\nThis would redirect to the actual tool interface.`);
+            // Create a professional modal instead of alert
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 3rem;
+                    border-radius: 1rem;
+                    max-width: 500px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+                ">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 1.5rem;
+                        font-size: 2rem;
+                        color: white;
+                    ">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #1e293b;">Launching ${toolName}</h2>
+                    <p style="color: #64748b; margin-bottom: 2rem;">This would open the actual ${toolName} interface in a production environment.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                            background: #8b5cf6;
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 0.5rem;
+                            cursor: pointer;
+                            font-weight: 500;
+                        ">Got it!</button>
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                            background: transparent;
+                            color: #8b5cf6;
+                            border: 2px solid #8b5cf6;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 0.5rem;
+                            cursor: pointer;
+                            font-weight: 500;
+                        ">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Remove modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
     </script>
 </body>
 </html>
