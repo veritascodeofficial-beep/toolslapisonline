@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Toolslap.online - Professional online toolkit for image editing, text processing, GIF manipulation, and more. Advanced tools with dark mode support.">
-    <meta name="keywords" content="toolslap.online, online tools, image editor, text tools, GIF tools, PNG tools, JPG tools, professional toolkit">
+    <meta name="description" content="Toolslap.online - Professional online toolkit for image editing, text processing, GIF manipulation, YouTube tools, AI tools, and more. Advanced tools with dark mode support.">
+    <meta name="keywords" content="toolslap.online, online tools, image editor, text tools, GIF tools, YouTube tools, AI tools, PNG tools, JPG tools, professional toolkit">
     <meta name="author" content="Toolslap">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Toolslap.online - Professional Online Toolkit">
-    <meta property="og:description" content="Advanced collection of professional online tools for image editing, text processing, and more.">
+    <meta property="og:description" content="Advanced collection of professional online tools for image editing, text processing, YouTube tools, AI tools, and more.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolslap.online">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Toolslap.online - Professional Online Toolkit">
-    <meta name="twitter:description" content="Advanced collection of professional online tools for image editing, text processing, and more.">
+    <meta name="twitter:description" content="Advanced collection of professional online tools for image editing, text processing, YouTube tools, AI tools, and more.">
     
     <title>Toolslap.online - Professional Online Toolkit</title>
     
@@ -523,6 +523,8 @@
                 <li><a href="gif-tools.html">GIF Tools</a></li>
                 <li><a href="text-tools.html">Text Tools</a></li>
                 <li><a href="math-tools.html">Math Tools</a></li>
+                <li><a href="youtube-tools.html">YouTube Tools</a></li>
+                <li><a href="ai-tools.html">AI Tools</a></li>
                 <li>
                     <button class="theme-toggle" onclick="toggleTheme()">
                         <span id="theme-icon">🌙</span>
@@ -605,6 +607,32 @@
                         <span>6 Professional Tools</span>
                     </div>
                 </a>
+
+                <!-- YouTube Tools Category -->
+                <a href="youtube-tools.html" class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">📺</div>
+                        <h2 class="category-title">YouTube Tools</h2>
+                    </div>
+                    <p class="category-description">Essential tools for YouTube creators including thumbnail generation, video optimization, analytics, and channel management utilities.</p>
+                    <div class="category-tools">
+                        <i class="fas fa-tools"></i>
+                        <span>6 Professional Tools</span>
+                    </div>
+                </a>
+
+                <!-- AI Tools Category -->
+                <a href="ai-tools.html" class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🤖</div>
+                        <h2 class="category-title">AI Tools</h2>
+                    </div>
+                    <p class="category-description">Cutting-edge artificial intelligence tools for content generation, image enhancement, text analysis, and automation tasks.</p>
+                    <div class="category-tools">
+                        <i class="fas fa-tools"></i>
+                        <span>6 Professional Tools</span>
+                    </div>
+                </a>
             </div>
         </section>
     </main>
@@ -614,7 +642,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>About Toolslap.online</h3>
-                    <p>Professional toolkit designed for developers, designers, and creators. Access 24+ advanced tools with enterprise-grade performance and security.</p>
+                    <p>Professional toolkit designed for developers, designers, and creators. Access 36+ advanced tools with enterprise-grade performance and security.</p>
                     <p>Built with modern technologies and optimized for speed and reliability.</p>
                 </div>
                 <div class="footer-section">
@@ -624,6 +652,8 @@
                         <li><a href="gif-tools.html">GIF Tools</a></li>
                         <li><a href="text-tools.html">Text Tools</a></li>
                         <li><a href="math-tools.html">Math Tools</a></li>
+                        <li><a href="youtube-tools.html">YouTube Tools</a></li>
+                        <li><a href="ai-tools.html">AI Tools</a></li>
                         <li><a href="#">All Tools</a></li>
                     </ul>
                 </div>
@@ -705,6 +735,10 @@
                     window.location.href = 'text-tools.html';
                 } else if (searchTerm.includes('math') || searchTerm.includes('number') || searchTerm.includes('random')) {
                     window.location.href = 'math-tools.html';
+                } else if (searchTerm.includes('youtube') || searchTerm.includes('video') || searchTerm.includes('thumbnail')) {
+                    window.location.href = 'youtube-tools.html';
+                } else if (searchTerm.includes('ai') || searchTerm.includes('artificial') || searchTerm.includes('intelligence')) {
+                    window.location.href = 'ai-tools.html';
                 }
             }
         }
