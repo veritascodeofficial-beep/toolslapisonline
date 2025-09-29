@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add text to GIF animations with Toolslap's advanced text overlay tool. Create animated text with custom fonts, colors, and timing controls for your GIFs.">
+    <meta name="keywords" content="add text to gif, gif text overlay, animated text gif, gif text animation, custom text on gif, gif caption tool">
+    <meta name="author" content="Toolslap">
+    <title>Add Text to GIF - Toolslap.online</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .tool-header p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Tool Interface */
+        .tool-interface {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+
+        .preview-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .preview-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .preview-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .preview-container {
+            background: white;
+            border: 2px dashed var(--border);
+            border-radius: 0.5rem;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .preview-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .preview-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .controls-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .controls-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .controls-header p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .control-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary-dark);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary-dark);
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .color-picker {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .color-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .font-selector {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background: white;
+        }
+
+        .file-upload {
+            margin-bottom: 1.5rem;
+        }
+
+        .file-label {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .file-label:hover {
+            background: var(--primary-dark);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .position-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .position-btn {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .position-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .position-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .animation-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .animation-option {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .animation-option:hover {
+            background: var(--light);
+        }
+
+        .animation-option input {
+            margin-right: 0.5rem;
+        }
+
+        .animation-option label {
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 3rem 0;
+            background: var(--light);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .features-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            color: #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid var(--border);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+            
+            .position-controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .animation-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="https://toolslap.online" class="logo">
+                <i class="fas fa-bolt"></i> Toolslap.online
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="https://toolslap.online/gif-tools.html">GIF Tools</a>
+                <a href="https://toolslap.online/image-tools.html">Image Tools</a>
+                <a href="https://toolslap.online/text-tools.html">Text Tools</a>
+                <a href="https://toolslap.online/math-tools.html">Math Tools</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>Add Text to GIF</h1>
+            <p>Add animated text overlays to GIF animations with custom fonts, colors, and timing controls.</p>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <div class="interface-container">
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <div class="preview-header">
+                        <h2>Preview</h2>
+                        <div class="preview-controls">
+                            <button class="preview-btn" id="playBtn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="preview-btn" id="pauseBtn">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                            <button class="preview-btn" id="resetBtn">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-placeholder">
+                            <i class="fas fa-film"></i>
+                            <p>Upload a GIF to preview</p>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-info">
+                        <span>Duration: <span id="gifDuration">0s</span></span>
+                        <span>Size: <span id="gifSize">0x0</span></span>
+                    </div>
+                </div>
+                
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <div class="controls-header">
+                        <h2>Text Settings</h2>
+                        <p>Configure text overlay options</p>
+                    </div>
+                    
+                    <div class="file-upload">
+                        <label for="gifUpload" class="file-label">
+                            <i class="fas fa-upload"></i> Upload GIF
+                        </label>
+                        <input type="file" id="gifUpload" class="file-input" accept="image/gif">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Text Content</span>
+                        </div>
+                        <input type="text" class="text-input" id="textInput" placeholder="Enter your text here">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Font</span>
+                        </div>
+                        <select class="font-selector" id="fontSelector">
+                            <option value="Arial">Arial</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Font Size</span>
+                            <span class="control-value" id="fontSizeValue">24px</span>
+                        </div>
+                        <input type="range" class="slider" id="fontSizeSlider" min="8" max="72" step="1" value="24">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Text Color</span>
+                        </div>
+                        <div class="color-picker-container">
+                            <input type="color" class="color-picker" id="textColorPicker" value="#ffffff">
+                            <input type="text" class="color-input" id="textColorInput" value="#ffffff">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Position</span>
+                        </div>
+                        <div class="position-controls">
+                            <button class="position-btn" data-position="top-left">Top Left</button>
+                            <button class="position-btn" data-position="top-center">Top Center</button>
+                            <button class="position-btn" data-position="top-right">Top Right</button>
+                            <button class="position-btn" data-position="middle-left">Middle Left</button>
+                            <button class="position-btn active" data-position="center">Center</button>
+                            <button class="position-btn" data-position="middle-right">Middle Right</button>
+                            <button class="position-btn" data-position="bottom-left">Bottom Left</button>
+                            <button class="position-btn" data-position="bottom-center">Bottom Center</button>
+                            <button class="position-btn" data-position="bottom-right">Bottom Right</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Text Animation</span>
+                        </div>
+                        <div class="animation-options">
+                            <div class="animation-option">
+                                <input type="checkbox" id="fadeInAnimation" name="animation" value="fade-in">
+                                <label for="fadeInAnimation">Fade In</label>
+                            </div>
+                            <div class="animation-option">
+                                <input type="checkbox" id="fadeOutAnimation" name="animation" value="fade-out">
+                                <label for="fadeOutAnimation">Fade Out</label>
+                            </div>
+                            <div class="animation-option">
+                                <input type="checkbox" id="slideInAnimation" name="animation" value="slide-in">
+                                <label for="slideInAnimation">Slide In</label>
+                            </div>
+                            <div class="animation-option">
+                                <input type="checkbox" id="bounceAnimation" name="animation" value="bounce">
+                                <label for="bounceAnimation">Bounce</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn action-btn-primary" id="applyTextBtn">
+                            Apply Text
+                        </button>
+                        <button class="action-btn action-btn-secondary" id="downloadBtn">
+                            Download GIF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2>Key Features</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h3 class="feature-title">Custom Fonts</h3>
+                    <p class="feature-description">Choose from a variety of fonts to match your style</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="feature-title">Text Animation</h3>
+                    <p class="feature-description">Add fade, slide, and bounce effects to your text</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Position Control</h3>
+                    <p class="feature-description">Place text anywhere on your GIF with precision</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="feature-title">Color Effects</h3>
+                    <p class="feature-description">Customize text color with our color picker</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Toolslap.online</h3>
+                    <p>Professional online tools for creators, developers, and designers.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap.online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            
+            // Toggle between hamburger and close icon
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Font size control
+        const fontSizeSlider = document.getElementById('fontSizeSlider');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        
+        fontSizeSlider.addEventListener('input', function() {
+            fontSizeValue.textContent = this.value + 'px';
+        });
+
+        // Color picker sync
+        const textColorPicker = document.getElementById('textColorPicker');
+        const textColorInput = document.getElementById('textColorInput');
+        
+        textColorPicker.addEventListener('input', function() {
+            textColorInput.value = this.value;
+        });
+        
+        textColorInput.addEventListener('input', function() {
+            if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                textColorPicker.value = this.value;
+            }
+        });
+
+        // Position buttons
+        const positionBtns = document.querySelectorAll('.position-btn');
+        
+        positionBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                positionBtns.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Preview controls
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        playBtn.addEventListener('click', function() {
+            // In a real implementation, this would play the GIF
+            console.log('Play GIF');
+        });
+        
+        pauseBtn.addEventListener('click', function() {
+            // In a real implementation, this would pause the GIF
+            console.log('Pause GIF');
+        });
+        
+        resetBtn.addEventListener('click', function() {
+            // In a real implementation, this would reset the GIF
+            console.log('Reset GIF');
+        });
+
+        // File upload
+        const gifUpload = document.getElementById('gifUpload');
+        const previewContainer = document.getElementById('previewContainer');
+        
+        gifUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && file.type === 'image/gif') {
+                // In a real implementation, this would display the GIF
+                previewContainer.innerHTML = `
+                    <div style="text-align: center;">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success); margin-bottom: 1rem;"></i>
+                        <p>GIF uploaded successfully!</p>
+                        <p style="font-size: 0.875rem; color: var(--gray);">${file.name}</p>
+                    </div>
+                `;
+                
+                document.getElementById('gifDuration').textContent = '3.5s'; // Simulated duration
+                document.getElementById('gifSize').textContent = '640x480'; // Simulated size
+            } else {
+                previewContainer.innerHTML = `
+                    <div class="preview-placeholder">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--accent);"></i>
+                        <p>Please upload a valid GIF file</p>
+                    </div>
+                `;
+            }
+        });
+
+        // Apply Text button
+        const applyTextBtn = document.getElementById('applyTextBtn');
+        
+        applyTextBtn.addEventListener('click', function() {
+            const text = document.getElementById('textInput').value;
+            if (!text) {
+                // Show error if no text is entered
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    backdrop-filter: blur(5px);
+                `;
+                
+                modal.innerHTML = `
+                    <div style="
+                        background: white;
+                        padding: 2rem;
+                        border-radius: 1rem;
+                        max-width: 400px;
+                        width: 90%;
+                        text-align: center;
+                        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+                    ">
+                        <div style="
+                            width: 60px;
+                            height: 60px;
+                            background: linear-gradient(135deg, #f59e0b, #ef4444);
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 auto 1.5rem;
+                            font-size: 1.5rem;
+                            color: white;
+                        ">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Text Required</h2>
+                        <p style="color: #64748b; margin-bottom: 1.5rem;">Please enter some text to apply to your GIF</p>
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                            background: #f59e0b;
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 0.5rem;
+                            cursor: pointer;
+                            font-weight: 500;
+                        ">OK</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Remove modal when clicking outside
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+                
+                return;
+            }
+            
+            // In a real implementation, this would apply the text to the GIF
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 1rem;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+                ">
+                    <div style="
+                        width: 60px;
+                        height: 60px;
+                        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 1.5rem;
+                        font-size: 1.5rem;
+                        color: white;
+                    ">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Text Applied</h2>
+                    <p style="color: #64748b; margin-bottom: 1.5rem;">"${text}" has been successfully added to your GIF</p>
+                    <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                        background: #8b5cf6;
+                        color: white;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 0.5rem;
+                        cursor: pointer;
+                        font-weight: 500;
+                    ">OK</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Remove modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        });
+
+        // Download button
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        downloadBtn.addEventListener('click', function() {
+            // In a real implementation, this would download the modified GIF
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 1rem;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+                ">
+                    <div style="
+                        width: 60px;
+                        height: 60px;
+                        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 1.5rem;
+                        font-size: 1.5rem;
+                        color: white;
+                    ">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Download Ready</h2>
+                    <p style="color: #64748b; margin-bottom: 1.5rem;">Your GIF with text overlay is ready for download</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                            background: #8b5cf6;
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 0.5rem;
+                            cursor: pointer;
+                            font-weight: 500;
+                        ">Download</button>
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                            background: transparent;
+                            color: #8b5cf6;
+                            border: 2px solid #8b5cf6;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 0.5rem;
+                            cursor: pointer;
+                            font-weight: 500;
+                        ">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Remove modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
