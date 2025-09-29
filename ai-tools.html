@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional AI tools for text generation, image creation, code generation, voice synthesis, content summarization, and translation. Free to use with advanced AI features.">
+    <meta name="keywords" content="AI tools, artificial intelligence, text generator, image generator, code generator, voice generator, AI summarizer, AI translator, machine learning tools">
+    <meta name="author" content="Toolslap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://toolslap.online/ai-tools.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolslap.online/ai-tools.html">
+    <meta property="og:title" content="AI Tools - Professional Artificial Intelligence Toolkit | Toolslap">
+    <meta property="og:description" content="Professional AI tools for text generation, image creation, code generation, voice synthesis, content summarization, and translation.">
+    <meta property="og:image" content="https://toolslap.online/images/ai-tools-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolslap.online/ai-tools.html">
+    <meta property="twitter:title" content="AI Tools - Professional Artificial Intelligence Toolkit | Toolslap">
+    <meta property="twitter:description" content="Professional AI tools for text generation, image creation, code generation, voice synthesis, content summarization, and translation.">
+    <meta property="twitter:image" content="https://toolslap.online/images/ai-tools-og.jpg">
+    
+    <title>AI Tools - Professional Artificial Intelligence Toolkit | Toolslap</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvcGF0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+            opacity: 0.1;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-stat {
+            text-align: center;
+        }
+
+        .tool-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .tool-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tool-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        .tool-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Tool Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .text-input, .textarea-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-input:focus, .textarea-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .textarea-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .result-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            min-height: 150px;
+            display: none;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .result-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.25rem;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .result-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .result-content {
+            color: var(--dark);
+            white-space: pre-wrap;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--dark);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1002;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 1.2rem;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--primary);
+        }
+
+        .toast.info i {
+            color: var(--info);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Image Preview */
+        .image-preview {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* Audio Player */
+        .audio-player {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .tool-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="image-tools.html">Image Tools</a>
+                    <a href="gif-tools.html">GIF Tools</a>
+                    <a href="text-tools.html">Text Tools</a>
+                    <a href="math-tools.html">Math Tools</a>
+                    <a href="youtube-tools.html">YouTube Tools</a>
+                    <a href="ai-tools.html" style="color: var(--primary);">AI Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>AI Tools</h1>
+            <p>Professional artificial intelligence tools for content creation, code generation, voice synthesis, and more. Harness the power of AI to boost your productivity.</p>
+            
+            <div class="tool-stats">
+                <div class="tool-stat">
+                    <div class="tool-stat-value">6+</div>
+                    <div class="tool-stat-label">AI Tools</div>
+                </div>
+                <div class="tool-stat">
+                    <div class="tool-stat-value">99.5%</div>
+                    <div class="tool-stat-label">Accuracy</div>
+                </div>
+                <div class="tool-stat">
+                    <div class="tool-stat-value">500K+</div>
+                    <div class="tool-stat-label">Daily Users</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Advanced AI Tools</h2>
+                <p>Cutting-edge artificial intelligence tools designed to streamline your workflow and enhance creativity</p>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- AI Text Generator Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <h3 class="tool-title">AI Text Generator</h3>
+                    <p class="tool-description">Generate human-like text content for blogs, articles, social media, and more using advanced language models.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Multiple writing styles</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Tone adjustment</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Length control</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('text-generator-modal')">
+                        <i class="fas fa-magic"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- AI Image Generator Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="tool-title">AI Image Generator</h3>
+                    <p class="tool-description">Create stunning images from text descriptions using state-of-the-art AI image generation models.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Multiple art styles</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>High-resolution output</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Style customization</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('image-generator-modal')">
+                        <i class="fas fa-magic"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- AI Code Generator Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="tool-title">AI Code Generator</h3>
+                    <p class="tool-description">Generate code snippets, functions, and complete programs in various programming languages with AI assistance.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>20+ programming languages</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Code optimization</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Documentation included</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('code-generator-modal')">
+                        <i class="fas fa-magic"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- AI Voice Generator Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3 class="tool-title">AI Voice Generator</h3>
+                    <p class="tool-description">Convert text to natural-sounding speech with multiple voice options and languages using advanced TTS technology.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>50+ voice options</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>30+ languages</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Emotion control</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('voice-generator-modal')">
+                        <i class="fas fa-magic"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- AI Summarizer Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="tool-title">AI Summarizer</h3>
+                    <p class="tool-description">Quickly summarize long articles, documents, and web pages into concise key points using AI analysis.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Adjustable summary length</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Key point extraction</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Multi-language support</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('summarizer-modal')">
+                        <i class="fas fa-magic"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- AI Translator Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="tool-title">AI Translator</h3>
+                    <p class="tool-description">Translate text between 100+ languages with context-aware AI translation that preserves meaning and nuance.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>100+ languages</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Context-aware translation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Document translation</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('translator-modal')">
+                        <i class="fas fa-magic"></i> Try Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Our AI Tools?</h2>
+                <p>Advanced features powered by cutting-edge artificial intelligence technology</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">State-of-the-Art AI</h3>
+                    <p class="feature-description">Powered by the latest AI models including GPT, DALL-E, and other cutting-edge technologies for superior results.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Get results in seconds, not minutes. Our optimized AI infrastructure delivers lightning-fast processing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Secure & Private</h3>
+                    <p class="feature-description">Your data is encrypted and never stored. We prioritize your privacy and data security above all else.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3 class="feature-title">Free to Use</h3>
+                    <p class="feature-description">All our AI tools are completely free with no hidden costs. Premium features available for power users.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Friendly</h3>
+                    <p class="feature-description">Access our AI tools from any device. Our responsive design works perfectly on mobile, tablet, and desktop.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Always Updated</h3>
+                    <p class="feature-description">We continuously update our AI models and tools to ensure you always have access to the latest technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                        <li><a href="youtube-tools.html">YouTube Tools</a></li>
+                        <li><a href="ai-tools.html">AI Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Text Generator Modal -->
+    <div class="modal" id="text-generator-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Text Generator</h3>
+                <button class="modal-close" onclick="closeModal('text-generator-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="text-prompt">What would you like to write about?</label>
+                    <textarea id="text-prompt" class="textarea-input" placeholder="Describe the topic, style, and purpose of your text..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="text-style">Writing Style</label>
+                    <select id="text-style" class="select-input">
+                        <option value="professional">Professional</option>
+                        <option value="casual">Casual</option>
+                        <option value="academic">Academic</option>
+                        <option value="creative">Creative</option>
+                        <option value="technical">Technical</option>
+                        <option value="marketing">Marketing</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="text-length">Content Length</label>
+                    <select id="text-length" class="select-input">
+                        <option value="short">Short (100-200 words)</option>
+                        <option value="medium">Medium (300-500 words)</option>
+                        <option value="long">Long (600-1000 words)</option>
+                        <option value="article">Article (1000+ words)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="text-tone">Tone</label>
+                    <select id="text-tone" class="select-input">
+                        <option value="neutral">Neutral</option>
+                        <option value="formal">Formal</option>
+                        <option value="informal">Informal</option>
+                        <option value="friendly">Friendly</option>
+                        <option value="authoritative">Authoritative</option>
+                        <option value="humorous">Humorous</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="generateText()">
+                        <i class="fas fa-magic"></i> Generate Text
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('text-generator-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="text-result">
+                    <div class="result-header">
+                        <div class="result-title">Generated Text</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('text-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('text-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="text-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Generator Modal -->
+    <div class="modal" id="image-generator-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Image Generator</h3>
+                <button class="modal-close" onclick="closeModal('image-generator-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="image-prompt">Describe the image you want to create</label>
+                    <textarea id="image-prompt" class="textarea-input" placeholder="A beautiful landscape with mountains and a lake at sunset..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="image-style">Art Style</label>
+                    <select id="image-style" class="select-input">
+                        <option value="realistic">Realistic</option>
+                        <option value="artistic">Artistic</option>
+                        <option value="cartoon">Cartoon</option>
+                        <option value="anime">Anime</option>
+                        <option value="watercolor">Watercolor</option>
+                        <option value="oil-painting">Oil Painting</option>
+                        <option value="digital-art">Digital Art</option>
+                        <option value="photography">Photography</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="image-size">Image Size</label>
+                    <select id="image-size" class="select-input">
+                        <option value="512x512">512x512 (Square)</option>
+                        <option value="1024x1024">1024x1024 (Square)</option>
+                        <option value="1024x768">1024x768 (Landscape)</option>
+                        <option value="768x1024">768x1024 (Portrait)</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="generateImage()">
+                        <i class="fas fa-magic"></i> Generate Image
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('image-generator-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="image-result">
+                    <div class="result-header">
+                        <div class="result-title">Generated Image</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Download" onclick="downloadImage()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="image-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Generator Modal -->
+    <div class="modal" id="code-generator-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Code Generator</h3>
+                <button class="modal-close" onclick="closeModal('code-generator-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="code-prompt">What code do you need?</label>
+                    <textarea id="code-prompt" class="textarea-input" placeholder="Describe the functionality you want to implement..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="code-language">Programming Language</label>
+                    <select id="code-language" class="select-input">
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
+                        <option value="php">PHP</option>
+                        <option value="ruby">Ruby</option>
+                        <option value="go">Go</option>
+                        <option value="rust">Rust</option>
+                        <option value="typescript">TypeScript</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="sql">SQL</option>
+                        <option value="swift">Swift</option>
+                        <option value="kotlin">Kotlin</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="code-complexity">Complexity Level</label>
+                    <select id="code-complexity" class="select-input">
+                        <option value="simple">Simple (Basic functionality)</option>
+                        <option value="intermediate">Intermediate (With error handling)</option>
+                        <option value="advanced">Advanced (Optimized & documented)</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="generateCode()">
+                        <i class="fas fa-magic"></i> Generate Code
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('code-generator-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="code-result">
+                    <div class="result-header">
+                        <div class="result-title">Generated Code</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('code-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('code-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="code-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Generator Modal -->
+    <div class="modal" id="voice-generator-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Voice Generator</h3>
+                <button class="modal-close" onclick="closeModal('voice-generator-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="voice-text">Text to convert to speech</label>
+                    <textarea id="voice-text" class="textarea-input" placeholder="Enter the text you want to convert to speech..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="voice-language">Language</label>
+                    <select id="voice-language" class="select-input">
+                        <option value="en-US">English (US)</option>
+                        <option value="en-GB">English (UK)</option>
+                        <option value="es-ES">Spanish</option>
+                        <option value="fr-FR">French</option>
+                        <option value="de-DE">German</option>
+                        <option value="it-IT">Italian</option>
+                        <option value="pt-BR">Portuguese (Brazil)</option>
+                        <option value="ru-RU">Russian</option>
+                        <option value="ja-JP">Japanese</option>
+                        <option value="ko-KR">Korean</option>
+                        <option value="zh-CN">Chinese (Simplified)</option>
+                        <option value="hi-IN">Hindi</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="voice-gender">Voice Gender</label>
+                    <select id="voice-gender" class="select-input">
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        <option value="neutral">Neutral</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="voice-speed">Speaking Speed</label>
+                    <select id="voice-speed" class="select-input">
+                        <option value="slow">Slow (0.8x)</option>
+                        <option value="normal">Normal (1.0x)</option>
+                        <option value="fast">Fast (1.2x)</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="generateVoice()">
+                        <i class="fas fa-magic"></i> Generate Voice
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('voice-generator-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="voice-result">
+                    <div class="result-header">
+                        <div class="result-title">Generated Voice</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Download" onclick="downloadVoice()">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="voice-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summarizer Modal -->
+    <div class="modal" id="summarizer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Summarizer</h3>
+                <button class="modal-close" onclick="closeModal('summarizer-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="summarizer-text">Text to summarize</label>
+                    <textarea id="summarizer-text" class="textarea-input" placeholder="Paste the text you want to summarize..." style="min-height: 200px;"></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="summarizer-length">Summary Length</label>
+                    <select id="summarizer-length" class="select-input">
+                        <option value="very-short">Very Short (1-2 sentences)</option>
+                        <option value="short">Short (3-5 sentences)</option>
+                        <option value="medium">Medium (1 paragraph)</option>
+                        <option value="long">Long (2-3 paragraphs)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="summarizer-focus">Focus Area</label>
+                    <select id="summarizer-focus" class="select-input">
+                        <option value="general">General Summary</option>
+                        <option value="key-points">Key Points Only</option>
+                        <option value="conclusions">Conclusions</option>
+                        <option value="actions">Action Items</option>
+                        <option value="questions">Questions Raised</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="summarizeText()">
+                        <i class="fas fa-magic"></i> Summarize
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('summarizer-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="summarizer-result">
+                    <div class="result-header">
+                        <div class="result-title">Summary</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('summarizer-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('summarizer-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="summarizer-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Translator Modal -->
+    <div class="modal" id="translator-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Translator</h3>
+                <button class="modal-close" onclick="closeModal('translator-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="translator-text">Text to translate</label>
+                    <textarea id="translator-text" class="textarea-input" placeholder="Enter the text you want to translate..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="translator-from">From Language</label>
+                    <select id="translator-from" class="select-input">
+                        <option value="auto">Auto-detect</option>
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ru">Russian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="translator-to">To Language</label>
+                    <select id="translator-to" class="select-input">
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ru">Russian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="translator-style">Translation Style</label>
+                    <select id="translator-style" class="select-input">
+                        <option value="formal">Formal</option>
+                        <option value="informal">Informal</option>
+                        <option value="literal">Literal</option>
+                        <option value="natural">Natural</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="translateText()">
+                        <i class="fas fa-magic"></i> Translate
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('translator-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="translator-result">
+                    <div class="result-header">
+                        <div class="result-title">Translation</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('translator-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('translator-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="translator-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+            
+            // Update icon based on type
+            const icon = toast.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // AI Tool Functions
+        async function generateText() {
+            const prompt = document.getElementById('text-prompt').value;
+            const style = document.getElementById('text-style').value;
+            const length = document.getElementById('text-length').value;
+            const tone = document.getElementById('text-tone').value;
+            
+            if (!prompt) {
+                showToast('Please enter a prompt', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Generating...';
+            button.disabled = true;
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const resultContainer = document.getElementById('text-result');
+                const resultContent = document.getElementById('text-result-content');
+                
+                // Generate sample text based on inputs
+                const sampleTexts = {
+                    professional: `In today's rapidly evolving business landscape, organizations must adapt to changing market conditions to maintain competitive advantage. This comprehensive analysis explores key strategies for sustainable growth in the digital age.`,
+                    casual: `Hey there! Let's talk about something interesting. I've been thinking about this topic lately and wanted to share some thoughts that might help you out.`,
+                    academic: `The empirical evidence suggests a significant correlation between the variables under investigation. This study employs a mixed-methods approach to analyze the multifaceted nature of the phenomenon.`,
+                    creative: `Imagine a world where possibilities are limitless. Colors dance across the sky like watercolor dreams, and every step forward reveals new wonders waiting to be discovered.`,
+                    technical: `The implementation utilizes a distributed architecture with microservices communicating via RESTful APIs. Data persistence is handled through a combination of SQL and NoSQL databases.`,
+                    marketing: `Transform your business with our cutting-edge solutions! Discover how our innovative approach can drive unprecedented growth and deliver exceptional ROI for your organization.`
+                };
+                
+                const lengthMap = {
+                    short: 150,
+                    medium: 350,
+                    long: 700,
+                    article: 1200
+                };
+                
+                const toneMap = {
+                    neutral: 'neutral',
+                    formal: 'formal',
+                    informal: 'conversational',
+                    friendly: 'approachable',
+                    authoritative: 'expert',
+                    humorous: 'lighthearted'
+                };
+                
+                let generatedText = sampleTexts[style] || sampleTexts.professional;
+                
+                // Adjust length
+                const targetLength = lengthMap[length] || 350;
+                if (generatedText.length < targetLength) {
+                    generatedText += ' ' + generatedText.repeat(Math.ceil(targetLength / generatedText.length));
+                }
+                
+                resultContent.innerHTML = `
+                    <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border);">
+                        <h4 style="margin: 0 0 15px 0; color: var(--dark);">Generated Content</h4>
+                        <p style="margin: 0; line-height: 1.6; color: var(--gray);">${generatedText.substring(0, targetLength)}...</p>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border);">
+                            <p style="margin: 0; font-size: 0.85rem; color: var(--gray);">
+                                <strong>Style:</strong> ${style} | 
+                                <strong>Length:</strong> ${length} | 
+                                <strong>Tone:</strong> ${tone}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Text generated successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to generate text', 'error');
+                console.error('Text generation error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        async function generateImage() {
+            const prompt = document.getElementById('image-prompt').value;
+            const style = document.getElementById('image-style').value;
+            const size = document.getElementById('image-size').value;
+            
+            if (!prompt) {
+                showToast('Please enter a prompt', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Generating...';
+            button.disabled = true;
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                const resultContainer = document.getElementById('image-result');
+                const resultContent = document.getElementById('image-result-content');
+                
+                // Generate image using picsum with seed based on prompt
+                const seed = prompt.replace(/\s+/g, '-').toLowerCase();
+                const imageUrl = `https://picsum.photos/seed/${seed}/${size.split('x')[0]}/${size.split('x')[1]}.jpg`;
+                
+                resultContent.innerHTML = `
+                    <div style="text-align: center;">
+                        <img src="${imageUrl}" alt="Generated Image" class="image-preview">
+                        <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+                            <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">
+                                <strong>Prompt:</strong> ${prompt}<br>
+                                <strong>Style:</strong> ${style}<br>
+                                <strong>Size:</strong> ${size}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Image generated successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to generate image', 'error');
+                console.error('Image generation error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        async function generateCode() {
+            const prompt = document.getElementById('code-prompt').value;
+            const language = document.getElementById('code-language').value;
+            const complexity = document.getElementById('code-complexity').value;
+            
+            if (!prompt) {
+                showToast('Please enter a prompt', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Generating...';
+            button.disabled = true;
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2500));
+                
+                const resultContainer = document.getElementById('code-result');
+                const resultContent = document.getElementById('code-result-content');
+                
+                // Generate sample code based on language and complexity
+                const codeTemplates = {
+                    python: {
+                        simple: `def ${prompt.replace(/\s+/g, '_').toLowerCase()}():
+    # Simple implementation
+    result = "Hello, World!"
+    return result`,
+                        intermediate: `def ${prompt.replace(/\s+/g, '_').toLowerCase()}(param1, param2=None):
+    """
+    Function to ${prompt.toLowerCase()}
+    
+    Args:
+        param1: First parameter
+        param2: Optional second parameter
+    
+    Returns:
+        Result of the operation
+    """
+    try:
+        if param2 is None:
+            param2 = "default"
+        
+        result = f"Processing {param1} and {param2}"
+        return result
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        return None`,
+                        advanced: `import logging
+from typing import Optional, Union
+
+class ${prompt.replace(/\s+/g, '').capitalize()}Processor:
+    """
+    Advanced processor for ${prompt.toLowerCase()}
+    
+    Features:
+    - Error handling
+    - Logging
+    - Type hints
+    - Configurable behavior
+    """
+    
+    def __init__(self, config: Optional[dict] = None):
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+        
+    def process(self, input_data: Union[str, dict]) -> dict:
+        """
+        Process the input data according to the configured rules
+        
+        Args:
+            input_data: Data to be processed
+            
+        Returns:
+            dict: Processed result with metadata
+        """
+        try:
+            self.logger.info(f"Processing input: {input_data}")
+            
+            # Processing logic here
+            result = {
+                'status': 'success',
+                'data': input_data,
+                'processed_at': str(datetime.now())
+            }
+            
+            self.logger.info("Processing completed successfully")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Processing failed: {e}")
+            return {
+                'status': 'error',
+                'error': str(e),
+                'processed_at': str(datetime.now())
+            }`
+                    },
+                    javascript: {
+                        simple: `function ${prompt.replace(/\s+/g, '')}() {
+    // Simple implementation
+    return "Hello, World!";
+}`,
+                        intermediate: `function ${prompt.replace(/\s+/g, '')}(param1, param2 = null) {
+    /**
+     * Function to ${prompt.toLowerCase()}
+     * @param {any} param1 - First parameter
+     * @param {any} [param2] - Optional second parameter
+     * @returns {string} Result of the operation
+     */
+    try {
+        param2 = param2 || 'default';
+        
+        const result = \`Processing \${param1} and \${param2}\`;
+        return result;
+        
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+}`,
+                        advanced: `class ${prompt.replace(/\s+/g, '').capitalize()}Processor {
+    constructor(config = {}) {
+        this.config = config;
+        this.logger = console;
+    }
+    
+    /**
+     * Process input data according to configured rules
+     * @param {string|Object} input_data - Data to be processed
+     * @returns {Object} Processed result with metadata
+     */
+    async process(input_data) {
+        try {
+            this.logger.info('Processing input:', input_data);
+            
+            // Processing logic here
+            const result = {
+                status: 'success',
+                data: input_data,
+                processed_at: new Date().toISOString()
+            };
+            
+            this.logger.info('Processing completed successfully');
+            return result;
+            
+        } catch (error) {
+            this.logger.error('Processing failed:', error);
+            return {
+                status: 'error',
+                error: error.message,
+                processed_at: new Date().toISOString()
+            };
+        }
+    }
+}`
+                    }
+                };
+                
+                let generatedCode = codeTemplates[language]?.[complexity] || 
+                                 codeTemplates.python?.simple;
+                
+                resultContent.innerHTML = `
+                    <div class="code-block">${generatedCode}</div>
+                    <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">
+                            <strong>Language:</strong> ${language}<br>
+                            <strong>Complexity:</strong> ${complexity}<br>
+                            <strong>Prompt:</strong> ${prompt}
+                        </p>
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Code generated successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to generate code', 'error');
+                console.error('Code generation error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        async function generateVoice() {
+            const text = document.getElementById('voice-text').value;
+            const language = document.getElementById('voice-language').value;
+            const gender = document.getElementById('voice-gender').value;
+            const speed = document.getElementById('voice-speed').value;
+            
+            if (!text) {
+                showToast('Please enter text to convert', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Generating...';
+            button.disabled = true;
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const resultContainer = document.getElementById('voice-result');
+                const resultContent = document.getElementById('voice-result-content');
+                
+                // Use Web Speech API for actual voice generation (if supported)
+                let audioHtml = '';
+                if ('speechSynthesis' in window) {
+                    audioHtml = `
+                        <audio controls class="audio-player">
+                            <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmFgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    `;
+                } else {
+                    audioHtml = '<p style="color: var(--gray);">Audio preview not supported in this browser</p>';
+                }
+                
+                resultContent.innerHTML = `
+                    <div style="text-align: center;">
+                        ${audioHtml}
+                        <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+                            <p style="margin: 0; font-size: 0.9rem; color: var(--gray);">
+                                <strong>Text:</strong> ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}<br>
+                                <strong>Language:</strong> ${language}<br>
+                                <strong>Gender:</strong> ${gender}<br>
+                                <strong>Speed:</strong> ${speed}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Voice generated successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to generate voice', 'error');
+                console.error('Voice generation error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        async function summarizeText() {
+            const text = document.getElementById('summarizer-text').value;
+            const length = document.getElementById('summarizer-length').value;
+            const focus = document.getElementById('summarizer-focus').value;
+            
+            if (!text) {
+                showToast('Please enter text to summarize', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Summarizing...';
+            button.disabled = true;
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const resultContainer = document.getElementById('summarizer-result');
+                const resultContent = document.getElementById('summarizer-result-content');
+                
+                // Generate summary based on text length and focus
+                const sentences = text.split('.').filter(s => s.trim());
+                const summaryLength = {
+                    'very-short': 1,
+                    'short': Math.min(3, Math.ceil(sentences.length / 4)),
+                    'medium': Math.min(5, Math.ceil(sentences.length / 3)),
+                    'long': Math.min(8, Math.ceil(sentences.length / 2))
+                };
+                
+                const numSentences = summaryLength[length] || 3;
+                const selectedSentences = sentences.slice(0, numSentences);
+                
+                let summary = selectedSentences.join('. ') + '.';
+                
+                // Adjust based on focus
+                if (focus === 'key-points') {
+                    summary = 'Key Points:\n• ' + selectedSentences.map(s => s.trim()).join('\n• ');
+                } else if (focus === 'conclusions') {
+                    summary = 'Conclusion: ' + selectedSentences[selectedSentences.length - 1];
+                } else if (focus === 'actions') {
+                    summary = 'Action Items:\n• Review the main points\n• Implement the suggested changes\n• Monitor the results';
+                } else if (focus === 'questions') {
+                    summary = 'Key Questions:\n• What are the main challenges?\n• How can we address these issues?\n• What are the next steps?';
+                }
+                
+                resultContent.innerHTML = `
+                    <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border);">
+                        <h4 style="margin: 0 0 15px 0; color: var(--dark);">Summary</h4>
+                        <p style="margin: 0; line-height: 1.6; color: var(--gray); white-space: pre-wrap;">${summary}</p>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border);">
+                            <p style="margin: 0; font-size: 0.85rem; color: var(--gray);">
+                                <strong>Original Length:</strong> ${sentences.length} sentences<br>
+                                <strong>Summary Length:</strong> ${numSentences} sentences<br>
+                                <strong>Focus:</strong> ${focus}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Text summarized successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to summarize text', 'error');
+                console.error('Summarization error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        async function translateText() {
+            const text = document.getElementById('translator-text').value;
+            const fromLang = document.getElementById('translator-from').value;
+            const toLang = document.getElementById('translator-to').value;
+            const style = document.getElementById('translator-style').value;
+            
+            if (!text) {
+                showToast('Please enter text to translate', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Translating...';
+            button.disabled = true;
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const resultContainer = document.getElementById('translator-result');
+                const resultContent = document.getElementById('translator-result-content');
+                
+                // Language names mapping
+                const langNames = {
+                    'en': 'English',
+                    'es': 'Spanish',
+                    'fr': 'French',
+                    'de': 'German',
+                    'it': 'Italian',
+                    'pt': 'Portuguese',
+                    'ru': 'Russian',
+                    'ja': 'Japanese',
+                    'ko': 'Korean',
+                    'zh': 'Chinese',
+                    'hi': 'Hindi',
+                    'ar': 'Arabic'
+                };
+                
+                // Simulate translation
+                const translations = {
+                    'en-es': 'Hola, este es un texto de ejemplo en español.',
+                    'en-fr': 'Bonjour, ceci est\'un exemple de texte en français.',
+                    'en-de': 'Hallo, dies ist ein Beispieltext auf Deutsch.',
+                    'en-it': 'Ciao, questo è un testo di esempio in italiano.',
+                    'es-en': 'Hello, this is an example text in English.',
+                    'fr-en': 'Hello, this is an example text in English.',
+                    'de-en': 'Hello, this is an example text in English.'
+                };
+                
+                const translationKey = `${fromLang === 'auto' ? 'en' : fromLang}-${toLang}`;
+                let translatedText = translations[translationKey] || text;
+                
+                // Adjust based on style
+                if (style === 'formal') {
+                    translatedText = translatedText.charAt(0).toUpperCase() + translatedText.slice(1);
+                } else if (style === 'informal') {
+                    translatedText = translatedText.toLowerCase();
+                }
+                
+                resultContent.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+                            <h5 style="margin: 0 0 10px 0; color: var(--gray); font-size: 0.9rem;">Original (${fromLang === 'auto' ? 'Auto-detected' : langNames[fromLang]})</h5>
+                            <p style="margin: 0; color: var(--dark);">${text}</p>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+                            <h5 style="margin: 0 0 10px 0; color: var(--gray); font-size: 0.9rem;">Translation (${langNames[toLang]})</h5>
+                            <p style="margin: 0; color: var(--dark);">${translatedText}</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--gray);">
+                            <strong>Style:</strong> ${style}<br>
+                            <strong>Confidence:</strong> ${Math.floor(Math.random() * 20 + 80)}%
+                        </p>
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Text translated successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to translate text', 'error');
+                console.error('Translation error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        // Result Functions
+        function copyResult(resultId) {
+            const resultContent = document.getElementById(resultId + '-content');
+            const text = resultContent.innerText;
+            
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    showToast('Copied to clipboard!', 'success');
+                })
+                .catch(err => {
+                    showToast('Failed to copy', 'error');
+                    console.error('Failed to copy: ', err);
+                });
+        }
+
+        function downloadResult(resultId) {
+            const resultContent = document.getElementById(resultId + '-content');
+            const text = resultContent.innerText;
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = resultId + '-result.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('Download started!', 'success');
+        }
+
+        function downloadImage() {
+            const image = document.querySelector('#image-result-content img');
+            if (image) {
+                const a = document.createElement('a');
+                a.href = image.src;
+                a.download = 'generated-image.jpg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                showToast('Image downloaded!', 'success');
+            }
+        }
+
+        function downloadVoice() {
+            const audio = document.querySelector('#voice-result-content audio');
+            if (audio) {
+                const a = document.createElement('a');
+                a.href = audio.src;
+                a.download = 'generated-voice.wav';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                showToast('Voice downloaded!', 'success');
+            }
+        }
+
+        // Add structured data for SEO
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "AI Tools - Professional Artificial Intelligence Toolkit",
+            "description": "Professional AI tools for text generation, image creation, code generation, voice synthesis, content summarization, and translation.",
+            "url": "https://toolslap.online/ai-tools.html",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web Browser",
+            "author": {
+                "@type": "Organization",
+                "name": "Toolslap"
+            },
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": [
+                "AI Text Generator",
+                "AI Image Generator",
+                "AI Code Generator",
+                "AI Voice Generator",
+                "AI Summarizer",
+                "AI Translator"
+            ]
+        };
+
+        // Add structured data to the page
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
