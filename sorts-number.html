@@ -1,0 +1,109 @@
+            // Get the sorted numbers and statistics from the selected algorithm
+            const algorithm = sortingAlgorithms[algorithmValue];
+            const result = algorithm(numbers);
+            
+            // Apply sort order
+            let sortedNumbers = result.sorted;
+            if (orderValue === 'descending') {
+                sortedNumbers = sortedNumbers.reverse();
+            }
+            
+            // Display results
+            let resultsHTML = '';
+            
+            // Create sorted numbers display
+            resultsHTML += '<div class="sorted-numbers">';
+            sortedNumbers.forEach(num => {
+                resultsHTML += `<div class="sorted-number-item">${num}</div>`;
+            });
+            resultsHTML += '</div>';
+            
+            // Add statistics if enabled
+            if (showStats.classList.contains('active')) {
+                resultsHTML += '<div class="sort-stats">';
+                resultsHTML += `<div class="sort-stats-item"><span>Algorithm:</span><span>${algorithmValue.charAt(0).toUpperCase() + algorithmValue.slice(1)} Sort</span></div>`;
+                resultsHTML += `<div class="sort-stats-item"><span>Numbers Count:</span><span>${numbers.length}</span></div>`;
+                resultsHTML += `<div class="sort-stats-item"><span>Comparisons:</span><span>${result.stats.comparisons}</span></div>`;
+                resultsHTML += `<div class="sort-stats-item"><span>Swaps:</span><span>${result.stats.swaps}</span></div>`;
+                resultsHTML += '</div>';
+            }
+            
+            resultsContainer.innerHTML = resultsHTML;
+        }
+
+        // Event listener for sort button
+        sortBtn.addEventListener('click', sortNumbers);
+
+        // Reset button
+        resetBtn.addEventListener('click', function() {
+            // Reset all controls to default values
+            sortOrder.value = 'ascending';
+            sortAlgorithm.value = 'bubble';
+            separator.value = 'newline';
+            showStats.classList.add('active');
+            ignoreNonNumeric.classList.add('active');
+            
+            // Clear input and results
+            inputNumbers.value = '42\n17\n8\n99\n23\n56\n3\n74';
+            resultsContainer.innerHTML = `
+                <div class="results-placeholder">
+                    <i class="fas fa-sort-amount-down"></i>
+                    <p>Click "Sort Numbers" to organize your numbers</p>
+                </div>
+            `;
+        });
+
+        // Copy results
+        copyResultsBtn.addEventListener('click', function() {
+            const sortedNumbersElement = document.querySelector('.sorted-numbers');
+            if (sortedNumbersElement) {
+                const numbers = Array.from(sortedNumbersElement.querySelectorAll('.sorted-number-item'))
+                    .map(item => item.textContent);
+                const textToCopy = numbers.join('\n');
+                
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        // Show success feedback
+                        const originalHTML = copyResultsBtn.innerHTML;
+                        copyResultsBtn.innerHTML = '<i class="fas fa-check"></i>';
+                        copyResultsBtn.style.background = 'var(--success)';
+                        
+                        setTimeout(() => {
+                            copyResultsBtn.innerHTML = originalHTML;
+                            copyResultsBtn.style.background = '';
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+            }
+        });
+
+        // Download results
+        downloadResultsBtn.addEventListener('click', function() {
+            const sortedNumbersElement = document.querySelector('.sorted-numbers');
+            if (sortedNumbersElement) {
+                const numbers = Array.from(sortedNumbersElement.querySelectorAll('.sorted-number-item'))
+                    .map(item => item.textContent);
+                const textToDownload = numbers.join('\n');
+                
+                const blob = new Blob([textToDownload], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sorted_numbers.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        });
+
+        // Initialize with default values
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default input numbers
+            inputNumbers.value = '42\n17\n8\n99\n23\n56\n3\n74';
+        });
+    </script>
+</body>
+</html>
