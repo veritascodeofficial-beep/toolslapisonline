@@ -767,9 +767,9 @@
                             <li>Preserve quality</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('Change GIF Speed')">
+                            <a href="change-gif-speed.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -793,9 +793,9 @@
                             <li>Quality preservation</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('Extract GIF Frames')">
+                            <a href="extract-gif-frames.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -819,9 +819,9 @@
                             <li>Batch processing</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('Remove GIF Background')">
+                            <a href="remove-gif-background.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -845,9 +845,9 @@
                             <li>Color effects</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('Add Text to GIF')">
+                            <a href="add-text-to-gif.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -871,9 +871,9 @@
                             <li>Quality preservation</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('Reverse GIF')">
+                            <a href="reverse-gif.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -897,9 +897,9 @@
                             <li>Size optimization</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('Crop GIF')">
+                            <a href="crop-gif.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="#" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -1059,83 +1059,6 @@
                 icon.classList.add('fa-bars');
             }
         });
-
-        // Tool launch function
-        function openTool(toolName) {
-            // Create a professional modal instead of alert
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-                backdrop-filter: blur(5px);
-            `;
-            
-            modal.innerHTML = `
-                <div style="
-                    background: white;
-                    padding: 3rem;
-                    border-radius: 1rem;
-                    max-width: 500px;
-                    width: 90%;
-                    text-align: center;
-                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-                ">
-                    <div style="
-                        width: 80px;
-                        height: 80px;
-                        background: linear-gradient(135deg, #8b5cf6, #ec4899);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0 auto 1.5rem;
-                        font-size: 2rem;
-                        color: white;
-                    ">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #1e293b;">Launching ${toolName}</h2>
-                    <p style="color: #64748b; margin-bottom: 2rem;">This would open the actual ${toolName} interface in a production environment.</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center;">
-                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
-                            background: #8b5cf6;
-                            color: white;
-                            border: none;
-                            padding: 0.75rem 1.5rem;
-                            border-radius: 0.5rem;
-                            cursor: pointer;
-                            font-weight: 500;
-                        ">Got it!</button>
-                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
-                            background: transparent;
-                            color: #8b5cf6;
-                            border: 2px solid #8b5cf6;
-                            padding: 0.75rem 1.5rem;
-                            border-radius: 0.5rem;
-                            cursor: pointer;
-                            font-weight: 500;
-                        ">Close</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Remove modal when clicking outside
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
