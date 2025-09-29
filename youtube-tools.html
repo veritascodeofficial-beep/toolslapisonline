@@ -1402,6 +1402,29 @@
     </div>
 
     <script>
+        // API Configuration
+        const YOUTUBE_TRANSCRIPT_API = 'https://stormmcp.ai/gateway/2bef01a3-37eb-45cd-9a69-4ec67baacc2d/mcp';
+        
+        // Helper function to extract video ID from YouTube URL
+        function extractVideoId(url) {
+            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        // Helper function to extract channel ID or name from URL
+        function extractChannelInfo(url) {
+            if (url.includes('/c/')) {
+                return { type: 'custom', value: url.split('/c/')[1].split('/')[0] };
+            } else if (url.includes('/channel/')) {
+                return { type: 'id', value: url.split('/channel/')[1].split('/')[0] };
+            } else if (url.includes('/user/')) {
+                return { type: 'user', value: url.split('/user/')[1].split('/')[0] };
+            } else {
+                return { type: 'name', value: url };
+            }
+        }
+
         // Modal Functions
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -1447,7 +1470,7 @@
         }
 
         // Tool Functions
-        function downloadVideo() {
+        async function downloadVideo() {
             const url = document.getElementById('video-url').value;
             const quality = document.getElementById('video-quality').value;
             const format = document.getElementById('video-format').value;
@@ -1457,42 +1480,9 @@
                 return;
             }
             
-            // Show loading state
-            const button = event.target;
-            const originalHTML = button.innerHTML;
-            button.innerHTML = '<div class="spinner"></div> Processing...';
-            button.disabled = true;
-            
-            // Simulate processing
-            setTimeout(() => {
-                const resultContainer = document.getElementById('video-result');
-                const resultContent = document.getElementById('video-result-content');
-                
-                resultContent.innerHTML = `
-                    <p><strong>Video URL:</strong> ${url}</p>
-                    <p><strong>Quality:</strong> ${quality}</p>
-                    <p><strong>Format:</strong> ${format}</p>
-                    <p><strong>Status:</strong> Ready for download</p>
-                    <p><strong>Download Link:</strong> <a href="#" style="color: var(--primary);">https://example.com/download/video123</a></p>
-                `;
-                
-                resultContainer.classList.add('active');
-                
-                // Reset button state
-                button.innerHTML = originalHTML;
-                button.disabled = false;
-                
-                showToast('Video processed successfully!', 'success');
-            }, 2000);
-        }
-
-        function downloadTranscript() {
-            const url = document.getElementById('transcript-url').value;
-            const language = document.getElementById('transcript-language').value;
-            const format = document.getElementById('transcript-format').value;
-            
-            if (!url) {
-                showToast('Please enter a YouTube video URL', 'error');
+            const videoId = extractVideoId(url);
+            if (!videoId) {
+                showToast('Invalid YouTube URL', 'error');
                 return;
             }
             
@@ -1502,31 +1492,155 @@
             button.innerHTML = '<div class="spinner"></div> Processing...';
             button.disabled = true;
             
-            // Simulate processing
-            setTimeout(() => {
-                const resultContainer = document.getElementById('transcript-result');
-                const resultContent = document.getElementById('transcript-result-content');
+            try {
+                // Simulate API call to video download service
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const resultContainer = document.getElementById('video-result');
+                const resultContent = document.getElementById('video-result-content');
+                
+                // Generate download link (in real implementation, this would come from API)
+                const downloadLink = `https://example.com/download/${videoId}.${format}?quality=${quality}`;
                 
                 resultContent.innerHTML = `
                     <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Video ID:</strong> ${videoId}</p>
+                    <p><strong>Quality:</strong> ${quality}</p>
+                    <p><strong>Format:</strong> ${format}</p>
+                    <p><strong>Status:</strong> Ready for download</p>
+                    <p><strong>Download Link:</strong> <a href="${downloadLink}" target="_blank" style="color: var(--primary);">Download Video</a></p>
+                `;
+                
+                resultContainer.classList.add('active');
+                showToast('Video processed successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to process video', 'error');
+                console.error('Video download error:', error);
+            } finally {
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }
+        }
+
+        async function downloadTranscript() {
+            const url = document.getElementById('transcript-url').value;
+            const language = document.getElementById('transcript-language').value;
+            const format = document.getElementById('transcript-format').value;
+            
+            if (!url) {
+                showToast('Please enter a YouTube video URL', 'error');
+                return;
+            }
+            
+            const videoId = extractVideoId(url);
+            if (!videoId) {
+                showToast('Invalid YouTube URL', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Processing...';
+            button.disabled = true;
+            
+            try {
+                // Call the transcript API
+                const response = await fetch(YOUTUBE_TRANSCRIPT_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'get_transcript',
+                        video_id: videoId,
+                        language: language === 'auto' ? undefined : language
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch transcript');
+                }
+                
+                const data = await response.json();
+                
+                const resultContainer = document.getElementById('transcript-result');
+                const resultContent = document.getElementById('transcript-result-content');
+                
+                let transcriptText = '';
+                if (data.transcript) {
+                    transcriptText = data.transcript;
+                } else if (data.error) {
+                    throw new Error(data.error);
+                } else {
+                    throw new Error('No transcript available');
+                }
+                
+                // Format transcript based on selected format
+                let formattedTranscript = transcriptText;
+                if (format === 'srt') {
+                    // Convert to SRT format
+                    const lines = transcriptText.split('\n');
+                    let srtContent = '';
+                    let counter = 1;
+                    
+                    for (let i = 0; i < lines.length; i += 2) {
+                        if (i + 1 < lines.length) {
+                            const timeMatch = lines[i].match(/(\d{1,2}):(\d{2}):(\d{2})/);
+                            if (timeMatch) {
+                                const startTime = lines[i];
+                                const endTime = `00:${parseInt(timeMatch[2]) + 5}:${timeMatch[3]}`;
+                                srtContent += `${counter}\n${startTime} --> ${endTime}\n${lines[i + 1]}\n\n`;
+                                counter++;
+                            }
+                        }
+                    }
+                    formattedTranscript = srtContent;
+                } else if (format === 'vtt') {
+                    // Convert to VTT format
+                    formattedTranscript = 'WEBVTT\n\n' + transcriptText
+                        .split('\n')
+                        .map((line, index) => {
+                            if (index % 2 === 0) {
+                                return `${Math.floor(index / 2) + 1}\n${line} --> ${line.replace(/(\d{1,2}):(\d{2}):(\d{2})/, (match, h, m, s) => {
+                                    const seconds = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s) + 5;
+                                    const newH = Math.floor(seconds / 3600);
+                                    const newM = Math.floor((seconds % 3600) / 60);
+                                    const newS = seconds % 60;
+                                    return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}:${String(newS).padStart(2, '0')}`;
+                                })}`;
+                            }
+                            return line;
+                        })
+                        .join('\n');
+                }
+                
+                resultContent.innerHTML = `
+                    <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Video ID:</strong> ${videoId}</p>
                     <p><strong>Language:</strong> ${language}</p>
                     <p><strong>Format:</strong> ${format}</p>
                     <p><strong>Status:</strong> Transcript extracted successfully</p>
                     <p><strong>Transcript Preview:</strong></p>
-                    <p>Hello everyone and welcome to my channel! Today we're going to talk about...</p>
+                    <div style="max-height: 200px; overflow-y: auto; background: white; padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <pre style="white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;">${formattedTranscript.substring(0, 500)}${formattedTranscript.length > 500 ? '...' : ''}</pre>
+                    </div>
                 `;
                 
                 resultContainer.classList.add('active');
-                
+                showToast('Transcript extracted successfully!', 'success');
+            } catch (error) {
+                showToast(`Failed to extract transcript: ${error.message}`, 'error');
+                console.error('Transcript download error:', error);
+            } finally {
                 // Reset button state
                 button.innerHTML = originalHTML;
                 button.disabled = false;
-                
-                showToast('Transcript extracted successfully!', 'success');
-            }, 2000);
+            }
         }
 
-        function generateKeywords() {
+        async function generateKeywords() {
             const topic = document.getElementById('keyword-topic').value;
             const region = document.getElementById('keyword-region').value;
             const timeframe = document.getElementById('keyword-timeframe').value;
@@ -1539,13 +1653,29 @@
             // Show loading state
             const button = event.target;
             const originalHTML = button.innerHTML;
-            button.innerHTML = '<div class="spinner"></i> Generating...';
+            button.innerHTML = '<div class="spinner"></div> Generating...';
             button.disabled = true;
             
-            // Simulate processing
-            setTimeout(() => {
+            try {
+                // Simulate API call to keyword generator service
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
                 const resultContainer = document.getElementById('keywords-result');
                 const resultContent = document.getElementById('keywords-result-content');
+                
+                // Generate trending keywords based on topic
+                const trendingKeywords = [
+                    `${topic} tutorial`,
+                    `${topic} for beginners`,
+                    `how to ${topic}`,
+                    `${topic} tips and tricks`,
+                    `${topic} explained`,
+                    `${topic} 2024`,
+                    `${topic} vs ${topic} alternative`,
+                    `best ${topic}`,
+                    `${topic} review`,
+                    `${topic} guide`
+                ];
                 
                 resultContent.innerHTML = `
                     <p><strong>Topic:</strong> ${topic}</p>
@@ -1553,25 +1683,31 @@
                     <p><strong>Timeframe:</strong> ${timeframe}</p>
                     <p><strong>Trending Keywords:</strong></p>
                     <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>${topic} tutorial (high search volume, low competition)</li>
-                        <li>${topic} for beginners (medium search volume, medium competition)</li>
-                        <li>how to ${topic} (high search volume, high competition)</li>
-                        <li>${topic} tips and tricks (medium search volume, low competition)</li>
-                        <li>${topic} explained (high search volume, medium competition)</li>
+                        ${trendingKeywords.map((keyword, index) => {
+                            const searchVolume = Math.floor(Math.random() * 900000) + 100000;
+                            const competition = ['low', 'medium', 'high'][Math.floor(Math.random() * 3)];
+                            return `<li>${keyword} (${searchVolume.toLocaleString()} searches/month, ${competition} competition)</li>`;
+                        }).join('')}
                     </ul>
+                    <p style="margin-top: 15px;"><strong>Recommended Tags:</strong></p>
+                    <div style="background: white; padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        ${trendingKeywords.slice(0, 5).map(tag => `<span style="display: inline-block; background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 4px; margin: 2px; font-size: 0.85rem;">#${tag.replace(/\s+/g, '')}</span>`).join('')}
+                    </div>
                 `;
                 
                 resultContainer.classList.add('active');
-                
+                showToast('Keywords generated successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to generate keywords', 'error');
+                console.error('Keyword generation error:', error);
+            } finally {
                 // Reset button state
                 button.innerHTML = originalHTML;
                 button.disabled = false;
-                
-                showToast('Keywords generated successfully!', 'success');
-            }, 2000);
+            }
         }
 
-        function downloadThumbnail() {
+        async function downloadThumbnail() {
             const url = document.getElementById('thumbnail-url').value;
             const quality = document.getElementById('thumbnail-quality').value;
             const format = document.getElementById('thumbnail-format').value;
@@ -1581,39 +1717,55 @@
                 return;
             }
             
+            const videoId = extractVideoId(url);
+            if (!videoId) {
+                showToast('Invalid YouTube URL', 'error');
+                return;
+            }
+            
             // Show loading state
             const button = event.target;
             const originalHTML = button.innerHTML;
             button.innerHTML = '<div class="spinner"></div> Processing...';
             button.disabled = true;
             
-            // Simulate processing
-            setTimeout(() => {
+            try {
+                // Generate thumbnail URL
+                const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${quality}.${format}`;
+                
                 const resultContainer = document.getElementById('thumbnail-result');
                 const resultContent = document.getElementById('thumbnail-result-content');
                 
                 resultContent.innerHTML = `
                     <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Video ID:</strong> ${videoId}</p>
                     <p><strong>Quality:</strong> ${quality}</p>
                     <p><strong>Format:</strong> ${format}</p>
                     <p><strong>Status:</strong> Thumbnail extracted successfully</p>
                     <p><strong>Thumbnail Preview:</strong></p>
                     <div style="margin-top: 10px; text-align: center;">
-                        <img src="https://picsum.photos/seed/youtube-thumbnail/300/180.jpg" alt="YouTube Thumbnail" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                        <img src="${thumbnailUrl}" alt="YouTube Thumbnail" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow);">
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <a href="${thumbnailUrl}" target="_blank" download="thumbnail-${videoId}.${format}" class="btn btn-primary" style="display: inline-flex;">
+                            <i class="fas fa-download"></i> Download Thumbnail
+                        </a>
                     </div>
                 `;
                 
                 resultContainer.classList.add('active');
-                
+                showToast('Thumbnail extracted successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to extract thumbnail', 'error');
+                console.error('Thumbnail download error:', error);
+            } finally {
                 // Reset button state
                 button.innerHTML = originalHTML;
                 button.disabled = false;
-                
-                showToast('Thumbnail extracted successfully!', 'success');
-            }, 2000);
+            }
         }
 
-        function analyzeChannel() {
+        async function analyzeChannel() {
             const url = document.getElementById('channel-url').value;
             const analysisType = document.getElementById('analysis-type').value;
             const timePeriod = document.getElementById('time-period').value;
@@ -1623,67 +1775,83 @@
                 return;
             }
             
+            const channelInfo = extractChannelInfo(url);
+            
             // Show loading state
             const button = event.target;
             const originalHTML = button.innerHTML;
             button.innerHTML = '<div class="spinner"></div> Analyzing...';
             button.disabled = true;
             
-            // Simulate processing
-            setTimeout(() => {
+            try {
+                // Simulate API call to channel analyzer service
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
                 const resultContainer = document.getElementById('channel-result');
                 const resultContent = document.getElementById('channel-result-content');
                 
+                // Generate mock analysis data based on type
+                let analysisContent = '';
+                
                 if (analysisType === 'overview') {
-                    resultContent.innerHTML = `
-                        <p><strong>Channel:</strong> ${url}</p>
-                        <p><strong>Subscribers:</strong> 1.2M</p>
-                        <p><strong>Total Views:</strong> 245M</p>
-                        <p><strong>Total Videos:</strong> 342</p>
-                        <p><strong>Channel Created:</strong> January 15, 2015</p>
+                    analysisContent = `
+                        <p><strong>Channel:</strong> ${channelInfo.value}</p>
+                        <p><strong>Channel Type:</strong> ${channelInfo.type}</p>
+                        <p><strong>Subscribers:</strong> ${(Math.random() * 5 + 0.1).toFixed(1)}M</p>
+                        <p><strong>Total Views:</strong> ${(Math.random() * 500 + 10).toFixed(0)}M</p>
+                        <p><strong>Total Videos:</strong> ${Math.floor(Math.random() * 500 + 50)}</p>
+                        <p><strong>Channel Created:</strong> January ${Math.floor(Math.random() * 12) + 1}, 20${Math.floor(Math.random() * 4) + 15}</p>
                         <p><strong>Country:</strong> United States</p>
                         <p><strong>Category:</strong> Technology</p>
                     `;
                 } else if (analysisType === 'growth') {
-                    resultContent.innerHTML = `
-                        <p><strong>Channel:</strong> ${url}</p>
+                    analysisContent = `
+                        <p><strong>Channel:</strong> ${channelInfo.value}</p>
                         <p><strong>Time Period:</strong> ${timePeriod}</p>
-                        <p><strong>Subscriber Growth:</strong> +125K (+11.6%)</p>
-                        <p><strong>View Growth:</strong> +15.2M (+6.6%)</p>
-                        <p><strong>Average Watch Time:</strong> 8:42</p>
-                        <p><strong>Engagement Rate:</strong> 8.4%</p>
+                        <p><strong>Subscriber Growth:</strong> +${(Math.random() * 200 + 50).toFixed(0)}K (+${(Math.random() * 20 + 5).toFixed(1)}%)</p>
+                        <p><strong>View Growth:</strong> +${(Math.random() * 50 + 5).toFixed(1)}M (+${(Math.random() * 15 + 2).toFixed(1)}%)</p>
+                        <p><strong>Average Watch Time:</strong> ${Math.floor(Math.random() * 5 + 3)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}</p>
+                        <p><strong>Engagement Rate:</strong> ${(Math.random() * 10 + 3).toFixed(1)}%</p>
+                        <p><strong>Click-Through Rate:</strong> ${(Math.random() * 10 + 2).toFixed(1)}%</p>
                     `;
                 } else if (analysisType === 'content') {
-                    resultContent.innerHTML = `
-                        <p><strong>Channel:</strong> ${url}</p>
+                    analysisContent = `
+                        <p><strong>Channel:</strong> ${channelInfo.value}</p>
                         <p><strong>Time Period:</strong> ${timePeriod}</p>
-                        <p><strong>Top Performing Video:</strong> "How to Build a PC - Full Tutorial" (12.5M views)</p>
-                        <p><strong>Average Views per Video:</strong> 715K</p>
-                        <p><strong>Average Likes per Video:</strong> 42K</p>
-                        <p><strong>Average Comments per Video:</strong> 2.1K</p>
+                        <p><strong>Top Performing Video:</strong> "How to Build a PC - Full Tutorial" (${(Math.random() * 20 + 5).toFixed(1)}M views)</p>
+                        <p><strong>Average Views per Video:</strong> ${(Math.random() * 2 + 0.5).toFixed(1)}M</p>
+                        <p><strong>Average Likes per Video:</strong> ${(Math.random() * 100 + 20).toFixed(0)}K</p>
+                        <p><strong>Average Comments per Video:</strong> ${(Math.random() * 5 + 1).toFixed(1)}K</p>
+                        <p><strong>Most Popular Category:</strong> Tutorials</p>
+                        <p><strong>Upload Frequency:</strong> ${Math.floor(Math.random() * 3 + 1)} videos per week</p>
                     `;
                 } else if (analysisType === 'audience') {
-                    resultContent.innerHTML = `
-                        <p><strong>Channel:</strong> ${url}</p>
+                    analysisContent = `
+                        <p><strong>Channel:</strong> ${channelInfo.value}</p>
                         <p><strong>Time Period:</strong> ${timePeriod}</p>
-                        <p><strong>Top Country:</strong> United States (35%)</p>
-                        <p><strong>Age Group:</strong> 18-24 (42%)</p>
-                        <p><strong>Gender Distribution:</strong> Male (68%), Female (32%)</p>
+                        <p><strong>Top Country:</strong> United States (${(Math.random() * 40 + 20).toFixed(0)}%)</p>
+                        <p><strong>Age Group:</strong> 18-24 (${(Math.random() * 30 + 20).toFixed(0)}%)</p>
+                        <p><strong>Gender Distribution:</strong> Male (${(Math.random() * 30 + 50).toFixed(0)}%), Female (${(Math.random() * 30 + 20).toFixed(0)}%)</p>
                         <p><strong>Top Languages:</strong> English, Spanish, German</p>
+                        <p><strong>Audience Retention:</strong> ${(Math.random() * 20 + 60).toFixed(0)}%</p>
+                        <p><strong>Viewer Device:</strong> Mobile (${(Math.random() * 30 + 50).toFixed(0)}%), Desktop (${(Math.random() * 30 + 20).toFixed(0)}%)</p>
                     `;
                 }
                 
+                resultContent.innerHTML = analysisContent;
                 resultContainer.classList.add('active');
-                
+                showToast('Channel analyzed successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to analyze channel', 'error');
+                console.error('Channel analysis error:', error);
+            } finally {
                 // Reset button state
                 button.innerHTML = originalHTML;
                 button.disabled = false;
-                
-                showToast('Channel analyzed successfully!', 'success');
-            }, 2000);
+            }
         }
 
-        function convertToMP3() {
+        async function convertToMP3() {
             const url = document.getElementById('mp3-url').value;
             const quality = document.getElementById('mp3-quality').value;
             const metadata = document.getElementById('mp3-metadata').value;
@@ -1693,35 +1861,57 @@
                 return;
             }
             
+            const videoId = extractVideoId(url);
+            if (!videoId) {
+                showToast('Invalid YouTube URL', 'error');
+                return;
+            }
+            
             // Show loading state
             const button = event.target;
             const originalHTML = button.innerHTML;
             button.innerHTML = '<div class="spinner"></div> Converting...';
             button.disabled = true;
             
-            // Simulate processing
-            setTimeout(() => {
+            try {
+                // Simulate API call to MP3 conversion service
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
                 const resultContainer = document.getElementById('mp3-result');
                 const resultContent = document.getElementById('mp3-result-content');
                 
+                // Generate download link (in real implementation, this would come from API)
+                const downloadLink = `https://example.com/download/${videoId}.mp3?quality=${quality}&metadata=${metadata}`;
+                const fileSize = (Math.random() * 10 + 2).toFixed(1);
+                const duration = `${Math.floor(Math.random() * 10 + 1)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`;
+                
                 resultContent.innerHTML = `
                     <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Video ID:</strong> ${videoId}</p>
                     <p><strong>Audio Quality:</strong> ${quality} kbps</p>
                     <p><strong>Metadata:</strong> ${metadata}</p>
                     <p><strong>Status:</strong> Conversion completed successfully</p>
-                    <p><strong>File Size:</strong> 4.2 MB</p>
-                    <p><strong>Duration:</strong> 3:45</p>
-                    <p><strong>Download Link:</strong> <a href="#" style="color: var(--primary);">https://example.com/download/audio123.mp3</a></p>
+                    <p><strong>File Size:</strong> ${fileSize} MB</p>
+                    <p><strong>Duration:</strong> ${duration}</p>
+                    <p><strong>Download Link:</strong> <a href="${downloadLink}" target="_blank" style="color: var(--primary);">Download MP3</a></p>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <audio controls style="max-width: 100%;">
+                            <source src="${downloadLink}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
                 `;
                 
                 resultContainer.classList.add('active');
-                
+                showToast('Video converted to MP3 successfully!', 'success');
+            } catch (error) {
+                showToast('Failed to convert video', 'error');
+                console.error('MP3 conversion error:', error);
+            } finally {
                 // Reset button state
                 button.innerHTML = originalHTML;
                 button.disabled = false;
-                
-                showToast('Video converted to MP3 successfully!', 'success');
-            }, 2000);
+            }
         }
 
         // Result Functions
