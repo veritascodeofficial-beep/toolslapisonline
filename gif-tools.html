@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional GIF editing tools at Toolslap.online - Advanced speed control, frame extraction, background removal, and animation tools">
-    <meta name="keywords" content="GIF tools, GIF editor, animation tools, GIF processing, toolslap.online">
+    <meta name="description" content="Professional GIF editing tools at Toolslap.online - Advanced speed control, frame extraction, background removal, and animation tools for creators and marketers">
+    <meta name="keywords" content="GIF tools, GIF editor, animation tools, GIF processing, GIF speed controller, frame extractor, background remover, toolslap.online">
     <meta name="author" content="Toolslap">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolslap.online/gif-tools.html">
+    <meta property="og:title" content="Professional GIF Tools - Toolslap.online">
+    <meta property="og:description" content="Professional GIF editing tools - Advanced speed control, frame extraction, background removal, and animation tools">
+    <meta property="og:image" content="https://toolslap.online/images/gif-tools-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolslap.online/gif-tools.html">
+    <meta property="twitter:title" content="Professional GIF Tools - Toolslap.online">
+    <meta property="twitter:description" content="Professional GIF editing tools - Advanced speed control, frame extraction, background removal, and animation tools">
+    <meta property="twitter:image" content="https://toolslap.online/images/gif-tools-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://toolslap.online/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://toolslap.online/apple-touch-icon.png">
+    
     <title>Professional GIF Tools - Toolslap.online</title>
     
     <!-- Google Fonts -->
@@ -117,6 +137,16 @@
             width: 100%;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
@@ -178,12 +208,22 @@
         .hero-feature {
             text-align: center;
             min-width: 150px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-feature:hover {
+            transform: translateY(-5px);
         }
 
         .hero-feature-icon {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             color: var(--accent);
+            transition: color 0.3s ease;
+        }
+
+        .hero-feature:hover .hero-feature-icon {
+            color: white;
         }
 
         .hero-feature-text {
@@ -371,6 +411,11 @@
         .step {
             text-align: center;
             position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
         }
 
         .step-number {
@@ -385,6 +430,11 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1);
         }
 
         .step h3 {
@@ -453,18 +503,35 @@
             color: white;
             padding: 4rem 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite reverse;
         }
 
         .cta h2 {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .cta p {
             font-size: 1.125rem;
             margin-bottom: 2rem;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .cta-btn {
@@ -479,6 +546,8 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            position: relative;
+            z-index: 1;
         }
 
         .cta-btn:hover {
@@ -561,6 +630,23 @@
             
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid var(--border);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
             
             .tools-grid {
@@ -569,6 +655,12 @@
             
             .hero-features {
                 gap: 2rem;
+            }
+            
+            .back-btn {
+                top: 90px;
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
             }
         }
 
@@ -595,11 +687,14 @@
             <a href="https://toolslap.online" class="logo">
                 <i class="fas fa-bolt"></i> Toolslap.online
             </a>
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="https://toolslap.online/image-tools.html">Image Tools</a>
                 <a href="https://toolslap.online/text-tools.html">Text Tools</a>
                 <a href="https://toolslap.online/math-tools.html">Math Tools</a>
             </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
         </nav>
     </header>
 
@@ -611,30 +706,30 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
+            <div class="hero-content" data-aos="fade-up">
                 <h1>GIF Tools</h1>
                 <p>Professional GIF animation tools for creators, marketers, and developers</p>
                 
                 <div class="hero-features">
-                    <div class="hero-feature">
+                    <div class="hero-feature" data-aos="fade-up" data-aos-delay="100">
                         <div class="hero-feature-icon">
                             <i class="fas fa-tachometer-alt"></i>
                         </div>
                         <div class="hero-feature-text">Speed Control</div>
                     </div>
-                    <div class="hero-feature">
+                    <div class="hero-feature" data-aos="fade-up" data-aos-delay="200">
                         <div class="hero-feature-icon">
                             <i class="fas fa-film"></i>
                         </div>
                         <div class="hero-feature-text">Frame Extraction</div>
                     </div>
-                    <div class="hero-feature">
+                    <div class="hero-feature" data-aos="fade-up" data-aos-delay="300">
                         <div class="hero-feature-icon">
                             <i class="fas fa-magic"></i>
                         </div>
                         <div class="hero-feature-text">Background Removal</div>
                     </div>
-                    <div class="hero-feature">
+                    <div class="hero-feature" data-aos="fade-up" data-aos-delay="400">
                         <div class="hero-feature-icon">
                             <i class="fas fa-font"></i>
                         </div>
@@ -648,14 +743,14 @@
     <!-- Tools Section -->
     <section class="tools">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Professional GIF Tools</h2>
                 <p>Explore our comprehensive collection of GIF animation and editing tools</p>
             </div>
             
             <div class="tools-grid">
                 <!-- Change GIF Speed -->
-                <div class="tool-card">
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="tool-header">
                         <div class="tool-icon">
                             <i class="fas fa-tachometer-alt"></i>
@@ -681,7 +776,7 @@
                 </div>
 
                 <!-- Extract GIF Frames -->
-                <div class="tool-card">
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="tool-header">
                         <div class="tool-icon">
                             <i class="fas fa-film"></i>
@@ -707,7 +802,7 @@
                 </div>
 
                 <!-- Remove GIF Background -->
-                <div class="tool-card">
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="tool-header">
                         <div class="tool-icon">
                             <i class="fas fa-eraser"></i>
@@ -733,7 +828,7 @@
                 </div>
 
                 <!-- Add Text to GIF -->
-                <div class="tool-card">
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="tool-header">
                         <div class="tool-icon">
                             <i class="fas fa-font"></i>
@@ -759,7 +854,7 @@
                 </div>
 
                 <!-- Reverse GIF -->
-                <div class="tool-card">
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="tool-header">
                         <div class="tool-icon">
                             <i class="fas fa-exchange-alt"></i>
@@ -785,7 +880,7 @@
                 </div>
 
                 <!-- Crop GIF -->
-                <div class="tool-card">
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="tool-header">
                         <div class="tool-icon">
                             <i class="fas fa-crop"></i>
@@ -816,25 +911,25 @@
     <!-- How It Works -->
     <section class="how-it-works">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>How It Works</h2>
                 <p>Create amazing GIF animations in three simple steps</p>
             </div>
             
             <div class="steps">
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
                     <div class="step-number">1</div>
                     <h3>Upload Your GIF</h3>
                     <p>Upload your GIF file or create one from images</p>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-number">2</div>
                     <h3>Edit & Enhance</h3>
                     <p>Use our tools to modify speed, add effects, or extract frames</p>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
                     <div class="step-number">3</div>
                     <h3>Download & Share</h3>
                     <p>Download your enhanced GIF and share it anywhere</p>
@@ -846,13 +941,13 @@
     <!-- Showcase -->
     <section class="showcase">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Popular Use Cases</h2>
                 <p>See how others are using our GIF tools</p>
             </div>
             
             <div class="showcase-grid">
-                <div class="showcase-item">
+                <div class="showcase-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="showcase-image">
                         <i class="fas fa-ad"></i>
                     </div>
@@ -862,7 +957,7 @@
                     </div>
                 </div>
                 
-                <div class="showcase-item">
+                <div class="showcase-item" data-aos="fade-up" data-aos-delay="200">
                     <div class="showcase-image">
                         <i class="fas fa-bullhorn"></i>
                     </div>
@@ -872,7 +967,7 @@
                     </div>
                 </div>
                 
-                <div class="showcase-item">
+                <div class="showcase-item" data-aos="fade-up" data-aos-delay="300">
                     <div class="showcase-image">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
@@ -888,9 +983,9 @@
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
-            <h2>Ready to Create Amazing GIFs?</h2>
-            <p>Join thousands of creators who trust Toolslap.online for their animation needs</p>
-            <a href="#" class="cta-btn">Start Creating</a>
+            <h2 data-aos="fade-up">Ready to Create Amazing GIFs?</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Join thousands of creators who trust Toolslap.online for their animation needs</p>
+            <a href="#" class="cta-btn" data-aos="fade-up" data-aos-delay="200">Start Creating</a>
         </div>
     </section>
 
@@ -898,11 +993,11 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
+                <div class="footer-section" data-aos="fade-up">
                     <h3>Toolslap.online</h3>
                     <p>Professional online tools for creators, developers, and designers.</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-section" data-aos="fade-up" data-aos-delay="100">
                     <h3>Tools</h3>
                     <ul>
                         <li><a href="image-tools.html">Image Tools</a></li>
@@ -911,7 +1006,7 @@
                         <li><a href="math-tools.html">Math Tools</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
                     <h3>Support</h3>
                     <ul>
                         <li><a href="#">Help Center</a></li>
@@ -920,7 +1015,7 @@
                         <li><a href="#">Terms of Service</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-section" data-aos="fade-up" data-aos-delay="300">
                     <h3>Connect</h3>
                     <ul>
                         <li><a href="#">Twitter</a></li>
@@ -945,6 +1040,24 @@
             duration: 1000,
             once: true,
             offset: 100
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            
+            // Toggle between hamburger and close icon
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
         // Tool launch function
@@ -1047,6 +1160,30 @@
                 header.style.boxShadow = 'none';
             }
         });
+    </script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Toolslap.online GIF Tools",
+        "description": "Professional GIF editing tools for creators, marketers, and developers",
+        "url": "https://toolslap.online/gif-tools.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Toolslap",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://toolslap.online/images/logo.png"
+            }
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://toolslap.online/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
     </script>
 </body>
 </html>
