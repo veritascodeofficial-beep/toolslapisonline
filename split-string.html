@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Split strings into segments using custom delimiters, multiple splits, or length-based splitting. Free online string splitter tool by Toolslap.">
+    <meta name="keywords" content="split string, string splitter, text splitter, divide text, split by delimiter, split by length, text segmentation">
+    <meta name="author" content="Toolslap">
+    <title>Split String - Divide Text into Segments | Toolslap</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --secondary: #ef4444;
+            --accent: #10b981;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .tool-header p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Tool Interface */
+        .tool-interface {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .section-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .section-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 300px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-area:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .controls-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .controls-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .controls-header p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .split-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .split-option {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .split-option:hover {
+            border-color: var(--primary);
+        }
+
+        .split-option.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .split-option i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .split-option span {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Results Section */
+        .results-section {
+            margin-top: 2rem;
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .results-header h3 {
+            font-size: 1.125rem;
+            color: var(--dark);
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .results-container {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .result-text {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .result-copy {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 0.25rem;
+            margin-left: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .result-copy:hover {
+            color: var(--primary);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 3rem 0;
+            background: var(--light);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .features-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+
+            .split-options {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="https://toolslap.online/text-tools.html">Text Tools</a>
+                    <a href="https://toolslap.online/image-tools.html">Image Tools</a>
+                    <a href="https://toolslap.online/gif-tools.html">GIF Tools</a>
+                    <a href="https://toolslap.online/math-tools.html">Math Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online/text-tools.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Text Tools
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>Split String</h1>
+            <p>Divide text into segments using custom delimiters, multiple splits, or length-based splitting</p>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <div class="interface-container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="section-header">
+                        <h2>Input Text</h2>
+                        <div class="section-controls">
+                            <button class="section-btn" title="Clear" id="clear-input">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="section-btn" title="Paste" id="paste-text">
+                                <i class="fas fa-paste"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="input-text" class="text-area" placeholder="Enter or paste your text here...">apple,banana,cherry,date,elderberry,fig,grape</textarea>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <div class="controls-header">
+                        <h2>Split Settings</h2>
+                        <p>Configure how you want to split your text</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Split Method</label>
+                        <div class="split-options">
+                            <div class="split-option active" data-method="delimiter">
+                                <i class="fas fa-columns"></i>
+                                <span>By Delimiter</span>
+                            </div>
+                            <div class="split-option" data-method="length">
+                                <i class="fas fa-ruler"></i>
+                                <span>By Length</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="delimiter-group">
+                        <label class="control-label" for="delimiter">Delimiter</label>
+                        <input type="text" id="delimiter" class="text-input" placeholder="Enter delimiter" value=",">
+                    </div>
+
+                    <div class="control-group" id="length-group" style="display: none;">
+                        <label class="control-label" for="length">Character Length</label>
+                        <input type="number" id="length" class="text-input" placeholder="Enter length" value="5" min="1">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="limit">Split Limit (Optional)</label>
+                        <input type="number" id="limit" class="text-input" placeholder="Maximum number of segments" min="1">
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Remove Empty Segments</span>
+                        <div class="toggle-switch active" id="remove-empty">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn action-btn-secondary" id="reset-btn">Reset</button>
+                        <button class="action-btn action-btn-primary" id="split-btn">Split Text</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h3>Split Results</h3>
+                    <div class="results-count">Segments: <span id="segment-count">0</span></div>
+                </div>
+                <div class="results-container" id="results-container">
+                    <p style="text-align: center; color: var(--gray);">Enter text and configure your split settings to see results here.</p>
+                </div>
+                <div class="action-buttons" style="margin-top: 1rem;">
+                    <button class="action-btn action-btn-secondary" id="copy-all">Copy All</button>
+                    <button class="action-btn action-btn-secondary" id="download-results">Download</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2>Powerful Features</h2>
+                <p>Advanced text splitting capabilities for various use cases</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <h3 class="feature-title">Delimiter Splitting</h3>
+                    <p class="feature-description">Split text using custom delimiters such as commas, spaces, or any character sequence.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-ruler"></i>
+                    </div>
+                    <h3 class="feature-title">Length-Based Splitting</h3>
+                    <p class="feature-description">Divide text into segments of equal length, perfect for formatting or data processing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3 class="feature-title">Split Limit</h3>
+                    <p class="feature-description">Control the number of segments produced by setting a maximum split limit.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="feature-title">Empty Segment Removal</h3>
+                    <p class="feature-description">Automatically remove empty segments from your results for cleaner output.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const inputText = document.getElementById('input-text');
+        const splitOptions = document.querySelectorAll('.split-option');
+        const delimiterGroup = document.getElementById('delimiter-group');
+        const lengthGroup = document.getElementById('length-group');
+        const delimiter = document.getElementById('delimiter');
+        const length = document.getElementById('length');
+        const limit = document.getElementById('limit');
+        const removeEmpty = document.getElementById('remove-empty');
+        const splitBtn = document.getElementById('split-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const clearInputBtn = document.getElementById('clear-input');
+        const pasteTextBtn = document.getElementById('paste-text');
+        const copyAllBtn = document.getElementById('copy-all');
+        const downloadResultsBtn = document.getElementById('download-results');
+        const resultsContainer = document.getElementById('results-container');
+        const segmentCount = document.getElementById('segment-count');
+        
+        let currentSplitMethod = 'delimiter';
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Split method selection
+        splitOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                splitOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                currentSplitMethod = this.dataset.method;
+                
+                // Show/hide appropriate controls
+                if (currentSplitMethod === 'delimiter') {
+                    delimiterGroup.style.display = 'block';
+                    lengthGroup.style.display = 'none';
+                } else {
+                    delimiterGroup.style.display = 'none';
+                    lengthGroup.style.display = 'block';
+                }
+            });
+        });
+
+        // Clear input
+        clearInputBtn.addEventListener('click', function() {
+            inputText.value = '';
+            resultsContainer.innerHTML = '<p style="text-align: center; color: var(--gray);">Enter text and configure your split settings to see results here.</p>';
+            segmentCount.textContent = '0';
+        });
+
+        // Paste text
+        pasteTextBtn.addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                inputText.value = text;
+            } catch (err) {
+                // Fallback for older browsers
+                inputText.focus();
+                document.execCommand('paste');
+            }
+        });
+
+        // Split text
+        splitBtn.addEventListener('click', function() {
+            const text = inputText.value;
+            if (!text) {
+                resultsContainer.innerHTML = '<p style="text-align: center; color: var(--gray);">Please enter text to split.</p>';
+                segmentCount.textContent = '0';
+                return;
+            }
+
+            let segments = [];
+            const removeEmptySegments = removeEmpty.classList.contains('active');
+            const splitLimit = limit.value ? parseInt(limit.value) : undefined;
+
+            try {
+                if (currentSplitMethod === 'delimiter') {
+                    const delim = delimiter.value;
+                    if (splitLimit !== undefined) {
+                        segments = text.split(delim, splitLimit);
+                    } else {
+                        segments = text.split(delim);
+                    }
+                } else {
+                    const charLength = parseInt(length.value) || 1;
+                    if (splitLimit !== undefined) {
+                        for (let i = 0; i < splitLimit && i * charLength < text.length; i++) {
+                            segments.push(text.substr(i * charLength, charLength));
+                        }
+                    } else {
+                        for (let i = 0; i < text.length; i += charLength) {
+                            segments.push(text.substr(i, charLength));
+                        }
+                    }
+                }
+
+                // Remove empty segments if enabled
+                if (removeEmptySegments) {
+                    segments = segments.filter(segment => segment !== '');
+                }
+
+                // Display results
+                displayResults(segments);
+                segmentCount.textContent = segments.length;
+            } catch (error) {
+                resultsContainer.innerHTML = `<p style="text-align: center; color: var(--secondary);">Error: ${error.message}</p>`;
+                segmentCount.textContent = '0';
+            }
+        });
+
+        // Display results
+        function displayResults(segments) {
+            resultsContainer.innerHTML = '';
+            
+            if (segments.length === 0) {
+                resultsContainer.innerHTML = '<p style="text-align: center; color: var(--gray);">No segments found.</p>';
+                return;
+            }
+
+            segments.forEach((segment, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                
+                const resultNumber = document.createElement('div');
+                resultNumber.className = 'result-number';
+                resultNumber.textContent = index + 1;
+                
+                const resultText = document.createElement('div');
+                resultText.className = 'result-text';
+                resultText.textContent = segment;
+                
+                const resultCopy = document.createElement('button');
+                resultCopy.className = 'result-copy';
+                resultCopy.innerHTML = '<i class="fas fa-copy"></i>';
+                resultCopy.title = 'Copy';
+                resultCopy.addEventListener('click', function() {
+                    navigator.clipboard.writeText(segment).then(() => {
+                        const originalHTML = resultCopy.innerHTML;
+                        resultCopy.innerHTML = '<i class="fas fa-check" style="color: var(--success);"></i>';
+                        setTimeout(() => {
+                            resultCopy.innerHTML = originalHTML;
+                        }, 2000);
+                    });
+                });
+                
+                resultItem.appendChild(resultNumber);
+                resultItem.appendChild(resultText);
+                resultItem.appendChild(resultCopy);
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+
+        // Reset form
+        resetBtn.addEventListener('click', function() {
+            inputText.value = 'apple,banana,cherry,date,elderberry,fig,grape';
+            delimiter.value = ',';
+            length.value = '5';
+            limit.value = '';
+            removeEmpty.classList.add('active');
+            splitOptions.forEach(opt => opt.classList.remove('active'));
+            splitOptions[0].classList.add('active');
+            currentSplitMethod = 'delimiter';
+            delimiterGroup.style.display = 'block';
+            lengthGroup.style.display = 'none';
+            resultsContainer.innerHTML = '<p style="text-align: center; color: var(--gray);">Enter text and configure your split settings to see results here.</p>';
+            segmentCount.textContent = '0';
+        });
+
+        // Copy all results
+        copyAllBtn.addEventListener('click', function() {
+            const segments = [];
+            const resultItems = document.querySelectorAll('.result-text');
+            resultItems.forEach(item => {
+                segments.push(item.textContent);
+            });
+            
+            if (segments.length > 0) {
+                const text = segments.join('\n');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = copyAllBtn.textContent;
+                    copyAllBtn.textContent = 'Copied!';
+                    copyAllBtn.style.background = 'var(--success)';
+                    
+                    setTimeout(() => {
+                        copyAllBtn.textContent = originalText;
+                        copyAllBtn.style.background = '';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Download results
+        downloadResultsBtn.addEventListener('click', function() {
+            const segments = [];
+            const resultItems = document.querySelectorAll('.result-text');
+            resultItems.forEach(item => {
+                segments.push(item.textContent);
+            });
+            
+            if (segments.length > 0) {
+                const text = segments.join('\n');
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'split-text.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        });
+    </script>
+</body>
+</html>
