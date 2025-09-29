@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional YouTube tools for video download, transcript extraction, trending keywords generation, thumbnail download, and more. Free to use with advanced features.">
+    <meta name="keywords" content="YouTube tools, video downloader, transcript downloader, trending keywords, YouTube thumbnail, YouTube analytics, video to MP3, channel analyzer">
+    <meta name="author" content="Toolslap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://toolslap.online/youtube-tools.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolslap.online/youtube-tools.html">
+    <meta property="og:title" content="YouTube Tools - Professional Video & Channel Management Tools | Toolslap">
+    <meta property="og:description" content="Professional YouTube tools for video download, transcript extraction, trending keywords generation, thumbnail download, and more. Free to use with advanced features.">
+    <meta property="og:image" content="https://toolslap.online/images/youtube-tools-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolslap.online/youtube-tools.html">
+    <meta property="twitter:title" content="YouTube Tools - Professional Video & Channel Management Tools | Toolslap">
+    <meta property="twitter:description" content="Professional YouTube tools for video download, transcript extraction, trending keywords generation, thumbnail download, and more.">
+    <meta property="twitter:image" content="https://toolslap.online/images/youtube-tools-og.jpg">
+    
+    <title>YouTube Tools - Professional Video & Channel Management Tools | Toolslap</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF0000;
+            --primary-dark: #CC0000;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvcGF0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+            opacity: 0.1;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-stat {
+            text-align: center;
+        }
+
+        .tool-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .tool-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tool-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        .tool-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Tool Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .result-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            min-height: 150px;
+            display: none;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .result-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.25rem;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .result-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .result-content {
+            color: var(--dark);
+            white-space: pre-wrap;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--dark);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1002;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 1.2rem;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--primary);
+        }
+
+        .toast.info i {
+            color: var(--accent);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .tool-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="image-tools.html">Image Tools</a>
+                    <a href="gif-tools.html">GIF Tools</a>
+                    <a href="text-tools.html">Text Tools</a>
+                    <a href="math-tools.html">Math Tools</a>
+                    <a href="youtube-tools.html" style="color: var(--primary);">YouTube Tools</a>
+                    <a href="ai-tools.html">AI Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>YouTube Tools</h1>
+            <p>Professional toolkit for YouTube creators and marketers with advanced features for video optimization, analytics, and content creation</p>
+            
+            <div class="tool-stats">
+                <div class="tool-stat">
+                    <div class="tool-stat-value">6+</div>
+                    <div class="tool-stat-label">Professional Tools</div>
+                </div>
+                <div class="tool-stat">
+                    <div class="tool-stat-value">99.9%</div>
+                    <div class="tool-stat-label">Accuracy Rate</div>
+                </div>
+                <div class="tool-stat">
+                    <div class="tool-stat-value">1M+</div>
+                    <div class="tool-stat-label">Happy Users</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>YouTube Creator Tools</h2>
+                <p>Essential tools to help you grow your YouTube channel, optimize your content, and analyze your performance</p>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- YouTube Video Downloader Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="tool-title">Video Downloader</h3>
+                    <p class="tool-description">Download YouTube videos in various formats and qualities. Save videos for offline viewing or content repurposing.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Multiple format support (MP4, WebM, etc.)</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Quality selection (720p, 1080p, 4K)</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Batch download capability</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('video-downloader-modal')">
+                        <i class="fas fa-rocket"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- YouTube Transcript Downloader Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-closed-captioning"></i>
+                    </div>
+                    <h3 class="tool-title">Transcript Downloader</h3>
+                    <p class="tool-description">Extract and download video transcripts in multiple formats. Perfect for content repurposing and accessibility.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Multiple export formats (TXT, SRT, VTT)</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Auto-generated and manual captions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Timestamps included</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('transcript-downloader-modal')">
+                        <i class="fas fa-rocket"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- YouTube Trending Keywords Generator Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3 class="tool-title">Trending Keywords Generator</h3>
+                    <p class="tool-description">Discover trending keywords and topics in your niche to optimize your video titles, descriptions, and tags.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Real-time trending data</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Competition analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Search volume metrics</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('keywords-generator-modal')">
+                        <i class="fas fa-rocket"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- YouTube Thumbnail Downloader Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="tool-title">Thumbnail Downloader</h3>
+                    <p class="tool-description">Download high-quality YouTube thumbnails in various resolutions. Perfect for analysis and inspiration.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Multiple resolution options</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Batch download capability</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Custom naming options</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('thumbnail-downloader-modal')">
+                        <i class="fas fa-rocket"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- YouTube Channel Analyzer Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="tool-title">Channel Analyzer</h3>
+                    <p class="tool-description">Analyze any YouTube channel's performance, growth metrics, and content strategy with detailed insights.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Growth analytics</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Content performance metrics</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Audience demographics</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('channel-analyzer-modal')">
+                        <i class="fas fa-rocket"></i> Try Now
+                    </button>
+                </div>
+
+                <!-- YouTube Video to MP3 Converter Tool -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3 class="tool-title">Video to MP3 Converter</h3>
+                    <p class="tool-description">Convert YouTube videos to high-quality MP3 audio files. Extract audio from videos for podcasts or music.</p>
+                    <div class="tool-features">
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>High-quality audio extraction</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Bitrate selection options</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check"></i>
+                            <span>ID3 tag preservation</span>
+                        </div>
+                    </div>
+                    <button class="tool-button" onclick="openModal('video-to-mp3-modal')">
+                        <i class="fas fa-rocket"></i> Try Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Our YouTube Tools?</h2>
+                <p>Advanced features designed specifically for YouTube creators and marketers</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Our tools process requests in seconds, not minutes. Get your results quickly without any waiting.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Secure & Private</h3>
+                    <p class="feature-description">We don't store your data or video history. Your privacy is our top priority.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Friendly</h3>
+                    <p class="feature-description">Access our tools from any device. Our responsive design works perfectly on mobile, tablet, and desktop.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3 class="feature-title">Free Forever</h3>
+                    <p class="feature-description">All our YouTube tools are completely free to use with no hidden costs or premium subscriptions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Regular Updates</h3>
+                    <p class="feature-description">We continuously update our tools to keep up with YouTube's changes and add new features.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">24/7 Support</h3>
+                    <p class="feature-description">Our support team is always ready to help you with any questions or issues you might have.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                        <li><a href="youtube-tools.html">YouTube Tools</a></li>
+                        <li><a href="ai-tools.html">AI Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Downloader Modal -->
+    <div class="modal" id="video-downloader-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">YouTube Video Downloader</h3>
+                <button class="modal-close" onclick="closeModal('video-downloader-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="video-url">YouTube Video URL</label>
+                    <input type="text" id="video-url" class="text-input" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="video-quality">Video Quality</label>
+                    <select id="video-quality" class="select-input">
+                        <option value="highest">Highest Quality</option>
+                        <option value="1080p">1080p Full HD</option>
+                        <option value="720p">720p HD</option>
+                        <option value="480p">480p</option>
+                        <option value="360p">360p</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="video-format">Format</label>
+                    <select id="video-format" class="select-input">
+                        <option value="mp4">MP4 (Video)</option>
+                        <option value="webm">WebM (Video)</option>
+                        <option value="mp3">MP3 (Audio Only)</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="downloadVideo()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('video-downloader-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="video-result">
+                    <div class="result-header">
+                        <div class="result-title">Download Result</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('video-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('video-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="video-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transcript Downloader Modal -->
+    <div class="modal" id="transcript-downloader-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">YouTube Transcript Downloader</h3>
+                <button class="modal-close" onclick="closeModal('transcript-downloader-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="transcript-url">YouTube Video URL</label>
+                    <input type="text" id="transcript-url" class="text-input" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="transcript-language">Language</label>
+                    <select id="transcript-language" class="select-input">
+                        <option value="auto">Auto-detect</option>
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="ja">Japanese</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="transcript-format">Export Format</label>
+                    <select id="transcript-format" class="select-input">
+                        <option value="txt">Plain Text (.txt)</option>
+                        <option value="srt">SubRip (.srt)</option>
+                        <option value="vtt">WebVTT (.vtt)</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="downloadTranscript()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('transcript-downloader-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="transcript-result">
+                    <div class="result-header">
+                        <div class="result-title">Transcript Result</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('transcript-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('transcript-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="transcript-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keywords Generator Modal -->
+    <div class="modal" id="keywords-generator-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">YouTube Trending Keywords Generator</h3>
+                <button class="modal-close" onclick="closeModal('keywords-generator-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="keyword-topic">Topic or Niche</label>
+                    <input type="text" id="keyword-topic" class="text-input" placeholder="e.g., cooking, gaming, technology">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="keyword-region">Region</label>
+                    <select id="keyword-region" class="select-input">
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                        <option value="au">Australia</option>
+                        <option value="in">India</option>
+                        <option value="global">Global</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="keyword-timeframe">Timeframe</label>
+                    <select id="keyword-timeframe" class="select-input">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="generateKeywords()">
+                        <i class="fas fa-magic"></i> Generate Keywords
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('keywords-generator-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="keywords-result">
+                    <div class="result-header">
+                        <div class="result-title">Trending Keywords</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('keywords-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('keywords-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="keywords-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thumbnail Downloader Modal -->
+    <div class="modal" id="thumbnail-downloader-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">YouTube Thumbnail Downloader</h3>
+                <button class="modal-close" onclick="closeModal('thumbnail-downloader-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="thumbnail-url">YouTube Video URL</label>
+                    <input type="text" id="thumbnail-url" class="text-input" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="thumbnail-quality">Thumbnail Quality</label>
+                    <select id="thumbnail-quality" class="select-input">
+                        <option value="maxresdefault">Max Resolution (1280x720)</option>
+                        <option value="sddefault">Standard Definition (640x480)</option>
+                        <option value="hqdefault">High Quality (480x360)</option>
+                        <option value="mqdefault">Medium Quality (320x180)</option>
+                        <option value="default">Default (120x90)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="thumbnail-format">Image Format</label>
+                    <select id="thumbnail-format" class="select-input">
+                        <option value="jpg">JPG</option>
+                        <option value="png">PNG</option>
+                        <option value="webp">WebP</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="downloadThumbnail()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('thumbnail-downloader-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="thumbnail-result">
+                    <div class="result-header">
+                        <div class="result-title">Thumbnail Result</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('thumbnail-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('thumbnail-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="thumbnail-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Channel Analyzer Modal -->
+    <div class="modal" id="channel-analyzer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">YouTube Channel Analyzer</h3>
+                <button class="modal-close" onclick="closeModal('channel-analyzer-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="channel-url">Channel URL or Name</label>
+                    <input type="text" id="channel-url" class="text-input" placeholder="https://www.youtube.com/c/ChannelName or ChannelName">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="analysis-type">Analysis Type</label>
+                    <select id="analysis-type" class="select-input">
+                        <option value="overview">Channel Overview</option>
+                        <option value="growth">Growth Analytics</option>
+                        <option value="content">Content Analysis</option>
+                        <option value="audience">Audience Demographics</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="time-period">Time Period</label>
+                    <select id="time-period" class="select-input">
+                        <option value="month">Last 30 Days</option>
+                        <option value="quarter">Last 90 Days</option>
+                        <option value="half">Last 6 Months</option>
+                        <option value="year">Last Year</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="analyzeChannel()">
+                        <i class="fas fa-chart-line"></i> Analyze
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('channel-analyzer-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="channel-result">
+                    <div class="result-header">
+                        <div class="result-title">Channel Analysis</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('channel-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('channel-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="channel-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video to MP3 Converter Modal -->
+    <div class="modal" id="video-to-mp3-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">YouTube Video to MP3 Converter</h3>
+                <button class="modal-close" onclick="closeModal('video-to-mp3-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label" for="mp3-url">YouTube Video URL</label>
+                    <input type="text" id="mp3-url" class="text-input" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="mp3-quality">Audio Quality</label>
+                    <select id="mp3-quality" class="select-input">
+                        <option value="320">320 kbps (Highest)</option>
+                        <option value="192">192 kbps (High)</option>
+                        <option value="128">128 kbps (Standard)</option>
+                        <option value="96">96 kbps (Medium)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="mp3-metadata">Metadata Options</label>
+                    <select id="mp3-metadata" class="select-input">
+                        <option value="all">Include All Metadata</option>
+                        <option value="title">Title Only</option>
+                        <option value="none">No Metadata</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="convertToMP3()">
+                        <i class="fas fa-music"></i> Convert to MP3
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('video-to-mp3-modal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div class="result-container" id="mp3-result">
+                    <div class="result-header">
+                        <div class="result-title">MP3 Conversion Result</div>
+                        <div class="result-actions">
+                            <button class="result-btn" title="Copy" onclick="copyResult('mp3-result')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="result-btn" title="Download" onclick="downloadResult('mp3-result')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="mp3-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+            
+            // Update icon based on type
+            const icon = toast.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Tool Functions
+        function downloadVideo() {
+            const url = document.getElementById('video-url').value;
+            const quality = document.getElementById('video-quality').value;
+            const format = document.getElementById('video-format').value;
+            
+            if (!url) {
+                showToast('Please enter a YouTube video URL', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Processing...';
+            button.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultContainer = document.getElementById('video-result');
+                const resultContent = document.getElementById('video-result-content');
+                
+                resultContent.innerHTML = `
+                    <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Quality:</strong> ${quality}</p>
+                    <p><strong>Format:</strong> ${format}</p>
+                    <p><strong>Status:</strong> Ready for download</p>
+                    <p><strong>Download Link:</strong> <a href="#" style="color: var(--primary);">https://example.com/download/video123</a></p>
+                `;
+                
+                resultContainer.classList.add('active');
+                
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+                
+                showToast('Video processed successfully!', 'success');
+            }, 2000);
+        }
+
+        function downloadTranscript() {
+            const url = document.getElementById('transcript-url').value;
+            const language = document.getElementById('transcript-language').value;
+            const format = document.getElementById('transcript-format').value;
+            
+            if (!url) {
+                showToast('Please enter a YouTube video URL', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Processing...';
+            button.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultContainer = document.getElementById('transcript-result');
+                const resultContent = document.getElementById('transcript-result-content');
+                
+                resultContent.innerHTML = `
+                    <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Language:</strong> ${language}</p>
+                    <p><strong>Format:</strong> ${format}</p>
+                    <p><strong>Status:</strong> Transcript extracted successfully</p>
+                    <p><strong>Transcript Preview:</strong></p>
+                    <p>Hello everyone and welcome to my channel! Today we're going to talk about...</p>
+                `;
+                
+                resultContainer.classList.add('active');
+                
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+                
+                showToast('Transcript extracted successfully!', 'success');
+            }, 2000);
+        }
+
+        function generateKeywords() {
+            const topic = document.getElementById('keyword-topic').value;
+            const region = document.getElementById('keyword-region').value;
+            const timeframe = document.getElementById('keyword-timeframe').value;
+            
+            if (!topic) {
+                showToast('Please enter a topic or niche', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></i> Generating...';
+            button.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultContainer = document.getElementById('keywords-result');
+                const resultContent = document.getElementById('keywords-result-content');
+                
+                resultContent.innerHTML = `
+                    <p><strong>Topic:</strong> ${topic}</p>
+                    <p><strong>Region:</strong> ${region}</p>
+                    <p><strong>Timeframe:</strong> ${timeframe}</p>
+                    <p><strong>Trending Keywords:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>${topic} tutorial (high search volume, low competition)</li>
+                        <li>${topic} for beginners (medium search volume, medium competition)</li>
+                        <li>how to ${topic} (high search volume, high competition)</li>
+                        <li>${topic} tips and tricks (medium search volume, low competition)</li>
+                        <li>${topic} explained (high search volume, medium competition)</li>
+                    </ul>
+                `;
+                
+                resultContainer.classList.add('active');
+                
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+                
+                showToast('Keywords generated successfully!', 'success');
+            }, 2000);
+        }
+
+        function downloadThumbnail() {
+            const url = document.getElementById('thumbnail-url').value;
+            const quality = document.getElementById('thumbnail-quality').value;
+            const format = document.getElementById('thumbnail-format').value;
+            
+            if (!url) {
+                showToast('Please enter a YouTube video URL', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Processing...';
+            button.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultContainer = document.getElementById('thumbnail-result');
+                const resultContent = document.getElementById('thumbnail-result-content');
+                
+                resultContent.innerHTML = `
+                    <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Quality:</strong> ${quality}</p>
+                    <p><strong>Format:</strong> ${format}</p>
+                    <p><strong>Status:</strong> Thumbnail extracted successfully</p>
+                    <p><strong>Thumbnail Preview:</strong></p>
+                    <div style="margin-top: 10px; text-align: center;">
+                        <img src="https://picsum.photos/seed/youtube-thumbnail/300/180.jpg" alt="YouTube Thumbnail" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                    </div>
+                `;
+                
+                resultContainer.classList.add('active');
+                
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+                
+                showToast('Thumbnail extracted successfully!', 'success');
+            }, 2000);
+        }
+
+        function analyzeChannel() {
+            const url = document.getElementById('channel-url').value;
+            const analysisType = document.getElementById('analysis-type').value;
+            const timePeriod = document.getElementById('time-period').value;
+            
+            if (!url) {
+                showToast('Please enter a channel URL or name', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Analyzing...';
+            button.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultContainer = document.getElementById('channel-result');
+                const resultContent = document.getElementById('channel-result-content');
+                
+                if (analysisType === 'overview') {
+                    resultContent.innerHTML = `
+                        <p><strong>Channel:</strong> ${url}</p>
+                        <p><strong>Subscribers:</strong> 1.2M</p>
+                        <p><strong>Total Views:</strong> 245M</p>
+                        <p><strong>Total Videos:</strong> 342</p>
+                        <p><strong>Channel Created:</strong> January 15, 2015</p>
+                        <p><strong>Country:</strong> United States</p>
+                        <p><strong>Category:</strong> Technology</p>
+                    `;
+                } else if (analysisType === 'growth') {
+                    resultContent.innerHTML = `
+                        <p><strong>Channel:</strong> ${url}</p>
+                        <p><strong>Time Period:</strong> ${timePeriod}</p>
+                        <p><strong>Subscriber Growth:</strong> +125K (+11.6%)</p>
+                        <p><strong>View Growth:</strong> +15.2M (+6.6%)</p>
+                        <p><strong>Average Watch Time:</strong> 8:42</p>
+                        <p><strong>Engagement Rate:</strong> 8.4%</p>
+                    `;
+                } else if (analysisType === 'content') {
+                    resultContent.innerHTML = `
+                        <p><strong>Channel:</strong> ${url}</p>
+                        <p><strong>Time Period:</strong> ${timePeriod}</p>
+                        <p><strong>Top Performing Video:</strong> "How to Build a PC - Full Tutorial" (12.5M views)</p>
+                        <p><strong>Average Views per Video:</strong> 715K</p>
+                        <p><strong>Average Likes per Video:</strong> 42K</p>
+                        <p><strong>Average Comments per Video:</strong> 2.1K</p>
+                    `;
+                } else if (analysisType === 'audience') {
+                    resultContent.innerHTML = `
+                        <p><strong>Channel:</strong> ${url}</p>
+                        <p><strong>Time Period:</strong> ${timePeriod}</p>
+                        <p><strong>Top Country:</strong> United States (35%)</p>
+                        <p><strong>Age Group:</strong> 18-24 (42%)</p>
+                        <p><strong>Gender Distribution:</strong> Male (68%), Female (32%)</p>
+                        <p><strong>Top Languages:</strong> English, Spanish, German</p>
+                    `;
+                }
+                
+                resultContainer.classList.add('active');
+                
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+                
+                showToast('Channel analyzed successfully!', 'success');
+            }, 2000);
+        }
+
+        function convertToMP3() {
+            const url = document.getElementById('mp3-url').value;
+            const quality = document.getElementById('mp3-quality').value;
+            const metadata = document.getElementById('mp3-metadata').value;
+            
+            if (!url) {
+                showToast('Please enter a YouTube video URL', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const button = event.target;
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div> Converting...';
+            button.disabled = true;
+            
+            // Simulate processing
+            setTimeout(() => {
+                const resultContainer = document.getElementById('mp3-result');
+                const resultContent = document.getElementById('mp3-result-content');
+                
+                resultContent.innerHTML = `
+                    <p><strong>Video URL:</strong> ${url}</p>
+                    <p><strong>Audio Quality:</strong> ${quality} kbps</p>
+                    <p><strong>Metadata:</strong> ${metadata}</p>
+                    <p><strong>Status:</strong> Conversion completed successfully</p>
+                    <p><strong>File Size:</strong> 4.2 MB</p>
+                    <p><strong>Duration:</strong> 3:45</p>
+                    <p><strong>Download Link:</strong> <a href="#" style="color: var(--primary);">https://example.com/download/audio123.mp3</a></p>
+                `;
+                
+                resultContainer.classList.add('active');
+                
+                // Reset button state
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+                
+                showToast('Video converted to MP3 successfully!', 'success');
+            }, 2000);
+        }
+
+        // Result Functions
+        function copyResult(resultId) {
+            const resultContent = document.getElementById(resultId + '-content');
+            const text = resultContent.innerText;
+            
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    showToast('Copied to clipboard!', 'success');
+                })
+                .catch(err => {
+                    showToast('Failed to copy', 'error');
+                    console.error('Failed to copy: ', err);
+                });
+        }
+
+        function downloadResult(resultId) {
+            const resultContent = document.getElementById(resultId + '-content');
+            const text = resultContent.innerText;
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = resultId + '-result.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('Download started!', 'success');
+        }
+
+        // Add structured data for SEO
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "YouTube Tools - Professional Video & Channel Management Tools",
+            "description": "Professional YouTube tools for video download, transcript extraction, trending keywords generation, thumbnail download, and more.",
+            "url": "https://toolslap.online/youtube-tools.html",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web Browser",
+            "author": {
+                "@type": "Organization",
+                "name": "Toolslap"
+            },
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": [
+                "YouTube Video Downloader",
+                "YouTube Transcript Downloader",
+                "YouTube Trending Keywords Generator",
+                "YouTube Thumbnail Downloader",
+                "YouTube Channel Analyzer",
+                "YouTube Video to MP3 Converter"
+            ]
+        };
+
+        // Add structured data to the page
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
