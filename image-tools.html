@@ -526,9 +526,9 @@
                             <li>Batch processing support</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('transparent-png-maker.html')">
+                            <a href="transparent-png-maker.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="transparent-png-maker.html" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -552,9 +552,9 @@
                             <li>Preserve transparency</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('change-png-colors.html')">
+                            <a href="change-png-colors.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="change-png-colors.html" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -578,9 +578,9 @@
                             <li>Maintain quality</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('rotate-png.html')">
+                            <a href="rotate-png.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="rotate-png.html" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -604,9 +604,9 @@
                             <li>Batch optimization</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('change-jpg-quality.html')">
+                            <a href="change-jpg-quality.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="change-jpg-quality.html" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -630,9 +630,9 @@
                             <li>Multiple output sizes</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('pixelate-jpg.html')">
+                            <a href="pixelate-jpg.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="pixelate-jpg.html" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -656,9 +656,9 @@
                             <li>Live preview</li>
                         </ul>
                         <div class="tool-actions">
-                            <button class="tool-btn tool-btn-primary" onclick="openTool('crop-image.html')">
+                            <a href="crop-image.html" class="tool-btn tool-btn-primary">
                                 Launch Tool
-                            </button>
+                            </a>
                             <a href="crop-image.html" class="tool-btn tool-btn-secondary">Learn More</a>
                         </div>
                     </div>
@@ -758,83 +758,6 @@
             once: true,
             offset: 100
         });
-
-        // Tool launch function
-        function openTool(toolName) {
-            // Create a professional modal instead of alert
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-                backdrop-filter: blur(5px);
-            `;
-            
-            modal.innerHTML = `
-                <div style="
-                    background: white;
-                    padding: 3rem;
-                    border-radius: 1rem;
-                    max-width: 500px;
-                    width: 90%;
-                    text-align: center;
-                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-                ">
-                    <div style="
-                        width: 80px;
-                        height: 80px;
-                        background: linear-gradient(135deg, #6366f1, #ec4899);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0 auto 1.5rem;
-                        font-size: 2rem;
-                        color: white;
-                    ">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #1e293b;">Launching ${toolName}</h2>
-                    <p style="color: #64748b; margin-bottom: 2rem;">This would open the actual ${toolName} interface in a production environment.</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center;">
-                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
-                            background: #6366f1;
-                            color: white;
-                            border: none;
-                            padding: 0.75rem 1.5rem;
-                            border-radius: 0.5rem;
-                            cursor: pointer;
-                            font-weight: 500;
-                        ">Got it!</button>
-                        <button onclick="this.closest('div[style*=fixed]').remove()" style="
-                            background: transparent;
-                            color: #6366f1;
-                            border: 2px solid #6366f1;
-                            padding: 0.75rem 1.5rem;
-                            border-radius: 0.5rem;
-                            cursor: pointer;
-                            font-weight: 500;
-                        ">Close</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Remove modal when clicking outside
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
