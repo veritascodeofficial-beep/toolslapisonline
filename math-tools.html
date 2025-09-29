@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional math tools at Toolslap.online - random number generator, calculator, number converter">
-    <meta name="keywords" content="math tools, calculator, number generator, math utilities, toolslap.online">
+    <meta name="description" content="Professional math tools at Toolslap.online - random number generator, calculator, number converter, and advanced mathematical utilities">
+    <meta name="keywords" content="math tools, calculator, random number generator, number converter, math utilities, number sorting, word to number converter, toolslap.online">
     <meta name="author" content="Toolslap">
-    <title>Math Tools - Toolslap.online</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Professional Math Tools - Calculators, Converters & Generators | Toolslap.online</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -16,32 +27,25 @@
         }
 
         :root {
-            --primary-color: #2563eb;
+            --primary: #2563eb;
             --primary-dark: #1d4ed8;
-            --secondary-color: #7c3aed;
-            --accent-color: #f59e0b;
-            --bg-color: #ffffff;
-            --surface-color: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --surface-color: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --border-color: #334155;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            color: var(--text-primary);
+            background: var(--light);
+            color: var(--dark);
             line-height: 1.6;
-            transition: all 0.3s ease;
+            overflow-x: hidden;
         }
 
         .container {
@@ -50,26 +54,34 @@
             padding: 0 20px;
         }
 
+        /* Header */
         header {
-            background: var(--surface-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
-            position: sticky;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
             top: 0;
-            z-index: 100;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-links {
@@ -79,117 +91,389 @@
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--gray);
             text-decoration: none;
+            font-weight: 500;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #10b981, var(--primary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 4rem 0;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 20s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
             opacity: 0.9;
+        }
+
+        /* Tools Section */
+        .tools {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            padding: 4rem 0;
         }
 
         .tool-card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
+            background: white;
+            border: 1px solid var(--border);
             border-radius: 1rem;
-            padding: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
         }
 
         .tool-icon {
             font-size: 3rem;
-            color: #10b981;
             margin-bottom: 1rem;
         }
 
-        .tool-card h3 {
+        .tool-header h3 {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+            margin-bottom: 0.5rem;
         }
 
-        .tool-card p {
-            color: var(--text-secondary);
+        .tool-header p {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .tool-body {
+            padding: 2rem;
+        }
+
+        .tool-description {
+            color: var(--gray);
             margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .tool-features li {
+            padding: 0.5rem 0;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .tool-features li::before {
+            content: '→';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 1rem;
         }
 
         .tool-btn {
-            background: #10b981;
-            color: white;
+            flex: 1;
+            padding: 0.75rem 1.5rem;
             border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .tool-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: var(--gray);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            color: #9ca3af;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s ease;
-        }
-
-        .tool-btn:hover {
-            background: var(--primary-color);
-        }
-
-        footer {
-            background: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .back-btn {
-            display: inline-flex;
+            text-decoration: none;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            margin-bottom: 2rem;
             font-weight: 500;
+            z-index: 999;
+            transition: all 0.3s ease;
         }
 
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
             }
             
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <nav class="container">
-            <a href="https://toolslap.online" class="logo">⚡ Toolslap.online</a>
+            <a href="https://toolslap.online" class="logo">
+                <i class="fas fa-bolt"></i> Toolslap.online
+            </a>
             <div class="nav-links">
                 <a href="https://toolslap.online/image-tools.html">Image Tools</a>
                 <a href="https://toolslap.online/gif-tools.html">GIF Tools</a>
@@ -198,73 +482,304 @@
         </nav>
     </header>
 
+    <!-- Back Button -->
+    <a href="https://toolslap.online" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Math Tools</h1>
-            <p>Professional mathematical tools for calculations, random generation, and number processing</p>
+            <div class="hero-content" data-aos="fade-up">
+                <h1>Math Tools</h1>
+                <p>Professional mathematical tools for calculations, random generation, and number processing</p>
+            </div>
         </div>
     </section>
 
-    <main class="container">
-        <a href="https://toolslap.online" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
-
-        <div class="tools-grid">
-            <div class="tool-card">
-                <div class="tool-icon">🎲</div>
-                <h3>Generate Random Number</h3>
-                <p>Cryptographically secure random generation with custom range and distribution options.</p>
-                <button class="tool-btn" onclick="openTool('Generate Random Number')">Launch Tool</button>
+    <!-- Tools Section -->
+    <section class="tools">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Professional Math Tools</h2>
+                <p>Explore our comprehensive collection of mathematical utilities and calculators</p>
             </div>
+            
+            <div class="tools-grid">
+                <!-- Generate Random Number -->
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-dice"></i>
+                        </div>
+                        <h3>Generate Random Number</h3>
+                        <p>Cryptographically secure generation</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Generate cryptographically secure random numbers with custom range and distribution options.</p>
+                        <ul class="tool-features">
+                            <li>Custom range selection</li>
+                            <li>Multiple distribution types</li>
+                            <li>Batch generation</li>
+                            <li>Export results</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <a href="generate-random-number.html" class="tool-btn tool-btn-primary">
+                                Launch Tool
+                            </a>
+                            <a href="generate-random-number.html" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">🎯</div>
-                <h3>Pick Random Item</h3>
-                <p>Fair selection with weighted options and batch random selection capabilities.</p>
-                <button class="tool-btn" onclick="openTool('Pick Random Item')">Launch Tool</button>
-            </div>
+                <!-- Pick Random Item -->
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <h3>Pick Random Item</h3>
+                        <p>Fair selection from lists</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Make fair selections from lists with weighted options and batch random selection capabilities.</p>
+                        <ul class="tool-features">
+                            <li>Weighted probability</li>
+                            <li>Import from files</li>
+                            <li>Multiple selections</li>
+                            <li>History tracking</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <a href="pick-random-item.html" class="tool-btn tool-btn-primary">
+                                Launch Tool
+                            </a>
+                            <a href="pick-random-item.html" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">🔤</div>
-                <h3>Convert Words to Numbers</h3>
-                <p>Support for multiple languages and advanced number parsing algorithms.</p>
-                <button class="tool-btn" onclick="openTool('Convert Words to Numbers')">Launch Tool</button>
-            </div>
+                <!-- Convert Words to Numbers -->
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-spell-check"></i>
+                        </div>
+                        <h3>Convert Words to Numbers</h3>
+                        <p>Text to number conversion</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Convert written numbers to digits with support for multiple languages and advanced parsing.</p>
+                        <ul class="tool-features">
+                            <li>Multiple language support</li>
+                            <li>Decimal and fraction handling</li>
+                            <li>Batch conversion</li>
+                            <li>Custom dictionaries</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <a href="convert-words-to-numbers.html" class="tool-btn tool-btn-primary">
+                                Launch Tool
+                            </a>
+                            <a href="convert-words-to-numbers.html" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">➕</div>
-                <h3>Calculate Number Sum</h3>
-                <p>Advanced calculations with formulas, batch processing, and statistical functions.</p>
-                <button class="tool-btn" onclick="openTool('Calculate Number Sum')">Launch Tool</button>
-            </div>
+                <!-- Calculate Number Sum -->
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>Calculate Number Sum</h3>
+                        <p>Advanced calculations</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Perform advanced calculations with formulas, batch processing, and statistical functions.</p>
+                        <ul class="tool-features">
+                            <li>Basic and scientific operations</li>
+                            <li>Formula support</li>
+                            <li>Statistical functions</li>
+                            <li>Calculation history</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <a href="calculate-number-sum.html" class="tool-btn tool-btn-primary">
+                                Launch Tool
+                            </a>
+                            <a href="calculate-number-sum.html" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">📊</div>
-                <h3>Sort Numbers</h3>
-                <p>Multiple sorting algorithms with custom comparison functions and data analysis.</p>
-                <button class="tool-btn" onclick="openTool('Sort Numbers')">Launch Tool</button>
-            </div>
+                <!-- Sort Numbers -->
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </div>
+                        <h3>Sort Numbers</h3>
+                        <p>Organize number sequences</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Sort numbers using multiple algorithms with custom comparison functions and data analysis.</p>
+                        <ul class="tool-features">
+                            <li>Multiple sorting algorithms</li>
+                            <li>Ascending/descending order</li>
+                            <li>Custom comparison</li>
+                            <li>Visual analysis</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <a href="sort-numbers.html" class="tool-btn tool-btn-primary">
+                                Launch Tool
+                            </a>
+                            <a href="sort-numbers.html" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tool-card">
-                <div class="tool-icon">🔢</div>
-                <h3>Number Converter</h3>
-                <p>Convert between number systems (binary, octal, decimal, hexadecimal) with precision.</p>
-                <button class="tool-btn" onclick="openTool('Number Converter')">Launch Tool</button>
+                <!-- Number Converter -->
+                <div class="tool-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Number Converter</h3>
+                        <p>Convert between number systems</p>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-description">Convert between number systems (binary, octal, decimal, hexadecimal) with precision.</p>
+                        <ul class="tool-features">
+                            <li>Binary, octal, decimal, hex</li>
+                            <li>Custom base support</li>
+                            <li>Real-time conversion</li>
+                            <li>Batch conversion</li>
+                        </ul>
+                        <div class="tool-actions">
+                            <a href="number-converter.html" class="tool-btn tool-btn-primary">
+                                Launch Tool
+                            </a>
+                            <a href="number-converter.html" class="tool-btn tool-btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+    </section>
 
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>How It Works</h2>
+                <p>Solve your mathematical problems in three simple steps</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">1</div>
+                    <h3>Select Your Tool</h3>
+                    <p>Choose from our comprehensive collection of mathematical utilities</p>
+                </div>
+                
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <h3>Input Your Data</h3>
+                    <p>Enter your numbers, text, or parameters into the intuitive interface</p>
+                </div>
+                
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">3</div>
+                    <h3>Get Instant Results</h3>
+                    <p>Receive accurate calculations or conversions with detailed information</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container" data-aos="fade-up">
+            <h2>Ready to Solve Your Math Problems?</h2>
+            <p>Join thousands of professionals who trust Toolslap.online for their mathematical needs</p>
+            <a href="#" class="cta-btn">Start Calculating</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Toolslap.online - Professional Math Tools</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Toolslap.online</h3>
+                    <p>Professional online tools for creators, developers, and designers.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap.online. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
-        function openTool(toolName) {
-            alert(`Opening ${toolName} at Toolslap.online\n\nThis would redirect to the actual tool interface.`);
-        }
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
     </script>
 </body>
 </html>
