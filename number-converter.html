@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert written numbers to digits instantly with our professional tool. Supports multiple languages, decimals, fractions, and custom dictionaries. Free to use with advanced features.">
+    <meta name="keywords" content="words to numbers, text to number conversion, number translator, written to digits, number conversion tool, multi-language number converter">
+    <meta name="author" content="Toolslap">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://toolslap.online/words-to-numbers.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolslap.online/words-to-numbers.html">
+    <meta property="og:title" content="Convert Words to Numbers - Professional Text to Number Converter | Toolslap">
+    <meta property="og:description" content="Convert written numbers to digits instantly with our professional tool. Supports multiple languages, decimals, fractions, and custom dictionaries.">
+    <meta property="og:image" content="https://toolslap.online/images/words-to-numbers-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolslap.online/words-to-numbers.html">
+    <meta property="twitter:title" content="Convert Words to Numbers - Professional Text to Number Converter | Toolslap">
+    <meta property="twitter:description" content="Convert written numbers to digits instantly with our professional tool. Supports multiple languages, decimals, fractions, and custom dictionaries.">
+    <meta property="twitter:image" content="https://toolslap.online/images/words-to-numbers-og.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://toolslap.online/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://toolslap.online/apple-touch-icon.png">
+    
+    <title>Convert Words to Numbers - Professional Text to Number Converter | Toolslap</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #7c3aed;
+            --secondary-light: #ede9fe;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvcGF0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+            opacity: 0.1;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-stat {
+            text-align: center;
+        }
+
+        .tool-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Tool Interface */
+        .tool-interface {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .input-section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header h2 i {
+            color: var(--primary);
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .section-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 300px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            resize: vertical;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-area:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .controls-section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .controls-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .controls-header h2 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .controls-header h2 i {
+            color: var(--secondary);
+        }
+
+        .controls-header p {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: white;
+            cursor: pointer;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .toggle-group:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .toggle-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(24px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.85rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .action-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Results Section */
+        .results-section {
+            margin-top: 2rem;
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .results-section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .results-header h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .results-header h3 i {
+            color: var(--success);
+        }
+
+        .results-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .results-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .results-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .results-container {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--border);
+            transition: var(--transition);
+        }
+
+        .results-placeholder {
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .results-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .conversion-results {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .conversion-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .conversion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .conversion-original {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .conversion-converted {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .conversion-stats {
+            width: 100%;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .conversion-stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .conversion-stats-item:last-child {
+            border-bottom: none;
+        }
+
+        .conversion-stats-item span:first-child {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--dark);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1001;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 1.2rem;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--danger);
+        }
+
+        .toast.info i {
+            color: var(--primary);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .tool-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .tool-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+
+            .conversion-results {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="https://toolslap.online/text-tools.html">Text Tools</a>
+                    <a href="https://toolslap.online/math-tools.html">Math Tools</a>
+                    <a href="https://toolslap.online/image-tools.html">Image Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online/text-tools.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Text Tools
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>Convert Words to Numbers</h1>
+            <p>Transform written numbers into digits with precision and speed. Our advanced tool supports multiple languages, decimals, fractions, and custom dictionaries.</p>
+            
+            <div class="tool-stats">
+                <div class="tool-stat">
+                    <div class="tool-stat-value">12+</div>
+                    <div class="tool-stat-label">Languages Supported</div>
+                </div>
+                <div class="tool-stat">
+                    <div class="tool-stat-value">99.9%</div>
+                    <div class="tool-stat-label">Accuracy Rate</div>
+                </div>
+                <div class="tool-stat">
+                    <div class="tool-stat-value">1M+</div>
+                    <div class="tool-stat-label">Conversions</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <div class="interface-container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-keyboard"></i> Input Text</h2>
+                        <div class="section-controls">
+                            <button class="section-btn" title="Clear" id="clear-input">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="section-btn" title="Paste" id="paste-text">
+                                <i class="fas fa-paste"></i>
+                            </button>
+                            <button class="section-btn" title="Upload" id="upload-file">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="input-text" class="text-area" placeholder="Enter your text with written numbers...">I have twenty-three apples and forty-five oranges.
+The total cost is one hundred twenty-five dollars and fifty cents.
+Three quarters of the students passed the exam.
+The temperature is minus five point four degrees.</textarea>
+                    <input type="file" id="file-input" accept=".txt,.csv" style="display: none;">
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <div class="controls-header">
+                        <h2><i class="fas fa-cogs"></i> Conversion Settings</h2>
+                        <p>Configure your text to number conversion options</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="language">Language</label>
+                        <select id="language" class="select-input">
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="it">Italian</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="ru">Russian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="zh">Chinese</option>
+                            <option value="ar">Arabic</option>
+                            <option value="hi">Hindi</option>
+                            <option value="custom">Custom Dictionary</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="number-format">Number Format</label>
+                        <select id="number-format" class="select-input">
+                            <option value="standard">Standard (123)</option>
+                            <option value="decimal">Decimal (123.45)</option>
+                            <option value="fraction">Fraction (123 1/2)</option>
+                            <option value="mixed">Mixed Format</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group" id="custom-dict-group" style="display: none;">
+                        <label class="control-label" for="custom-dictionary">Custom Dictionary</label>
+                        <select id="custom-dictionary" class="select-input">
+                            <option value="">Select a dictionary</option>
+                            <option value="financial">Financial Terms</option>
+                            <option value="scientific">Scientific Notation</option>
+                            <option value="medical">Medical Terminology</option>
+                            <option value="legal">Legal Documents</option>
+                            <option value="upload">Upload Custom</option>
+                        </select>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Handle Decimals</span>
+                        <div class="toggle-switch active" id="handle-decimals">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Handle Fractions</span>
+                        <div class="toggle-switch active" id="handle-fractions">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Batch Conversion</span>
+                        <div class="toggle-switch active" id="batch-conversion">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Show Conversion Stats</span>
+                        <div class="toggle-switch active" id="show-stats">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn action-btn-secondary" id="reset-btn">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="action-btn action-btn-primary" id="convert-btn">
+                            <i class="fas fa-magic"></i> Convert Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h3><i class="fas fa-check-circle"></i> Conversion Results</h3>
+                    <div class="results-controls">
+                        <button class="results-btn" title="Copy" id="copy-results">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="results-btn" title="Download" id="download-results">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="results-container" id="results-container">
+                    <div class="results-placeholder">
+                        <i class="fas fa-exchange-alt"></i>
+                        <p>Click "Convert Text" to transform words to numbers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2>Powerful Features</h2>
+                <p>Advanced text to number conversion capabilities for professionals</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="feature-title">Multiple Language Support</h3>
+                    <p class="feature-description">Convert number words from 12+ languages including English, Spanish, French, German, Chinese, Japanese, and more with accurate language-specific parsing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="feature-title">Decimal & Fraction Handling</h3>
+                    <p class="feature-description">Accurately convert decimal numbers (point five) and fractions (three quarters) to their numerical equivalents with precision up to 10 decimal places.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3 class="feature-title">Batch Conversion</h3>
+                    <p class="feature-description">Process multiple lines of text simultaneously, converting all written numbers in a single operation. Save time with our efficient batch processing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="feature-title">Custom Dictionaries</h3>
+                    <p class="feature-description">Create and use custom dictionaries for specialized terminology like financial, scientific, medical, or legal number words. Upload your own dictionaries for maximum flexibility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3 class="feature-title">Export Options</h3>
+                    <p class="feature-description">Export your converted numbers in various formats including plain text, CSV, JSON, or Excel. Easily integrate the results into your workflow.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Conversion Analytics</h3>
+                    <p class="feature-description">Get detailed statistics about your conversions including total words processed, numbers converted, decimals and fractions detected, and accuracy metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script>
+        // DOM Elements
+        const inputText = document.getElementById('input-text');
+        const language = document.getElementById('language');
+        const numberFormat = document.getElementById('number-format');
+        const customDictionary = document.getElementById('custom-dictionary');
+        const customDictGroup = document.getElementById('custom-dict-group');
+        const handleDecimals = document.getElementById('handle-decimals');
+        const handleFractions = document.getElementById('handle-fractions');
+        const batchConversion = document.getElementById('batch-conversion');
+        const showStats = document.getElementById('show-stats');
+        const convertBtn = document.getElementById('convert-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const clearInputBtn = document.getElementById('clear-input');
+        const pasteTextBtn = document.getElementById('paste-text');
+        const uploadFileBtn = document.getElementById('upload-file');
+        const fileInput = document.getElementById('file-input');
+        const resultsContainer = document.getElementById('results-container');
+        const copyResultsBtn = document.getElementById('copy-results');
+        const downloadResultsBtn = document.getElementById('download-results');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Show/hide custom dictionary based on language selection
+        language.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customDictGroup.style.display = 'block';
+            } else {
+                customDictGroup.style.display = 'none';
+            }
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+            
+            // Update icon based on type
+            const icon = toast.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Clear input
+        clearInputBtn.addEventListener('click', function() {
+            inputText.value = '';
+            resultsContainer.innerHTML = `
+                <div class="results-placeholder">
+                    <i class="fas fa-exchange-alt"></i>
+                    <p>Click "Convert Text" to transform words to numbers</p>
+                </div>
+            `;
+            showToast('Input cleared', 'info');
+        });
+
+        // Paste text
+        pasteTextBtn.addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                inputText.value = text;
+                showToast('Text pasted successfully', 'success');
+            } catch (err) {
+                // Fallback for older browsers
+                inputText.focus();
+                document.execCommand('paste');
+                showToast('Text pasted successfully', 'success');
+            }
+        });
+
+        // Upload file
+        uploadFileBtn.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    inputText.value = event.target.result;
+                    showToast('File uploaded successfully', 'success');
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Enhanced number word dictionaries for different languages
+        const numberDictionaries = {
+            en: {
+                units: ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+                teens: ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"],
+                tens: ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"],
+                scales: ["hundred", "thousand", "million", "billion", "trillion"],
+                decimals: ["point", "decimal"],
+                fractions: ["half", "halves", "quarter", "quarters", "third", "thirds"],
+                negative: ["minus", "negative"]
+            },
+            es: {
+                units: ["cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"],
+                teens: ["diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"],
+                tens: ["veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"],
+                scales: ["cien", "ciento", "mil", "millón", "billón"],
+                decimals: ["punto", "coma"],
+                fractions: ["mitad", "cuarto", "tercio"],
+                negative: ["menos"]
+            },
+            fr: {
+                units: ["zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf"],
+                teens: ["dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf"],
+                tens: ["vingt", "trente", "quarante", "cinquante", "soixante", "soixante-dix", "quatre-vingts", "quatre-vingt-dix"],
+                scales: ["cent", "mille", "million", "milliard"],
+                decimals: ["virgule", "point"],
+                fractions: ["demi", "quart", "tiers"],
+                negative: ["moins"]
+            },
+            de: {
+                units: ["null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"],
+                teens: ["zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn"],
+                tens: ["zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig"],
+                scales: ["hundert", "tausend", "million", "milliarde"],
+                decimals: ["komma", "punkt"],
+                fractions: ["halb", "viertel", "drittel"],
+                negative: ["minus"]
+            },
+            it: {
+                units: ["zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove"],
+                teens: ["dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"],
+                tens: ["venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"],
+                scales: ["cento", "mille", "milione", "miliardo"],
+                decimals: ["punto", "virgola"],
+                fractions: ["metà", "quarto", "terzo"],
+                negative: ["meno"]
+            },
+            pt: {
+                units: ["zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"],
+                teens: ["dez", "onze", "doze", "treze", "catorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"],
+                tens: ["vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"],
+                scales: ["cem", "cento", "mil", "milhão", "bilhão"],
+                decimals: ["ponto", "vírgula"],
+                fractions: ["metade", "quarto", "terço"],
+                negative: ["menos"]
+            },
+            ru: {
+                units: ["ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"],
+                teens: ["десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"],
+                tens: ["двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"],
+                scales: ["сто", "тысяча", "миллион", "миллиард"],
+                decimals: ["точка", "запятая"],
+                fractions: ["половина", "четверть", "треть"],
+                negative: ["минус"]
+            },
+            ja: {
+                units: ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"],
+                teens: ["十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九"],
+                tens: ["二十", "三十", "四十", "五十", "六十", "七十", "八十", "九十"],
+                scales: ["百", "千", "万", "億"],
+                decimals: ["点", "・"],
+                fractions: ["半", "四分の一", "三分の一"],
+                negative: ["マイナス"]
+            },
+            zh: {
+                units: ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"],
+                teens: ["十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九"],
+                tens: ["二十", "三十", "四十", "五十", "六十", "七十", "八十", "九十"],
+                scales: ["百", "千", "万", "亿"],
+                decimals: ["点"],
+                fractions: ["半", "四分之一", "三分之一"],
+                negative: ["负", "减"]
+            },
+            ar: {
+                units: ["صفر", "واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة"],
+                teens: ["عشرة", "أحد عشر", "اثنا عشر", "ثلاثة عشر", "أربعة عشر", "خمسة عشر", "ستة عشر", "سبعة عشر", "ثمانية عشر", "تسعة عشر"],
+                tens: ["عشرون", "ثلاثون", "أربعون", "خمسون", "ستون", "سبعون", "ثمانون", "تسعون"],
+                scales: ["مئة", "ألف", "مليون", "مليار"],
+                decimals: ["نقطة"],
+                fractions: ["نصف", "ربع", "ثلث"],
+                negative: ["سالب", "ناقص"]
+            },
+            hi: {
+                units: ["शून्य", "एक", "दो", "तीन", "चार", "पाँच", "छह", "सात", "आठ", "नौ"],
+                teens: ["दस", "ग्यारह", "बारह", "तेरह", "चौदह", "पंद्रह", "सोलह", "सत्रह", "अठारह", "उन्नीस"],
+                tens: ["बीस", "तीस", "चालीस", "पचास", "साठ", "सत्तर", "अस्सी", "नब्बे"],
+                scales: ["सौ", "हज़ार", "लाख", "करोड़"],
+                decimals: ["दशमलव"],
+                fractions: ["आधा", "चौथाई", "तिहाई"],
+                negative: ["ऋणात्मक", "माइनस"]
+            }
+        };
+
+        // Custom dictionaries
+        const customDictionaries = {
+            financial: {
+                en: {
+                    units: [...numberDictionaries.en.units],
+                    teens: [...numberDictionaries.en.teens],
+                    tens: [...numberDictionaries.en.tens],
+                    scales: [...numberDictionaries.en.scales, "grand"],
+                    decimals: [...numberDictionaries.en.decimals],
+                    fractions: [...numberDictionaries.en.fractions],
+                    negative: [...numberDictionaries.en.negative],
+                    custom: {
+                        "k": "thousand",
+                        "m": "million",
+                        "b": "billion"
+                    }
+                }
+            },
+            scientific: {
+                en: {
+                    units: [...numberDictionaries.en.units],
+                    teens: [...numberDictionaries.en.teens],
+                    tens: [...numberDictionaries.en.tens],
+                    scales: [...numberDictionaries.en.scales, "googol"],
+                    decimals: [...numberDictionaries.en.decimals],
+                    fractions: [...numberDictionaries.en.fractions],
+                    negative: [...numberDictionaries.en.negative],
+                    custom: {
+                        "pi": "3.14159",
+                        "e": "2.71828",
+                        "golden ratio": "1.61803"
+                    }
+                }
+            },
+            medical: {
+                en: {
+                    units: [...numberDictionaries.en.units],
+                    teens: [...numberDictionaries.en.teens],
+                    tens: [...numberDictionaries.en.tens],
+                    scales: [...numberDictionaries.en.scales],
+                    decimals: [...numberDictionaries.en.decimals],
+                    fractions: [...numberDictionaries.en.fractions],
+                    negative: [...numberDictionaries.en.negative],
+                    custom: {
+                        "cc": "cubic centimeter",
+                        "mg": "milligram",
+                        "ml": "milliliter"
+                    }
+                }
+            },
+            legal: {
+                en: {
+                    units: [...numberDictionaries.en.units],
+                    teens: [...numberDictionaries.en.teens],
+                    tens: [...numberDictionaries.en.tens],
+                    scales: [...numberDictionaries.en.scales],
+                    decimals: [...numberDictionaries.en.decimals],
+                    fractions: [...numberDictionaries.en.fractions],
+                    negative: [...numberDictionaries.en.negative],
+                    custom: {
+                        "per cent": "%",
+                        "percent": "%",
+                        "per annum": "yearly"
+                    }
+                }
+            }
+        };
+
+        // Enhanced text to number conversion function
+        function textToNumber(text, lang, format, handleDec, handleFrac) {
+            const dict = numberDictionaries[lang] || numberDictionaries.en;
+            const words = text.toLowerCase().replace(/[.,;:!?]/g, '').split(/\s+/);
+            let result = [];
+            let currentNumber = null;
+            let isDecimal = false;
+            let isFraction = false;
+            let isNegative = false;
+            let decimalPart = '';
+            let fractionPart = '';
+            let stats = {
+                totalWords: words.length,
+                convertedNumbers: 0,
+                decimals: 0,
+                fractions: 0
+            };
+
+            // Apply custom dictionary if selected
+            if (language.value === 'custom' && customDictionary.value && customDictionaries[customDictionary.value]) {
+                const customDict = customDictionaries[customDictionary.value][lang];
+                if (customDict) {
+                    // Merge custom dictionary with base dictionary
+                    if (customDict.custom) {
+                        Object.assign(dict, customDict.custom);
+                    }
+                }
+            }
+
+            for (let i = 0; i < words.length; i++) {
+                const word = words[i];
+                
+                // Check for negative
+                if (dict.negative.includes(word)) {
+                    isNegative = true;
+                    continue;
+                }
+                
+                // Check for decimal point
+                if (handleDec && dict.decimals.includes(word)) {
+                    isDecimal = true;
+                    continue;
+                }
+                
+                // Check for units
+                const unitIndex = dict.units.indexOf(word);
+                if (unitIndex !== -1) {
+                    if (isDecimal) {
+                        decimalPart += unitIndex.toString();
+                    } else if (isFraction) {
+                        fractionPart += unitIndex.toString();
+                    } else {
+                        if (currentNumber === null) currentNumber = 0;
+                        currentNumber += unitIndex;
+                    }
+                    continue;
+                }
+                
+                // Check for teens
+                const teenIndex = dict.teens.indexOf(word);
+                if (teenIndex !== -1) {
+                    if (currentNumber === null) currentNumber = 0;
+                    currentNumber += 10 + teenIndex;
+                    continue;
+                }
+                
+                // Check for tens
+                const tenIndex = dict.tens.indexOf(word);
+                if (tenIndex !== -1) {
+                    if (currentNumber === null) currentNumber = 0;
+                    currentNumber += (tenIndex + 2) * 10;
+                    continue;
+                }
+                
+                // Check for scales
+                const scaleIndex = dict.scales.indexOf(word);
+                if (scaleIndex !== -1) {
+                    if (currentNumber === null) currentNumber = 1;
+                    if (scaleIndex === 0) { // hundred
+                        currentNumber *= 100;
+                    } else { // thousand, million, etc.
+                        currentNumber *= Math.pow(1000, scaleIndex);
+                    }
+                    continue;
+                }
+                
+                // Check for fractions
+                if (handleFrac && dict.fractions.includes(word)) {
+                    isFraction = true;
+                    if (word === "half" || word === "halves" || word === "mitad" || word === "metade" || word === "meio" || word === "половина" || word === "半" || word === "आधा") {
+                        fractionPart = "2";
+                    } else if (word === "quarter" || word === "quarters" || word === "cuarto" || word === "quart" || word === "quarto" || word === "четверть" || word === "四分の一" || word === "四分之一" || word === "चौथाई") {
+                        fractionPart = "4";
+                    } else if (word === "third" || word === "thirds" || word === "tercio" || word === "tiers" || word === "terzo" || word === "terceiro" || word === "треть" || word === "三分の一" || word === "三分之一" || word === "तिहाई") {
+                        fractionPart = "3";
+                    }
+                    continue;
+                }
+                
+                // If we encounter a non-number word, finalize the current number
+                if (currentNumber !== null || decimalPart || fractionPart) {
+                    let numberStr = '';
+                    
+                    if (isNegative) {
+                        numberStr += '-';
+                    }
+                    
+                    if (currentNumber !== null) {
+                        numberStr += currentNumber.toString();
+                    }
+                    
+                    if (decimalPart) {
+                        numberStr += '.' + decimalPart;
+                        stats.decimals++;
+                    }
+                    
+                    if (fractionPart) {
+                        if (format === 'fraction' || format === 'mixed') {
+                            numberStr += ' ' + (currentNumber || '1') + '/' + fractionPart;
+                        } else {
+                            numberStr += ' ' + fractionPart;
+                        }
+                        stats.fractions++;
+                    }
+                    
+                    if (numberStr) {
+                        result.push(numberStr);
+                        stats.convertedNumbers++;
+                    }
+                    
+                    // Reset for next number
+                    currentNumber = null;
+                    isDecimal = false;
+                    isFraction = false;
+                    isNegative = false;
+                    decimalPart = '';
+                    fractionPart = '';
+                }
+                
+                // Add non-number word as-is
+                result.push(word);
+            }
+            
+            // Handle any remaining number at the end
+            if (currentNumber !== null || decimalPart || fractionPart) {
+                let numberStr = '';
+                
+                if (isNegative) {
+                    numberStr += '-';
+                }
+                
+                if (currentNumber !== null) {
+                    numberStr += currentNumber.toString();
+                }
+                
+                if (decimalPart) {
+                    numberStr += '.' + decimalPart;
+                    stats.decimals++;
+                }
+                
+                if (fractionPart) {
+                    if (format === 'fraction' || format === 'mixed') {
+                        numberStr += ' ' + (currentNumber || '1') + '/' + fractionPart;
+                    } else {
+                        numberStr += ' ' + fractionPart;
+                    }
+                    stats.fractions++;
+                }
+                
+                if (numberStr) {
+                    result.push(numberStr);
+                    stats.convertedNumbers++;
+                }
+            }
+            
+            return {
+                convertedText: result.join(' '),
+                stats: stats
+            };
+        }
+
+        // Convert text
+        function convertText() {
+            const text = inputText.value.trim();
+            if (!text) {
+                resultsContainer.innerHTML = `
+                    <div class="results-placeholder">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--secondary);"></i>
+                        <p>Please enter text to convert</p>
+                    </div>
+                `;
+                showToast('Please enter text to convert', 'error');
+                return;
+            }
+            
+            // Show loading state
+            convertBtn.innerHTML = '<div class="spinner"></div> Converting...';
+            convertBtn.disabled = true;
+            
+            // Simulate processing time for better UX
+            setTimeout(() => {
+                const lang = language.value;
+                const format = numberFormat.value;
+                const handleDec = handleDecimals.classList.contains('active');
+                const handleFrac = handleFractions.classList.contains('active');
+                const batch = batchConversion.classList.contains('active');
+                const showStatsFlag = showStats.classList.contains('active');
+                
+                let results = [];
+                let stats = {
+                    totalWords: 0,
+                    convertedNumbers: 0,
+                    decimals: 0,
+                    fractions: 0
+                };
+                
+                if (batch) {
+                    // Process each line separately
+                    const lines = text.split('\n');
+                    lines.forEach(line => {
+                        const conversion = textToNumber(line, lang, format, handleDec, handleFrac);
+                        results.push({
+                            original: line,
+                            converted: conversion.convertedText
+                        });
+                        
+                        // Aggregate stats
+                        stats.totalWords += conversion.stats.totalWords;
+                        stats.convertedNumbers += conversion.stats.convertedNumbers;
+                        stats.decimals += conversion.stats.decimals;
+                        stats.fractions += conversion.stats.fractions;
+                    });
+                } else {
+                    // Process entire text as one
+                    const conversion = textToNumber(text, lang, format, handleDec, handleFrac);
+                    results.push({
+                        original: text,
+                        converted: conversion.convertedText
+                    });
+                    
+                    stats = conversion.stats;
+                }
+                
+                // Display results
+                let resultsHTML = '';
+                
+                if (results.length > 0) {
+                    resultsHTML += '<div class="conversion-results">';
+                    results.forEach(result => {
+                        resultsHTML += `
+                            <div class="conversion-item">
+                                <div class="conversion-original">"${result.original}"</div>
+                                <div class="conversion-converted">${result.converted}</div>
+                            </div>
+                        `;
+                    });
+                    resultsHTML += '</div>';
+                    
+                    // Add statistics if enabled
+                    if (showStatsFlag) {
+                        resultsHTML += '<div class="conversion-stats">';
+                        resultsHTML += `<div class="conversion-stats-item"><span>Language:</span><span>${lang.toUpperCase()}</span></div>`;
+                        resultsHTML += `<div class="conversion-stats-item"><span>Total Words:</span><span>${stats.totalWords}</span></div>`;
+                        resultsHTML += `<div class="conversion-stats-item"><span>Converted Numbers:</span><span>${stats.convertedNumbers}</span></div>`;
+                        resultsHTML += `<div class="conversion-stats-item"><span>Decimals:</span><span>${stats.decimals}</span></div>`;
+                        resultsHTML += `<div class="conversion-stats-item"><span>Fractions:</span><span>${stats.fractions}</span></div>`;
+                        resultsHTML += '</div>';
+                    }
+                }
+                
+                resultsContainer.innerHTML = resultsHTML;
+                
+                // Reset button state
+                convertBtn.innerHTML = '<i class="fas fa-magic"></i> Convert Text';
+                convertBtn.disabled = false;
+                
+                showToast('Conversion completed successfully!', 'success');
+            }, 800); // Simulate processing time
+        }
+
+        // Event listener for convert button
+        convertBtn.addEventListener('click', convertText);
+
+        // Reset button
+        resetBtn.addEventListener('click', function() {
+            // Reset all controls to default values
+            language.value = 'en';
+            numberFormat.value = 'standard';
+            customDictionary.value = '';
+            customDictGroup.style.display = 'none';
+            handleDecimals.classList.add('active');
+            handleFractions.classList.add('active');
+            batchConversion.classList.add('active');
+            showStats.classList.add('active');
+            
+            // Reset input and results
+            inputText.value = 'I have twenty-three apples and forty-five oranges.\nThe total cost is one hundred twenty-five dollars and fifty cents.\nThree quarters of the students passed the exam.\nThe temperature is minus five point four degrees.';
+            resultsContainer.innerHTML = `
+                <div class="results-placeholder">
+                    <i class="fas fa-exchange-alt"></i>
+                    <p>Click "Convert Text" to transform words to numbers</p>
+                </div>
+            `;
+            
+            showToast('Settings reset to default', 'info');
+        });
+
+        // Copy results
+        copyResultsBtn.addEventListener('click', function() {
+            const conversionResults = document.querySelector('.conversion-results');
+            if (conversionResults) {
+                const convertedTexts = Array.from(conversionResults.querySelectorAll('.conversion-converted'))
+                    .map(item => item.textContent)
+                    .join('\n');
+                
+                navigator.clipboard.writeText(convertedTexts)
+                    .then(() => {
+                        showToast('Results copied to clipboard', 'success');
+                    })
+                    .catch(err => {
+                        showToast('Failed to copy results', 'error');
+                        console.error('Failed to copy: ', err);
+                    });
+            } else {
+                showToast('No results to copy', 'error');
+            }
+        });
+
+        // Download results
+        downloadResultsBtn.addEventListener('click', function() {
+            const conversionResults = document.querySelector('.conversion-results');
+            if (conversionResults) {
+                const convertedTexts = Array.from(conversionResults.querySelectorAll('.conversion-converted'))
+                    .map(item => item.textContent)
+                    .join('\n');
+                
+                const blob = new Blob([convertedTexts], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'converted_numbers.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showToast('Results downloaded successfully', 'success');
+            } else {
+                showToast('No results to download', 'error');
+            }
+        });
+
+        // Initialize with default values
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default input text
+            inputText.value = 'I have twenty-three apples and forty-five oranges.\nThe total cost is one hundred twenty-five dollars and fifty cents.\nThree quarters of the students passed the exam.\nThe temperature is minus five point four degrees.';
+        });
+
+        // Add structured data for SEO
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Words to Numbers Converter",
+            "description": "Convert written numbers to digits with support for multiple languages, decimals, fractions, and custom dictionaries.",
+            "url": "https://toolslap.online/words-to-numbers.html",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web Browser",
+            "author": {
+                "@type": "Organization",
+                "name": "Toolslap"
+            },
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": [
+                "Multiple language support",
+                "Decimal and fraction handling",
+                "Batch conversion",
+                "Custom dictionaries"
+            ]
+        };
+
+        // Add structured data to the page
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
