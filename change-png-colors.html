@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Create transparent PNG images with Toolslap's advanced background removal tool. Perfect for logos, icons, and web graphics with AI-powered detection.">
-    <meta name="keywords" content="transparent png maker, png background remover, remove background from image, transparent image creator, png transparency tool">
+    <meta name="description" content="Change colors in PNG images with Toolslap's advanced color replacement tool. Perfect for branding adjustments, color customization, and design modifications with precision color selection.">
+    <meta name="keywords" content="change png colors, png color replacer, color replacement tool, png color editor, image color changer, color customization">
     <meta name="author" content="Toolslap">
-    <title>Transparent PNG Maker - Toolslap.online</title>
+    <title>Change PNG Colors - Toolslap.online</title>
     
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5839432813497030" crossorigin="anonymous"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -599,8 +600,8 @@
     <!-- Tool Header -->
     <section class="tool-header">
         <div class="container">
-            <h1>Transparent PNG Maker</h1>
-            <p>Create transparent PNG images with our advanced background removal technology. Perfect for logos, icons, and web graphics.</p>
+            <h1>Change PNG Colors</h1>
+            <p>Replace specific colors in your PNG images with our advanced color replacement technology. Perfect for branding adjustments and design modifications.</p>
         </div>
     </section>
 
@@ -635,8 +636,8 @@
                 <!-- Controls Section -->
                 <div class="controls-section">
                     <div class="controls-header">
-                        <h2>Background Removal Settings</h2>
-                        <p>Configure AI-powered background removal options</p>
+                        <h2>Color Replacement Settings</h2>
+                        <p>Configure color replacement options</p>
                     </div>
                     
                     <div class="file-upload">
@@ -648,23 +649,29 @@
                     
                     <div class="control-group">
                         <div class="control-label">
-                            <span>Detection Sensitivity</span>
-                            <span class="control-value" id="sensitivityValue">Medium</span>
+                            <span>Target Color</span>
+                            <input type="color" id="targetColor" value="#FF0000">
                         </div>
-                        <input type="range" class="slider" id="sensitivitySlider" min="1" max="5" step="1" value="3">
                     </div>
                     
                     <div class="control-group">
                         <div class="control-label">
-                            <span>Edge Smoothing</span>
-                            <span class="control-value" id="smoothingValue">50%</span>
+                            <span>Replacement Color</span>
+                            <input type="color" id="replacementColor" value="#0000FF">
                         </div>
-                        <input type="range" class="slider" id="smoothingSlider" min="0" max="100" step="5" value="50">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Tolerance</span>
+                            <span class="control-value" id="toleranceValue">50%</span>
+                        </div>
+                        <input type="range" class="slider" id="toleranceSlider" min="0" max="100" step="1" value="50">
                     </div>
                     
                     <div class="toggle-group">
-                        <span class="toggle-label">Preserve Shadows</span>
-                        <div class="toggle-switch" id="shadowsToggle">
+                        <span class="toggle-label">Preserve Transparency</span>
+                        <div class="toggle-switch active" id="transparencyToggle">
                             <div class="toggle-slider"></div>
                         </div>
                     </div>
@@ -678,7 +685,7 @@
                     
                     <div class="action-buttons">
                         <button class="action-btn action-btn-primary" id="processBtn">
-                            Remove Background
+                            Replace Colors
                         </button>
                         <button class="action-btn action-btn-secondary" id="downloadBtn">
                             Download PNG
@@ -699,18 +706,18 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
+                        <i class="fas fa-palette"></i>
                     </div>
-                    <h3 class="feature-title">AI-Powered Detection</h3>
-                    <p class="feature-description">Advanced artificial intelligence for precise background detection and removal</p>
+                    <h3 class="feature-title">Precision Color Selection</h3>
+                    <p class="feature-description">Advanced color picker with tolerance control for accurate color replacement</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-cut"></i>
+                        <i class="fas fa-eye-dropper"></i>
                     </div>
-                    <h3 class="feature-title">Precise Edge Refinement</h3>
-                    <p class="feature-description">Fine-tune edges for perfect transparency with our advanced algorithms</p>
+                    <h3 class="feature-title">Multiple Color Replacement</h3>
+                    <p class="feature-description">Replace multiple colors in a single operation with batch processing</p>
                 </div>
                 
                 <div class="feature-card">
@@ -723,10 +730,10 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-layer-group"></i>
+                        <i class="fas fa-sync-alt"></i>
                     </div>
-                    <h3 class="feature-title">Batch Processing</h3>
-                    <p class="feature-description">Process multiple images simultaneously for efficient workflow</p>
+                    <h3 class="feature-title">Real-time Preview</h3>
+                    <p class="feature-description">See changes instantly with our live preview functionality</p>
                 </div>
             </div>
         </div>
@@ -793,28 +800,19 @@
             }
         });
 
-        // Sensitivity control
-        const sensitivitySlider = document.getElementById('sensitivitySlider');
-        const sensitivityValue = document.getElementById('sensitivityValue');
+        // Tolerance control
+        const toleranceSlider = document.getElementById('toleranceSlider');
+        const toleranceValue = document.getElementById('toleranceValue');
         
-        sensitivitySlider.addEventListener('input', function() {
-            const levels = ['Very Low', 'Low', 'Medium', 'High', 'Very High'];
-            sensitivityValue.textContent = levels[this.value - 1];
-        });
-
-        // Smoothing control
-        const smoothingSlider = document.getElementById('smoothingSlider');
-        const smoothingValue = document.getElementById('smoothingValue');
-        
-        smoothingSlider.addEventListener('input', function() {
-            smoothingValue.textContent = this.value + '%';
+        toleranceSlider.addEventListener('input', function() {
+            toleranceValue.textContent = this.value + '%';
         });
 
         // Toggle switches
-        const shadowsToggle = document.getElementById('shadowsToggle');
+        const transparencyToggle = document.getElementById('transparencyToggle');
         const batchToggle = document.getElementById('batchToggle');
         
-        shadowsToggle.addEventListener('click', function() {
+        transparencyToggle.addEventListener('click', function() {
             this.classList.toggle('active');
         });
         
@@ -912,8 +910,8 @@
                     ">
                         <i class="fas fa-check"></i>
                     </div>
-                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Background Removed</h2>
-                    <p style="color: #64748b; margin-bottom: 1.5rem;">The background has been successfully removed from your image</p>
+                    <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Colors Replaced</h2>
+                    <p style="color: #64748b; margin-bottom: 1.5rem;">The colors have been successfully replaced in your image</p>
                     <button onclick="this.closest('div[style*=fixed]').remove()" style="
                         background: #6366f1;
                         color: white;
@@ -981,7 +979,7 @@
                         <i class="fas fa-download"></i>
                     </div>
                     <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Download Ready</h2>
-                    <p style="color: #64748b; margin-bottom: 1.5rem;">Your transparent PNG is ready for download</p>
+                    <p style="color: #64748b; margin-bottom: 1.5rem;">Your color-replaced PNG is ready for download</p>
                     <div style="display: flex; gap: 1rem; justify-content: center;">
                         <button onclick="this.closest('div[style*=fixed]').remove()" style="
                             background: #6366f1;
@@ -1027,3 +1025,4 @@
     </script>
 </body>
 </html>
+
