@@ -1,34 +1,1187 @@
-            // Get the sorted numbers and statistics from the selected algorithm
-            const algorithm = sortingAlgorithms[algorithmValue];
-            const result = algorithm(numbers);
-            
-            // Apply sort order
-            let sortedNumbers = result.sorted;
-            if (orderValue === 'descending') {
-                sortedNumbers = sortedNumbers.reverse();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sort numbers in ascending or descending order with multiple sorting algorithms. Supports integers, decimals, and negative numbers with detailed statistics.">
+    <meta name="keywords" content="sort numbers, number sorter, ascending sort, descending sort, bubble sort, quick sort, merge sort, number organization">
+    <meta name="author" content="Toolslap">
+    <title>Sort Numbers - Advanced Number Sorting Tool | Toolslap</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5839432813497030" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Tool Header */
+        .tool-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 0 4rem;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .tool-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .tool-header p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Tool Interface */
+        .tool-interface {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .section-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .section-btn:hover {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-area:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .controls-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .controls-header h2 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .controls-header p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--dark);
+            transition: border-color 0.3s ease;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .toggle-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toggle-group:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .action-btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Results Section */
+        .results-section {
+            grid-column: 1 / -1;
+            background: var(--light);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .results-header h3 {
+            font-size: 1.25rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .results-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .results-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .results-btn:hover {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .results-container {
+            min-height: 200px;
+            border: 1px dashed var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background: white;
+        }
+
+        .results-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 180px;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .results-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--border);
+        }
+
+        .sorted-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sorted-number-item {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+        }
+
+        .sort-stats {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sort-stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sort-stats-item:last-child {
+            border-bottom: none;
+        }
+
+        .sort-stats-item span:first-child {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tool-header {
+                padding: 6rem 0 3rem;
             }
-            
-            // Display results
-            let resultsHTML = '';
-            
-            // Create sorted numbers display
-            resultsHTML += '<div class="sorted-numbers">';
-            sortedNumbers.forEach(num => {
-                resultsHTML += `<div class="sorted-number-item">${num}</div>`;
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://toolslap.online" class="logo">
+                    <i class="fas fa-bolt"></i> Toolslap
+                </a>
+                <div class="nav-links">
+                    <a href="https://toolslap.online/math-tools.html">Math Tools</a>
+                    <a href="https://toolslap.online/image-tools.html">Image Tools</a>
+                    <a href="https://toolslap.online/text-tools.html">Text Tools</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <a href="https://toolslap.online/math-tools.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Math Tools
+    </a>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <h1>Sort Numbers</h1>
+            <p>Sort numbers in ascending or descending order with multiple sorting algorithms. Supports integers, decimals, and negative numbers.</p>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <div class="interface-container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="section-header">
+                        <h2>Input Numbers</h2>
+                        <div class="section-controls">
+                            <button class="section-btn" title="Clear" id="clear-input">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="section-btn" title="Paste" id="paste-text">
+                                <i class="fas fa-paste"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="input-numbers" class="text-area" placeholder="Enter numbers separated by new lines, commas, or spaces...">42
+17
+8
+99
+23
+56
+3
+74</textarea>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <div class="controls-header">
+                        <h2>Sorting Settings</h2>
+                        <p>Configure your number sorting options</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="sort-order">Sort Order</label>
+                        <select id="sort-order" class="select-input">
+                            <option value="ascending">Ascending (Low to High)</option>
+                            <option value="descending">Descending (High to Low)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="sort-algorithm">Algorithm</label>
+                        <select id="sort-algorithm" class="select-input">
+                            <option value="bubble">Bubble Sort</option>
+                            <option value="selection">Selection Sort</option>
+                            <option value="insertion">Insertion Sort</option>
+                            <option value="quick">Quick Sort</option>
+                            <option value="merge">Merge Sort</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="separator">Input Separator</label>
+                        <select id="separator" class="select-input">
+                            <option value="newline">New Line</option>
+                            <option value="comma">Comma (,)</option>
+                            <option value="space">Space</option>
+                            <option value="semicolon">Semicolon (;)</option>
+                            <option value="tab">Tab</option>
+                        </select>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Show Statistics</span>
+                        <div class="toggle-switch active" id="show-stats">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <span class="toggle-label">Ignore Non-Numeric</span>
+                        <div class="toggle-switch active" id="ignore-non-numeric">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn action-btn-secondary" id="reset-btn">Reset</button>
+                        <button class="action-btn action-btn-primary" id="sort-btn">Sort Numbers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h3><i class="fas fa-sort-amount-down"></i> Sorted Results</h3>
+                    <div class="results-controls">
+                        <button class="results-btn" title="Copy" id="copy-results">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="results-btn" title="Download" id="download-results">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="results-container" id="results-container">
+                    <div class="results-placeholder">
+                        <i class="fas fa-sort-amount-down"></i>
+                        <p>Click "Sort Numbers" to organize your numbers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2>Powerful Features</h2>
+                <p>Advanced number sorting capabilities for professionals</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sort-alpha-down"></i>
+                    </div>
+                    <h3 class="feature-title">Multiple Algorithms</h3>
+                    <p class="feature-description">Choose from 5 different sorting algorithms including Bubble, Selection, Insertion, Quick, and Merge Sort for optimal performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Flexible Sorting</h3>
+                    <p class="feature-description">Sort in ascending or descending order with support for integers, decimals, and negative numbers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Performance Statistics</h3>
+                    <p class="feature-description">Get detailed statistics including comparisons and swaps for educational purposes and algorithm analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3 class="feature-title">Export Options</h3>
+                    <p class="feature-description">Copy results to clipboard or download as a text file for easy integration into your workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Toolslap</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="math-tools.html">Math Tools</a></li>
+                        <li><a href="image-tools.html">Image Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
+                        <li><a href="gif-tools.html">GIF Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">License Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Toolslap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const inputNumbers = document.getElementById('input-numbers');
+        const sortOrder = document.getElementById('sort-order');
+        const sortAlgorithm = document.getElementById('sort-algorithm');
+        const separator = document.getElementById('separator');
+        const showStats = document.getElementById('show-stats');
+        const ignoreNonNumeric = document.getElementById('ignore-non-numeric');
+        const sortBtn = document.getElementById('sort-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const clearInputBtn = document.getElementById('clear-input');
+        const pasteTextBtn = document.getElementById('paste-text');
+        const resultsContainer = document.getElementById('results-container');
+        const copyResultsBtn = document.getElementById('copy-results');
+        const downloadResultsBtn = document.getElementById('download-results');
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
             });
-            resultsHTML += '</div>';
+        });
+
+        // Clear input
+        clearInputBtn.addEventListener('click', function() {
+            inputNumbers.value = '';
+            resultsContainer.innerHTML = `
+                <div class="results-placeholder">
+                    <i class="fas fa-sort-amount-down"></i>
+                    <p>Click "Sort Numbers" to organize your numbers</p>
+                </div>
+            `;
+        });
+
+        // Paste text
+        pasteTextBtn.addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                inputNumbers.value = text;
+            } catch (err) {
+                // Fallback for older browsers
+                inputNumbers.focus();
+                document.execCommand('paste');
+            }
+        });
+
+        // Sorting algorithms with statistics
+        const sortingAlgorithms = {
+            bubble: function(arr) {
+                let comparisons = 0;
+                let swaps = 0;
+                const sorted = [...arr];
+                const n = sorted.length;
+                
+                for (let i = 0; i < n - 1; i++) {
+                    for (let j = 0; j < n - i - 1; j++) {
+                        comparisons++;
+                        if (sorted[j] > sorted[j + 1]) {
+                            [sorted[j], sorted[j + 1]] = [sorted[j + 1], sorted[j]];
+                            swaps++;
+                        }
+                    }
+                }
+                
+                return {
+                    sorted: sorted,
+                    stats: { comparisons, swaps }
+                };
+            },
             
-            // Add statistics if enabled
-            if (showStats.classList.contains('active')) {
-                resultsHTML += '<div class="sort-stats">';
-                resultsHTML += `<div class="sort-stats-item"><span>Algorithm:</span><span>${algorithmValue.charAt(0).toUpperCase() + algorithmValue.slice(1)} Sort</span></div>`;
-                resultsHTML += `<div class="sort-stats-item"><span>Numbers Count:</span><span>${numbers.length}</span></div>`;
-                resultsHTML += `<div class="sort-stats-item"><span>Comparisons:</span><span>${result.stats.comparisons}</span></div>`;
-                resultsHTML += `<div class="sort-stats-item"><span>Swaps:</span><span>${result.stats.swaps}</span></div>`;
-                resultsHTML += '</div>';
+            selection: function(arr) {
+                let comparisons = 0;
+                let swaps = 0;
+                const sorted = [...arr];
+                const n = sorted.length;
+                
+                for (let i = 0; i < n - 1; i++) {
+                    let minIndex = i;
+                    for (let j = i + 1; j < n; j++) {
+                        comparisons++;
+                        if (sorted[j] < sorted[minIndex]) {
+                            minIndex = j;
+                        }
+                    }
+                    if (minIndex !== i) {
+                        [sorted[i], sorted[minIndex]] = [sorted[minIndex], sorted[i]];
+                        swaps++;
+                    }
+                }
+                
+                return {
+                    sorted: sorted,
+                    stats: { comparisons, swaps }
+                };
+            },
+            
+            insertion: function(arr) {
+                let comparisons = 0;
+                let swaps = 0;
+                const sorted = [...arr];
+                const n = sorted.length;
+                
+                for (let i = 1; i < n; i++) {
+                    const key = sorted[i];
+                    let j = i - 1;
+                    
+                    while (j >= 0 && sorted[j] > key) {
+                        comparisons++;
+                        sorted[j + 1] = sorted[j];
+                        j = j - 1;
+                        swaps++;
+                    }
+                    if (j >= 0) comparisons++; // Count the final comparison
+                    sorted[j + 1] = key;
+                }
+                
+                return {
+                    sorted: sorted,
+                    stats: { comparisons, swaps }
+                };
+            },
+            
+            quick: function(arr) {
+                let comparisons = 0;
+                let swaps = 0;
+                const sorted = [...arr];
+                
+                function quickSort(low, high) {
+                    if (low < high) {
+                        const pi = partition(low, high);
+                        quickSort(low, pi - 1);
+                        quickSort(pi + 1, high);
+                    }
+                }
+                
+                function partition(low, high) {
+                    const pivot = sorted[high];
+                    let i = low - 1;
+                    
+                    for (let j = low; j < high; j++) {
+                        comparisons++;
+                        if (sorted[j] < pivot) {
+                            i++;
+                            [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
+                            swaps++;
+                        }
+                    }
+                    [sorted[i + 1], sorted[high]] = [sorted[high], sorted[i + 1]];
+                    swaps++;
+                    return i + 1;
+                }
+                
+                quickSort(0, sorted.length - 1);
+                
+                return {
+                    sorted: sorted,
+                    stats: { comparisons, swaps }
+                };
+            },
+            
+            merge: function(arr) {
+                let comparisons = 0;
+                let swaps = 0;
+                const sorted = [...arr];
+                
+                function mergeSort(arr) {
+                    if (arr.length <= 1) return arr;
+                    
+                    const mid = Math.floor(arr.length / 2);
+                    const left = mergeSort(arr.slice(0, mid));
+                    const right = mergeSort(arr.slice(mid));
+                    
+                    return merge(left, right);
+                }
+                
+                function merge(left, right) {
+                    const result = [];
+                    let leftIndex = 0;
+                    let rightIndex = 0;
+                    
+                    while (leftIndex < left.length && rightIndex < right.length) {
+                        comparisons++;
+                        if (left[leftIndex] < right[rightIndex]) {
+                            result.push(left[leftIndex]);
+                            leftIndex++;
+                        } else {
+                            result.push(right[rightIndex]);
+                            rightIndex++;
+                        }
+                        swaps++;
+                    }
+                    
+                    return result
+                        .concat(left.slice(leftIndex))
+                        .concat(right.slice(rightIndex));
+                }
+                
+                const result = mergeSort(sorted);
+                
+                return {
+                    sorted: result,
+                    stats: { comparisons, swaps }
+                };
+            }
+        };
+
+        // Parse input numbers
+        function parseNumbers(input, separatorType, ignoreNonNumeric) {
+            let separatorRegex;
+            switch (separatorType) {
+                case 'newline':
+                    separatorRegex = /\r?\n/;
+                    break;
+                case 'comma':
+                    separatorRegex = /,/;
+                    break;
+                case 'space':
+                    separatorRegex = /\s+/;
+                    break;
+                case 'semicolon':
+                    separatorRegex = /;/;
+                    break;
+                case 'tab':
+                    separatorRegex = /\t/;
+                    break;
+                default:
+                    separatorRegex = /\r?\n/;
             }
             
-            resultsContainer.innerHTML = resultsHTML;
+            const parts = input.split(separatorRegex).filter(part => part.trim() !== '');
+            const numbers = [];
+            
+            for (const part of parts) {
+                const trimmed = part.trim();
+                if (trimmed === '') continue;
+                
+                const num = parseFloat(trimmed);
+                if (!isNaN(num)) {
+                    numbers.push(num);
+                } else if (!ignoreNonNumeric) {
+                    throw new Error(`Invalid number: ${trimmed}`);
+                }
+            }
+            
+            return numbers;
+        }
+
+        // Sort numbers function
+        function sortNumbers() {
+            try {
+                // Get input values
+                const input = inputNumbers.value;
+                const orderValue = sortOrder.value;
+                const algorithmValue = sortAlgorithm.value;
+                const separatorValue = separator.value;
+                const ignoreNonNumericValue = ignoreNonNumeric.classList.contains('active');
+                
+                if (!input.trim()) {
+                    resultsContainer.innerHTML = `
+                        <div class="results-placeholder">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Please enter some numbers to sort</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Parse numbers
+                const numbers = parseNumbers(input, separatorValue, ignoreNonNumericValue);
+                
+                if (numbers.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="results-placeholder">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>No valid numbers found in input</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Get the sorted numbers and statistics from the selected algorithm
+                const algorithm = sortingAlgorithms[algorithmValue];
+                const result = algorithm(numbers);
+                
+                // Apply sort order
+                let sortedNumbers = result.sorted;
+                if (orderValue === 'descending') {
+                    sortedNumbers = sortedNumbers.reverse();
+                }
+                
+                // Display results
+                let resultsHTML = '';
+                
+                // Create sorted numbers display
+                resultsHTML += '<div class="sorted-numbers">';
+                sortedNumbers.forEach(num => {
+                    resultsHTML += `<div class="sorted-number-item">${num}</div>`;
+                });
+                resultsHTML += '</div>';
+                
+                // Add statistics if enabled
+                if (showStats.classList.contains('active')) {
+                    resultsHTML += '<div class="sort-stats">';
+                    resultsHTML += `<div class="sort-stats-item"><span>Algorithm:</span><span>${algorithmValue.charAt(0).toUpperCase() + algorithmValue.slice(1)} Sort</span></div>`;
+                    resultsHTML += `<div class="sort-stats-item"><span>Numbers Count:</span><span>${numbers.length}</span></div>`;
+                    resultsHTML += `<div class="sort-stats-item"><span>Comparisons:</span><span>${result.stats.comparisons}</span></div>`;
+                    resultsHTML += `<div class="sort-stats-item"><span>Swaps:</span><span>${result.stats.swaps}</span></div>`;
+                    resultsHTML += '</div>';
+                }
+                
+                resultsContainer.innerHTML = resultsHTML;
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="results-placeholder">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
         }
 
         // Event listener for sort button
